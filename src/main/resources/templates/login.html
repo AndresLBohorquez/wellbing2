@@ -1,0 +1,27 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="es">
+
+
+<body class="align">
+    <div class="grid">
+        <form th:action="@{/login}" method="POST" class="form login">
+            <div class="form_field">
+                <label><i class="fa fa-user" style="color: #606468;"></i></label>
+                <input type="text" name="username" class="form_input" placeholder="Nombre de Usuario o Correo">
+            </div>
+            <div class="form_field">
+                <label><i class="fa fa-lock" style="color: #606468;"></i></label>
+                <input type="password" name="password" class="form_input" placeholder="Contraseña" required>
+            </div>
+            <div class="form_field">
+                <button class="submitButton" type="submit">Iniciar</button>
+            </div>
+        </form>
+        <p class="text--center">¿Aun no eres miembro? <a class="link" href="/signup">Registrarse</a></p>
+        <p class="text--center">¿Olvidaste tu contraseña? <a class="link" href="/recuperar-pass">Recupérala</a></p>
+    </div>
+
+
+</body>
+
+</html>
