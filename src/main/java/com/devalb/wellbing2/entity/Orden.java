@@ -33,4 +33,6 @@ public class Orden {
     private LocalDateTime fechaCreacion;
 
     private LocalDateTime fechaActualizacion;
+
+    private boolean visible;
 }
