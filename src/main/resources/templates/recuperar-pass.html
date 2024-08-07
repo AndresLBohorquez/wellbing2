@@ -1,0 +1,36 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="es">
+
+<head th:replace="~{layout/plantilla :: head('Recuperar Contraseña')}"></head>
+
+<body>
+    <nav th:replace="~{layout/plantilla :: navbar('', '', '', '', active)}"></nav>
+    <div class="container mt-5 mb-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-4">
+                <div class="card p-4 shadow-sm">
+                    <h2 class="text-center section-title">Recuperar Contraseña</h2>
+                    <div class="text-center mb-4">
+                        <img src="/images/img.png" class="img-fluid" alt="Recuperar Contraseña">
+                    </div>
+                    <form id="recuperarContraseñaForm">
+                        <div class="mb-3">
+                            <label for="correo" class="form-label">Correo Electrónico</label>
+                            <input type="email" class="form-control" id="correo" placeholder="nombre@ejemplo.com" required>
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">Enviar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer th:replace="~{layout/plantilla :: footer}"></footer>
+    <div th:replace="~{layout/plantilla :: alertas}"></div>
+
+    <script src="/js/recuperar_contraseña.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,42 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="es">
+
+<head th:replace="~{layout/plantilla :: head('Políticas de Privacidad')}"></head>
+
+<body>
+    <nav th:replace="~{layout/plantilla :: navbar('', '', active, '', '')}"></nav>
+    <div class="container mt-5 mb-5">
+        <h1 class="text-center section-title">Políticas de Privacidad</h1>
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="card p-4 shadow-sm custom-font">
+                    <h3>1. Introducción</h3>
+                    <p class="justify">En [Nombre de la Compañía], respetamos tu privacidad y estamos comprometidos a proteger tu información personal.</p>
+
+                    <h3>2. Información que Recopilamos</h3>
+                    <p class="justify">Recopilamos información personal que nos proporcionas directamente, así como datos recopilados automáticamente a través del uso de nuestro sitio web.</p>
+
+                    <h3>3. Uso de la Información</h3>
+                    <p class="justify">Utilizamos la información recopilada para proporcionar, mantener y mejorar nuestros servicios, así como para comunicarnos contigo.</p>
+
+                    <h3>4. Compartir Información</h3>
+                    <p class="justify">No compartimos tu información personal con terceros, excepto en los casos descritos en esta política de privacidad.</p>
+
+                    <h3>5. Seguridad</h3>
+                    <p class="justify">Implementamos medidas de seguridad para proteger tu información personal contra el acceso no autorizado.</p>
+
+                    <h3>6. Cambios en la Política</h3>
+                    <p class="justify">Nos reservamos el derecho de modificar esta política de privacidad en cualquier momento. Te notificaremos sobre cualquier cambio mediante la publicación de la nueva política en nuestro sitio web.</p>
+
+                    <h3>7. Contacto</h3>
+                    <p class="justify">Si tienes alguna pregunta sobre esta política de privacidad, puedes contactarnos en [Correo Electrónico de la Compañía] o [Dirección de la Compañía].</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer th:replace="~{layout/plantilla :: footer}"></footer>
+    <div th:replace="~{layout/plantilla :: alertas}"></div>
+</body>
+
+</html>

@@ -1,0 +1,40 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="es">
+
+<head th:replace="~{layout/plantilla :: head('Detalles del Producto')}"></head>
+
+<body>
+    <nav th:replace="~{layout/plantilla :: navbar('', active, '', '', '')}"></nav>
+    <div class="container mt-5 mb-5">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="product-image">
+                    <img src="/images/productos/producto_1.png" class="img-fluid" alt="Nombre del Producto">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="product-details">
+                    <h2 class="product-title mt-5">Nombre del Producto</h2>
+                    <p class="product-category mt-5">Categoría: <span>Categoría del Producto</span></p>
+                    <p class="product-price ">$ Precio del Producto</p>
+                    <p class="product-description">Descripción detallada del producto. Lorem ipsum dolor sit amet,
+                        consectetur adipiscing elit. Nullam non urna vitae ligula sodales fermentum.</p>
+                    <div class="row product-actions mt-4">
+                        <div class="col-6">
+                            <button class="btn btn-primary me-2" id="addToCartButton">Agregar al Carrito</button>
+                        </div>
+                        <div class="col-6">
+                            <button class="btn btn-success" id="buyNowButton">Comprar Ahora</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer th:replace="~{layout/plantilla :: footer}"></footer>
+    <div th:replace="~{layout/plantilla :: alertas}"></div>
+
+</body>
+
+</html>

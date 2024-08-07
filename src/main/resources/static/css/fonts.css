@@ -1,0 +1,56 @@
+/* Fuente principal */
+body {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+/* Fuente para títulos y encabezados */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Merriweather', serif;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Fuente para artículos y textos largos */
+.article,
+.blog-post {
+    font-family: 'Georgia', serif;
+    font-size: 18px;
+    line-height: 1.7;
+}
+
+/* Fuente para títulos de sección */
+.section-title {
+    font-family: 'Oswald', sans-serif;
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Fuente para botones y llamadas a la acción */
+.button,
+.cta {
+    font-family: 'Arial Black', sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #ec930d;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Fuente para menú de navegación */
+.navbar {
+    font-family: 'Lato', sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+}

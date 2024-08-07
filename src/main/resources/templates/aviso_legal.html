@@ -1,0 +1,39 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="es">
+
+<head th:replace="~{layout/plantilla :: head('Aviso Legal')}"></head>
+
+<body>
+    <nav th:replace="~{layout/plantilla :: navbar('', '', active, '', '')}"></nav>
+    <div class="container mt-5 mb-5">
+        <h1 class="text-center section-title">Aviso Legal</h1>
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="card p-4 shadow-sm custom-font">
+                    <h3>1. Información General</h3>
+                    <p class="justify">En cumplimiento con el deber de información recogido en la Ley [Nombre de la Ley], se exponen a continuación los datos identificativos de la entidad:</p>
+
+                    <h3>2. Propiedad Intelectual</h3>
+                    <p class="justify">Los contenidos del sitio web, incluyendo textos, imágenes y diseños gráficos, pertenecen a [Nombre de la Compañía] o a terceros que han autorizado su uso. Está prohibida su reproducción, distribución o modificación sin autorización previa.</p>
+
+                    <h3>3. Uso del Sitio Web</h3>
+                    <p class="justify">El acceso a nuestro sitio web implica la aceptación de las condiciones de uso. Te comprometes a hacer un uso adecuado de los contenidos y servicios, y a no emplearlos para realizar actividades ilícitas o contrarias a la buena fe y al orden público.</p>
+
+                    <h3>4. Responsabilidad</h3>
+                    <p class="justify">[Nombre de la Compañía] no se responsabiliza del mal uso que se pueda hacer de los contenidos de nuestro sitio web. Tampoco nos hacemos responsables de la información contenida en los sitios web de terceros accesibles a través de enlaces desde nuestro sitio.</p>
+
+                    <h3>5. Legislación y Jurisdicción</h3>
+                    <p class="justify">Las presentes condiciones se rigen por la legislación española. Para la resolución de cualquier controversia, las partes se someten a los juzgados y tribunales de [Ciudad], renunciando a cualquier otro fuero que pudiera corresponderles.</p>
+
+                    <h3>6. Contacto</h3>
+                    <p class="justify">Si tienes alguna pregunta sobre este aviso legal, puedes contactarnos en [Correo Electrónico de la Compañía] o [Dirección de la Compañía].</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer th:replace="~{layout/plantilla :: footer}"></footer>
+    <div th:replace="~{layout/plantilla :: alertas}"></div>
+</body>
+
+</html>

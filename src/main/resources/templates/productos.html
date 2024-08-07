@@ -1,0 +1,90 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="es">
+
+<head th:replace="~{layout/plantilla :: head('Productos')}"></head>
+
+<body>
+    <nav th:replace="~{layout/plantilla :: navbar('', active, '', '', '')}"></nav>
+    <div class="container mt-5 mb-5">
+        <h2 class="text-center section-title">Productos</h2>
+
+
+        <!-- Filtros -->
+        <div class="row mb-4">
+            <div class="col-md-4">
+                <input type="text" id="filterName" class="form-control" placeholder="Filtrar por nombre">
+            </div>
+            <div class="col-md-4">
+                <select id="filterCategory" class="form-control">
+                    <option value="">Filtrar por categoría</option>
+                    <option value="Electronica">Electrónica</option>
+                    <option value="Electrodoméstico">Electrodoméstico</option>
+                    <option value="Aseo">Aseo</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+
+                <div class="row">
+                    <h3 class="col-md-1 mt-1"><i class="bi bi-currency-dollar"></i></h3>
+                    <div class="col-md-5">
+                        <input type="range" id="filterMinPrice" min="0" max="10000000" value="0"
+                            class="form-control-range">
+                        <output for="filterMinPrice" id="filterMinPriceOutput">0</output>
+                    </div>
+                    <div class="col-md-5">
+                        <input type="range" id="filterMaxPrice" min="0" max="10000000" value="10000000"
+                            class="form-control-range">
+                        <output for="filterMaxPrice" id="filterMaxPriceOutput">10000000</output>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Listado de productos -->
+        <div class="row" id="productList">
+            <div class="col-md-4 mb-4 product" data-name="Televisor" data-category="Electronica" data-price="1200000">
+                <div class="card">
+                    <a href="/producto_detalle">
+                        <img src="/images/productos/producto_1.png" class="card-img-top" alt="Producto 1">
+                    </a>
+                    <div class="card-body">
+                        <h5 class="card-title">Televisor</h5>
+                        <p class="card-text">Descripción del Producto 1</p>
+                        <p class="card-text"><strong>Precio: $1200000</strong></p>
+                        <p class="card-text"><em>Categoría: Electrónica</em></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4 product" data-name="Nevera" data-category="Electrodoméstico" data-price="500000">
+                <div class="card">
+                    <img src="/images/productos/nevera.jpg" class="card-img-top" alt="Producto 2">
+                    <div class="card-body">
+                        <h5 class="card-title">Nevera</h5>
+                        <p class="card-text">Descripción del Producto 2</p>
+                        <p class="card-text"><strong>Precio: $500000</strong></p>
+                        <p class="card-text"><em>Categoría: Electrodoméstico</em></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4 product" data-name="Colonia" data-category="Aseo" data-price="20000">
+                <div class="card">
+                    <img src="/images/productos/producto_2.png" class="card-img-top" alt="Producto 3">
+                    <div class="card-body">
+                        <h5 class="card-title">Producto 3</h5>
+                        <p class="card-text">Descripción del Producto 3</p>
+                        <p class="card-text"><strong>Precio: $20000</strong></p>
+                        <p class="card-text"><em>Categoría: Aseo</em></p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer th:replace="~{layout/plantilla :: footer}"></footer>
+    <div th:replace="~{layout/plantilla :: alertas}"></div>
+
+    <script src="/js/productos.js"></script>
+</body>
+
+</html>

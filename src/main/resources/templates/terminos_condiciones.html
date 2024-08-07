@@ -1,0 +1,54 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="es">
+
+<head th:replace="~{layout/plantilla :: head('Términos y Condiciones')}"></head>
+
+<body>
+    <nav th:replace="~{layout/plantilla :: navbar('', '', active, '', '')}"></nav>
+    <div class="container mt-5 mb-5">
+        <h1 class="text-center section-title">Términos y Condiciones</h1>
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="card p-4 shadow-sm custom-font">
+                    <h3>1. Introducción</h3>
+                    <p class="justify">Bienvenido a [Nombre de la Compañía]. Estos Términos y Condiciones regulan el uso de nuestro sitio web y los servicios que ofrecemos. Al acceder o utilizar nuestro sitio web, aceptas cumplir con estos términos.</p>
+
+                    <h3>2. Uso del Sitio Web</h3>
+                    <p class="justify">El uso de nuestro sitio web debe ser conforme a la ley y no debe perjudicar los derechos de terceros. No debes usar nuestro sitio web para cualquier propósito ilícito o prohibido por estos términos.</p>
+
+                    <h3>3. Registro de Usuario</h3>
+                    <p class="justify">Para acceder a ciertas funciones de nuestro sitio web, es posible que necesites registrarte y crear una cuenta. Debes proporcionar información precisa y completa al registrarte. Eres responsable de mantener la confidencialidad de tu cuenta y contraseña.</p>
+
+                    <h3>4. Propiedad Intelectual</h3>
+                    <p class="justify">Todos los contenidos de nuestro sitio web, incluidos textos, gráficos, imágenes, logotipos y software, son propiedad de [Nombre de la Compañía] o de nuestros licenciantes y están protegidos por las leyes de propiedad intelectual.</p>
+
+                    <h3>5. Productos y Servicios</h3>
+                    <p class="justify">Los productos y servicios ofrecidos en nuestro sitio web están sujetos a disponibilidad y nos reservamos el derecho de modificarlos en cualquier momento sin previo aviso. Nos esforzamos por proporcionar descripciones precisas, pero no garantizamos que las descripciones de los productos sean exactas, completas, actuales o libres de errores.</p>
+
+                    <h3>6. Precios y Pagos</h3>
+                    <p class="justify">Los precios de nuestros productos y servicios se especifican en nuestro sitio web. Nos reservamos el derecho de cambiar los precios en cualquier momento sin previo aviso. Los pagos se deben realizar de acuerdo con las instrucciones proporcionadas en el sitio web.</p>
+
+                    <h3>7. Enlaces a Sitios de Terceros</h3>
+                    <p class="justify">Nuestro sitio web puede contener enlaces a sitios web de terceros. Estos enlaces se proporcionan solo para tu conveniencia. No tenemos control sobre estos sitios y no somos responsables de su contenido o disponibilidad.</p>
+
+                    <h3>8. Limitación de Responsabilidad</h3>
+                    <p class="justify">En la medida máxima permitida por la ley, [Nombre de la Compañía] no será responsable de ningún daño directo, indirecto, incidental, especial o consecuente que surja del uso de nuestro sitio web o de los productos y servicios adquiridos a través de él.</p>
+
+                    <h3>9. Modificaciones de los Términos</h3>
+                    <p class="justify">Nos reservamos el derecho de modificar estos Términos y Condiciones en cualquier momento. Cualquier cambio será efectivo inmediatamente después de su publicación en nuestro sitio web. Es tu responsabilidad revisar periódicamente estos términos para estar al tanto de cualquier cambio.</p>
+
+                    <h3>10. Ley Aplicable y Jurisdicción</h3>
+                    <p class="justify">Estos Términos y Condiciones se rigen por las leyes de [País]. Cualquier disputa relacionada con estos términos se someterá a la jurisdicción exclusiva de los tribunales de [Ciudad, País].</p>
+
+                    <h3>11. Contacto</h3>
+                    <p class="justify">Si tienes alguna pregunta sobre estos Términos y Condiciones, puedes contactarnos en [Correo Electrónico de la Compañía] o [Dirección de la Compañía].</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer th:replace="~{layout/plantilla :: footer}"></footer>
+    <div th:replace="~{layout/plantilla :: alertas}"></div>
+</body>
+
+</html>

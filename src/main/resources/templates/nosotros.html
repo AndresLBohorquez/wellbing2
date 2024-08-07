@@ -1,0 +1,61 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="es">
+
+<head th:replace="~{layout/plantilla :: head('Nosotros')}"></head>
+
+<body>
+    <nav th:replace="~{layout/plantilla :: navbar('', '', active, '', '')}"></nav>
+    <div class="container mt-5 mb-5">
+        <h2 class="text-center section-title">Sobre Nosotros</h2>
+        <div class="row">
+            <div class="col-md-6 mb-4 mt-2">
+                <img src="/images/img.png" class="img-fluid" alt="Nuestra Compañía">
+            </div>
+            <div class="col-md-6 mb-4 mt-2">
+                <h3>Nuestra Historia</h3>
+                
+                <p class="justify">
+                    Fundada en 2024, nuestra compañía ha crecido hasta convertirse en un fuerte competidor en el
+                    comercio online. Nuestro
+                    compromiso con la calidad y el servicio al cliente nos ha diferenciado en el mercado.
+                </p>
+                <h3>Nuestra Misión</h3>
+                <p class="justify">
+                    Nuestra misión es proporcionar el servicio de la más alta calidad, asegurando la satisfacción
+                    total de nuestros clientes. Creemos en la innovación constante y en la mejora continua para mantener
+                    nuestro liderazgo en la industria.
+                </p>
+                <h3>Nuestro Equipo</h3>
+                <p class="justify">
+                    Contamos con un equipo de profesionales altamente capacitados y dedicados, que trabajan arduamente
+                    para cumplir y superar las expectativas de nuestros clientes.
+                </p>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <h3>Valores Corporativos</h3>
+                <ul>
+                    <li class="justify">Integridad: Actuamos con ética y transparencia en todo lo que hacemos.</li>
+                    <li class="justify">Excelencia: Nos esforzamos por superar las expectativas de nuestros clientes.</li>
+                    <li class="justify">Innovación: Buscamos constantemente nuevas formas de mejorar y crecer.</li>
+                    <li class="justify">Responsabilidad: Somos responsables con nuestro entorno y nuestra comunidad.</li>
+                </ul>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <h3>Contacto</h3>
+                <p class="justify">
+                    Si tienes alguna pregunta o deseas más información, no dudes en <a href="/signup">contactarnos</a>.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <footer th:replace="~{layout/plantilla :: footer}"></footer>
+    <div th:replace="~{layout/plantilla :: alertas}"></div>
+
+</body>
+
+</html>

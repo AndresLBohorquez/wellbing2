@@ -2,24 +2,41 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="es">
 
 
-<body class="align">
-    <div class="grid">
-        <form th:action="@{/login}" method="POST" class="form login">
-            <div class="form_field">
-                <label><i class="fa fa-user" style="color: #606468;"></i></label>
-                <input type="text" name="username" class="form_input" placeholder="Nombre de Usuario o Correo">
+<head th:replace="~{layout/plantilla :: head('Iniciar Sesión')}"></head>
+
+<body>
+    <nav th:replace="~{layout/plantilla :: navbar('', '', '', '', active)}"></nav>
+    <div class="container mt-5 mb-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-4">
+                <div class="card p-4 shadow-sm">
+                    <h2 class="text-center  section-title">Iniciar Sesión</h2>
+                    <div class="text-center ">
+                        <img src="/images/img.png" alt="Imagen de inicio de sesión" class="login-image">
+                    </div>
+                    <form>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Correo Electrónico o Nombre de Usuario</label>
+                            <input type="text" class="form-control" id="email" placeholder="nombre@ejemplo.com" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Contraseña</label>
+                            <input type="password" class="form-control" id="password" placeholder="Contraseña" required>
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+                        </div>
+                        <div class="text-center mt-3">
+                            <a href="/recuperar-pass" class="text-decoration-none">¿Olvidaste tu contraseña?</a>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="form_field">
-                <label><i class="fa fa-lock" style="color: #606468;"></i></label>
-                <input type="password" name="password" class="form_input" placeholder="Contraseña" required>
-            </div>
-            <div class="form_field">
-                <button class="submitButton" type="submit">Iniciar</button>
-            </div>
-        </form>
-        <p class="text--center">¿Aun no eres miembro? <a class="link" href="/signup">Registrarse</a></p>
-        <p class="text--center">¿Olvidaste tu contraseña? <a class="link" href="/recuperar-pass">Recupérala</a></p>
+        </div>
     </div>
+
+    <footer th:replace="~{layout/plantilla :: footer}"></footer>
+    <div th:replace="~{layout/plantilla :: alertas}"></div>
 
 
 </body>
