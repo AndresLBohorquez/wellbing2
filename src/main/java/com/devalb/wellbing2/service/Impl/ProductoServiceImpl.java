@@ -54,4 +54,9 @@ public class ProductoServiceImpl implements ProductoService {
         return productoRepository.findAllByCategoria(id);
     }
 
+    @Override
+    public Double getMaxPrecioProducto() {
+        return productoRepository.findMaxPrice();
+    }
+
 }

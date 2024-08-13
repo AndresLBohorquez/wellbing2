@@ -140,3 +140,113 @@ body {
 .custom-font {
     color: #4792DD;
 }
+
+.card-producto {
+    width: 18rem;
+}
+
+.card-descripcion {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -moz-box-orient: vertical;
+    -ms-flex-direction: column;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    overflow: hidden;
+    -webkit-line-clamp: 3;
+    -moz-line-clamp: 3;
+    -ms-line-clamp: 3;
+    line-clamp: 3;
+    height: calc(1.5em * 3);
+}
+
+
+input[type="number"] {
+    height: 25px;
+    width: 80px;
+    border: none;
+    padding: 0;
+    box-shadow: none;
+    background-color: #F5F5F5;
+    text-align: center;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+.range-container {
+    display: flex;
+    align-items: center;
+}
+
+.range-container input[type="range"] {
+    margin-right: 20px;
+}
+
+.number-container {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.number-container input[type="number"] {
+    height: 25px;
+    width: 80px;
+    border: none;
+    padding: 0;
+    box-shadow: none;
+    background-color: #F5F5F5;
+    text-align: center;
+}
+
+@media (max-width: 767.98px) {
+    .range-container {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .number-container {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
+.carousel {
+    width: 70%;
+    margin: 0 auto;
+}
+
+.carousel-item img {
+    max-height: 300px;
+    width: auto;
+    margin: auto;
+    display: block;
+}
+
+.carousel-caption h5 {
+    color: #4792DD;
+    font-weight: bold;
+}
+
+.carousel-caption p {
+    color: #FFFFFF;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    filter: invert(1);
+}

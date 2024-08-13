@@ -19,4 +19,6 @@ public interface ProductoService {
     public List<Producto> getProductosVisibles();
 
     public List<Producto> getProductosByCategoria(Long id);
+
+    public Double getMaxPrecioProducto();
 }

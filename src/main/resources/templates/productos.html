@@ -8,7 +8,6 @@
     <div class="container mt-5 mb-5">
         <h2 class="text-center section-title">Productos</h2>
 
-
         <!-- Filtros -->
         <div class="row mb-4">
             <div class="col-md-4">
@@ -17,24 +16,24 @@
             <div class="col-md-4">
                 <select id="filterCategory" class="form-control">
                     <option value="">Filtrar por categoría</option>
-                    <option value="Electronica">Electrónica</option>
-                    <option value="Electrodoméstico">Electrodoméstico</option>
-                    <option value="Aseo">Aseo</option>
+                    <option th:each="categoria : ${listaCategorias}" th:value="${categoria.nombre}"
+                        th:text="${categoria.nombre}"></option>
                 </select>
             </div>
             <div class="col-md-4">
-
-                <div class="row">
+                <div class="row range-container">
                     <h3 class="col-md-1 mt-1"><i class="bi bi-currency-dollar"></i></h3>
                     <div class="col-md-5">
-                        <input type="range" id="filterMinPrice" min="0" max="10000000" value="0"
+                        <input type="range" id="filterMinPrice" min="0" th:max="${maxPrecio}" value="0"
                             class="form-control-range">
-                        <output for="filterMinPrice" id="filterMinPriceOutput">0</output>
+                        <input type="number" id="filterMinPriceInput" min="0" th:max="${maxPrecio}" value="0"
+                            class="form-control mt-2">
                     </div>
                     <div class="col-md-5">
-                        <input type="range" id="filterMaxPrice" min="0" max="10000000" value="10000000"
+                        <input type="range" id="filterMaxPrice" min="0" th:max="${maxPrecio}" th:value="${maxPrecio}"
                             class="form-control-range">
-                        <output for="filterMaxPrice" id="filterMaxPriceOutput">10000000</output>
+                        <input type="number" id="filterMaxPriceInput" min="0" th:max="${maxPrecio}"
+                            th:value="${maxPrecio}" class="form-control mt-2">
                     </div>
                 </div>
             </div>
@@ -42,42 +41,24 @@
 
         <!-- Listado de productos -->
         <div class="row" id="productList">
-            <div class="col-md-4 mb-4 product" data-name="Televisor" data-category="Electronica" data-price="1200000">
-                <div class="card">
+            <div th:each="producto : ${listaProductos}" class="col-md-4 mb-4 product" th:data-name="${producto.nombre}"
+                th:data-category="${producto.categoria.nombre}" th:data-price="${producto.precio}">
+                <div class="card card-producto">
                     <a href="/producto_detalle">
-                        <img src="/images/productos/producto_1.png" class="card-img-top" alt="Producto 1">
+                        <img th:src="@{/images/productos/} + ${producto.imagen}" class="card-img-top" alt="ProductoImg">
                     </a>
                     <div class="card-body">
-                        <h5 class="card-title">Televisor</h5>
-                        <p class="card-text">Descripción del Producto 1</p>
-                        <p class="card-text"><strong>Precio: $1200000</strong></p>
-                        <p class="card-text"><em>Categoría: Electrónica</em></p>
+                        <h5 th:text="${producto.nombre}" class="card-title">Televisor</h5>
+                        <p class="card-text card-descripcion"
+                            th:text="${producto.descripcion.length() > 85 ? producto.descripcion.substring(0, 85) + '...' : producto.descripcion}">
+                            Descripción del Producto 1</p>
+                        <p class="card-text"><strong
+                                th:text="'$ ' + ${#numbers.formatDecimal(producto.precio, 0 , 'COMMA', 0, 'POINT')}">Precio:
+                                $1200000</strong></p>
+                        <p  class="card-text"><em th:text="${producto.categoria.nombre}">Categoría: Electrónica</em></p>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 mb-4 product" data-name="Nevera" data-category="Electrodoméstico" data-price="500000">
-                <div class="card">
-                    <img src="/images/productos/nevera.jpg" class="card-img-top" alt="Producto 2">
-                    <div class="card-body">
-                        <h5 class="card-title">Nevera</h5>
-                        <p class="card-text">Descripción del Producto 2</p>
-                        <p class="card-text"><strong>Precio: $500000</strong></p>
-                        <p class="card-text"><em>Categoría: Electrodoméstico</em></p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 mb-4 product" data-name="Colonia" data-category="Aseo" data-price="20000">
-                <div class="card">
-                    <img src="/images/productos/producto_2.png" class="card-img-top" alt="Producto 3">
-                    <div class="card-body">
-                        <h5 class="card-title">Producto 3</h5>
-                        <p class="card-text">Descripción del Producto 3</p>
-                        <p class="card-text"><strong>Precio: $20000</strong></p>
-                        <p class="card-text"><em>Categoría: Aseo</em></p>
-                    </div>
-                </div>
-            </div>
-
         </div>
     </div>
 
