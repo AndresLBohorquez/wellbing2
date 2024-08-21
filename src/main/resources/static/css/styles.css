@@ -22,6 +22,8 @@ body {
 
 .navbar {
     background-color: #4792DD;
+    position: relative;
+    z-index: 1000;
 }
 
 .navbar-nav .nav-link {
@@ -85,6 +87,8 @@ body {
     position: sticky;
     bottom: 0;
     width: 100%;
+    z-index: 1000;
+    /* Asegura que esté encima del sidebar */
 }
 
 .footer a {
@@ -107,7 +111,6 @@ body {
 
 .swal2-modal {
     border-radius: 25% 10%;
-
 }
 
 .card-login,
@@ -163,7 +166,6 @@ body {
     line-clamp: 3;
     height: calc(1.5em * 3);
 }
-
 
 input[type="number"] {
     height: 25px;
@@ -245,4 +247,152 @@ input[type="number"]::-webkit-outer-spin-button {
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
     filter: invert(1);
+}
+
+/* Sidebar */
+#sidebar {
+    width: 250px;
+    height: calc(100vh - 56px);
+    background-color: #3268a7;
+    position: fixed;
+    top: 56px;
+    left: 0;
+    z-index: 900;
+}
+
+.bg-sidebar {
+    background-color: #3268a7;
+}
+
+#sidebar h4 {
+    color: #ffffff;
+}
+
+.nav-pills .nav-link {
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.nav-pills .nav-link:hover {
+    background-color: #4792DD;
+}
+
+.nav-pills .nav-link i {
+    margin-right: 10px;
+}
+
+/* Contenido principal */
+#content {
+    flex-grow: 1;
+    padding: 20px;
+    margin-left: 250px;
+    width: calc(100% - 250px);
+    max-width: 100%;
+}
+
+.card-perfil {
+    position: relative;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    background-color: #fff;
+    border: none;
+}
+
+.card-perfil h5 {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 600;
+    color: #041f3a;
+}
+
+.card-perfil p {
+    color: #3268a7;
+}
+
+.btn-edit,
+.btn-add {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    border-radius: 50%;
+    padding: 8px 12px;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.btn-edit:hover,
+.btn-add:hover {
+    background-color: #0dec93;
+    color: white;
+}
+
+.btn-edit i,
+.btn-add i {
+    font-size: 16px;
+}
+
+/* Lista de Roles */
+.roles-list span {
+    margin-right: 15px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #3268a7;
+}
+
+/* Cards debajo del perfil */
+.card-body-custom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 217px;
+    max-height: 220px;
+
+}
+
+/* Toggle para vista móvil */
+#sidebarToggle {
+    position: relative;
+    z-index: 1000;
+    display: none;
+}
+
+#sidebarToggle {
+    transition: transform 0.3s ease-in-out;
+}
+
+#sidebar.active+#content #sidebarToggle {
+    transform: translateX(250px) rotate(180deg);
+}
+
+@media (max-width: 768px) {
+    #sidebarToggle {
+        display: inline-block;
+    }
+
+    #sidebar {
+        display: none;
+        position: fixed;
+        top: var(--nav-height);
+        left: 0;
+        z-index: 1000;
+        height: calc(100vh - 56px);
+        background-color: #3268a7;
+    }
+
+    #sidebar.active {
+        display: block;
+    }
+
+    #content {
+        margin-left: 0;
+        width: 100%;
+    }
+}
+
+@media (min-width: 769px) {
+    #sidebarToggle {
+        display: none;
+    }
 }

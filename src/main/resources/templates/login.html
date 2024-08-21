@@ -14,14 +14,14 @@
                     <div class="text-center ">
                         <img src="/images/img.png" alt="Imagen de inicio de sesión" class="login-image">
                     </div>
-                    <form>
+                    <form th:action="@{/login}" method="POST">
                         <div class="mb-3">
                             <label for="email" class="form-label">Correo Electrónico o Nombre de Usuario</label>
-                            <input type="text" class="form-control" id="email" placeholder="nombre@ejemplo.com" required>
+                            <input type="text" class="form-control" name="username" placeholder="nombre@ejemplo.com" required>
                         </div>
                         <div class="mb-3">
                             <label for="password" class="form-label">Contraseña</label>
-                            <input type="password" class="form-control" id="password" placeholder="Contraseña" required>
+                            <input type="password" class="form-control" name="password" placeholder="Contraseña" required>
                         </div>
                         <div class="d-grid">
                             <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
