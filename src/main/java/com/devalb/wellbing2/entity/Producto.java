@@ -1,5 +1,7 @@
 package com.devalb.wellbing2.entity;
 
+import java.time.LocalDate;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -30,6 +32,10 @@ public class Producto {
     private String imagen;
 
     private boolean visible;
+
+    private LocalDate fecha;
+
+    private Double bono;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(nullable = false)
