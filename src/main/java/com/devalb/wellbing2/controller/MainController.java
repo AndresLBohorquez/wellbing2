@@ -103,9 +103,13 @@ public class MainController {
     }
 
     @GetMapping("/usuario/prueba")
-    public String getMethodName() {
+    public String goToPrueba() {
         return "usuario/prueba";
     }
-    
+
+    @GetMapping("/carrito")
+    public String goToCarrito() {
+        return "carrito";
+    }
 
 }

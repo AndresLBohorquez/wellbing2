@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="es">
+
+<head th:replace="~{layout/plantilla :: head('Carrito de Compras')}"></head>
+
+<body>
+    <!-- Navbar -->
+    <nav th:replace="~{layout/plantilla :: navbar('', '', '', '', '')}"></nav>
+
+    <!-- Contenido principal del carrito de compras -->
+    <div class="container cart-container">
+        <h2 class="text-center mb-4 section-title">Carrito de Compras</h2>
+
+        <!-- Items del carrito -->
+        <div class="row">
+            <div class="col-md-8">
+                <div class="cart-item mb-4">
+                    <div class="row align-items-center">
+                        <!-- Imagen del producto -->
+                        <div class="col-3 col-md-2">
+                            <img src="/images/productos/producto_1.png" alt="Producto 1" class="img-fluid">
+                        </div>
+
+                        <!-- Nombre y descripción -->
+                        <div class="col-9 col-md-5">
+                            <p class="item-name mb-1">Nombre del Producto 1</p>
+                            <p class="text-muted mb-0">Descripción breve del producto.</p>
+                        </div>
+
+                        <!-- Input de cantidad -->
+                        <div class="col-6 col-md-2 d-flex align-items-center justify-content-center quantity-container">
+                            <button class="quantity-btn quantity-btn-minus">-</button>
+                            <input type="number" class="quantity-input mx-2" value="1" min="1" readonly>
+                            <button class="quantity-btn quantity-btn-plus">+</button>
+                        </div>
+
+                        <!-- Precio -->
+                        <div class="col-6 col-md-2 text-center">
+                            <p class="item-price" data-price="99.99">$99.99</p>
+                        </div>
+
+                        <!-- Botón de eliminar -->
+                        <div class="col-12 col-md-1 text-end text-md-center mt-2 mt-md-0">
+                            <button class="btn-delete-product">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="cart-item mb-4">
+                    <div class="row align-items-center">
+                        <!-- Imagen del producto -->
+                        <div class="col-3 col-md-2">
+                            <img src="/images/productos/producto_2.png" alt="Producto 2" class="img-fluid">
+                        </div>
+
+                        <!-- Nombre y descripción -->
+                        <div class="col-9 col-md-5">
+                            <p class="item-name mb-1">Nombre del Producto 1</p>
+                            <p class="text-muted mb-0">Descripción breve del producto.</p>
+                        </div>
+
+                        <!-- Input de cantidad -->
+                        <div class="col-6 col-md-2 d-flex align-items-center justify-content-center quantity-container">
+                            <button class="quantity-btn quantity-btn-minus">-</button>
+                            <input type="number" class="quantity-input mx-2" value="1" min="1" readonly>
+                            <button class="quantity-btn quantity-btn-plus">+</button>
+                        </div>
+
+                        <!-- Precio -->
+                        <div class="col-6 col-md-2 text-center">
+                            <p class="item-price" data-price="53.75">$53.75</p>
+                        </div>
+
+                        <!-- Botón de eliminar -->
+                        <div class="col-12 col-md-1 text-end text-md-center mt-2 mt-md-0">
+                            <button class="btn-delete-product">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Repite este bloque para más productos en el carrito -->
+            </div>
+
+            <!-- Resumen del carrito -->
+            <div class="col-md-4">
+                <div class="cart-summary">
+                    <h5>Resumen del Pedido</h5>
+                    <p>Total: <span class="item-total">$99.99</span></p>
+                    <button class="checkout-btn mt-3">Realizar Compra</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer th:replace="~{layout/plantilla :: footer}"></footer>
+    <div th:replace="~{layout/plantilla :: alertas}"></div>
+
+    <!-- JavaScript para funcionalidad de los botones -->
+    <script>
+        document.querySelectorAll('.quantity-container').forEach(container => {
+            const minusBtn = container.querySelector('.quantity-btn-minus');
+            const plusBtn = container.querySelector('.quantity-btn-plus');
+            const quantityInput = container.querySelector('.quantity-input');
+            const priceElement = container.closest('.cart-item').querySelector('.item-price');
+            const basePrice = parseFloat(priceElement.getAttribute('data-price'));
+
+            minusBtn.addEventListener('click', () => {
+                let quantity = parseInt(quantityInput.value);
+                if (quantity > 1) {
+                    quantity--;
+                    quantityInput.value = quantity;
+                    priceElement.textContent = `$${(basePrice * quantity).toFixed(2)}`;
+                    updateTotal();
+                }
+            });
+
+            plusBtn.addEventListener('click', () => {
+                let quantity = parseInt(quantityInput.value);
+                quantity++;
+                quantityInput.value = quantity;
+                priceElement.textContent = `$${(basePrice * quantity).toFixed(2)}`;
+                updateTotal();
+            });
+
+            function updateTotal() {
+                let total = 0;
+                document.querySelectorAll('.item-price').forEach(item => {
+                    total += parseFloat(item.textContent.replace('$', ''));
+                });
+                document.querySelector('.item-total').textContent = `$${total.toFixed(2)}`;
+            }
+        });
+    </script>
+</body>
+
+</html>

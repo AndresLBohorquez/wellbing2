@@ -397,3 +397,140 @@ input[type="number"]::-webkit-outer-spin-button {
         display: none;
     }
 }
+
+/* Estilos adicionales específicos para el carrito de compras */
+.cart-container {
+    padding-top: 100px;
+    padding-bottom: 50px;
+    background-color: #F0F5F9;
+    /* Gris claro para fondo */
+    top: var(--nav-height);
+}
+
+.cart-item {
+    border-bottom: 1px solid #B0BEC5;
+    /* Gris medio para separar los elementos */
+    padding: 15px 0;
+}
+
+.cart-item:last-child {
+    border-bottom: none;
+}
+
+.item-name {
+    color: #073950;
+    /* Azul oscuro para el texto del nombre del producto */
+    font-weight: bold;
+}
+
+.item-price {
+    color: #3ED6B5;
+    /* Verde para el precio */
+    font-weight: bold;
+}
+
+.cart-summary {
+    background-color: #FFFFFF;
+    /* Blanco para el fondo del resumen */
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.cart-summary h5 {
+    color: #073950;
+    /* Azul oscuro para el título del resumen */
+    font-weight: bold;
+}
+
+.checkout-btn {
+    background-color: #3ED6B5;
+    /* Azul principal para el botón de finalizar compra */
+    border: none;
+    color: #FFFFFF;
+    /* Blanco para el texto del botón */
+    width: 100%;
+    padding: 15px;
+    border-radius: 5px;
+}
+
+.checkout-btn:hover {
+    background-color: #30B8E2;
+    /* Verde para el hover del botón */
+}
+
+/* Contenedor para el input de cantidad y botones */
+.quantity-container {
+    width: 120px;
+    border: 1px solid #B0BEC5;
+    /* Gris medio */
+    border-radius: 20px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    background-color: #F0F5F9;
+    /* Gris claro */
+}
+
+/* Estilo para los botones de cantidad */
+.quantity-btn {
+    background-color: #30B8E2;
+    border: none;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.quantity-input {
+    width: 50px !important;
+    text-align: center;
+    border-radius: 5px;
+    border: 1px solid #B0BEC5;
+}
+
+.quantity-btn:first-child {
+    border-radius: 20px 0 0 20px;
+    /* Borde redondeado izquierdo */
+}
+
+.quantity-btn:last-child {
+    border-radius: 0 20px 20px 0;
+    /* Borde redondeado derecho */
+}
+
+.btn-delete-product {
+    background-color: #ff4d4d;
+    border: none;
+    color: #fff;
+    padding: 8px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+    .cart-item .row {
+        flex-direction: row;
+        text-align: center;
+    }
+
+    .cart-item .col-3 {
+        text-align: center;
+    }
+
+    .quantity-container {
+        flex: 0 0 auto;
+        margin-left: 3.33333333%;
+    }
+
+    .quantity-input {
+        max-width: 50px;
+    }
+
+    .btn-delete-product {
+        width: 100%;
+    }
+}
