@@ -10,37 +10,35 @@
             <div class="col-md-6 col-lg-4">
                 <div class="card p-4 shadow-sm">
                     <h2 class="text-center section-title">Registrarse</h2>
-                    <form id="registerForm">
+                    <!-- Formulario de registro -->
+                    <form th:action="@{/signup}" th:object="${usuario}" method="post">
                         <div class="mb-3">
                             <label for="nombres" class="form-label">Nombres</label>
-                            <input type="text" class="form-control" id="nombres" placeholder="Nombres" required>
+                            <input type="text" th:field="*{nombre}" class="form-control" id="nombres" placeholder="Nombres" required>
                         </div>
                         <div class="mb-3">
                             <label for="apellidos" class="form-label">Apellidos</label>
-                            <input type="text" class="form-control" id="apellidos" placeholder="Apellidos" required>
+                            <input type="text" th:field="*{apellido}" class="form-control" id="apellidos" placeholder="Apellidos" required>
                         </div>
                         <div class="mb-3">
                             <label for="correo" class="form-label">Correo Electrónico</label>
-                            <input type="email" class="form-control" id="correo" placeholder="nombre@ejemplo.com"
-                                required>
+                            <input type="email" th:field="*{email}" class="form-control" id="correo" placeholder="nombre@ejemplo.com" required>
                         </div>
                         <div class="mb-3">
                             <label for="celular" class="form-label">Celular</label>
-                            <input type="text" class="form-control" id="celular" placeholder="Número de Celular"
-                                required>
+                            <input type="text" th:field="*{celular}" class="form-control" id="celular" placeholder="Número de Celular" required>
                         </div>
                         <div class="mb-3">
                             <label for="direccion" class="form-label">Dirección</label>
-                            <input type="text" class="form-control" id="direccion" placeholder="Dirección" required>
+                            <input type="text" th:field="*{direccion}" class="form-control" id="direccion" placeholder="Dirección" required>
                         </div>
                         <div class="mb-3">
                             <label for="username" class="form-label">Nombre de Usuario</label>
-                            <input type="text" class="form-control" id="username" placeholder="Nombre de Usuario"
-                                required>
+                            <input type="text" th:field="*{username}" class="form-control" id="username" placeholder="Nombre de Usuario" required>
                         </div>
                         <div class="mb-3">
                             <label for="password" class="form-label">Contraseña</label>
-                            <input type="password" class="form-control" id="password" placeholder="Contraseña" required>
+                            <input type="password" th:field="*{password}" class="form-control" id="password" placeholder="Contraseña" required>
                         </div>
                         <div class="mb-3 form-check">
                             <input type="checkbox" class="form-check-input" id="terminos" required>

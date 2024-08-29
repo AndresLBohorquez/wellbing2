@@ -13,10 +13,12 @@
                     <div class="text-center mb-4">
                         <img src="/images/img.png" class="img-fluid" alt="Recuperar Contraseña">
                     </div>
-                    <form id="recuperarContraseñaForm">
+                    <form th:action="@{/recuperar-pass}" th:object="${email}" method="POST"
+                        id="recuperarContraseñaForm">
                         <div class="mb-3">
                             <label for="correo" class="form-label">Correo Electrónico</label>
-                            <input type="email" class="form-control" id="correo" placeholder="nombre@ejemplo.com" required>
+                            <input type="email" class="form-control" id="correo" th:field="*{destinatario}"
+                                placeholder="nombre@ejemplo.com" required>
                         </div>
                         <div class="d-grid">
                             <button type="submit" class="btn btn-primary">Enviar</button>
@@ -28,9 +30,27 @@
     </div>
 
     <footer th:replace="~{layout/plantilla :: footer}"></footer>
-    <div th:replace="~{layout/plantilla :: alertas}"></div>
 
-    <script src="/js/recuperar_contraseña.js"></script>
+    <div th:if="${enviarKO}">
+        <script>
+            Swal.fire({
+                title: "Error!",
+                text: 'No se encontró ningún usuario con ese correo electrónico.',
+                icon: "error"
+            });
+        </script>
+    </div>
+
+    <div th:if="${enviarOK}">
+        <script>
+            Swal.fire({
+                title: "Enviado!",
+                text: 'Se ha enviado la nueva contraseña a tu correo electrónico.',
+                icon: "success"
+            });
+        </script>
+    </div>
+
 </body>
 
 </html>

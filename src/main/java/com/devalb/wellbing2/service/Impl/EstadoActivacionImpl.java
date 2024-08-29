@@ -41,4 +41,9 @@ public class EstadoActivacionImpl implements EstadoActivacionService {
         estadoActivacionRepository.deleteById(id);
     }
 
+    @Override
+    public EstadoActivacion getEstadoActivacionByNombre(String nombre) {
+        return estadoActivacionRepository.findByNombre(nombre);
+    }
+
 }

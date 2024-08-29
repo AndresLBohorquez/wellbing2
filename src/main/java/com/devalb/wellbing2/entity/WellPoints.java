@@ -1,5 +1,7 @@
 package com.devalb.wellbing2.entity;
 
+import java.time.LocalDate;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -31,4 +33,6 @@ public class WellPoints {
     private Double cantidad;
 
     private Double total;
+
+    private LocalDate fecha;
 }

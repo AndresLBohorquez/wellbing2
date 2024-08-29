@@ -10,6 +10,12 @@ body {
     display: none;
 }
 
+.col-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .btn-primary {
     background-color: #4CAF50;
     border-color: #4CAF50;
@@ -22,8 +28,12 @@ body {
 
 .navbar {
     background-color: #4792DD;
-    position: relative;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
     z-index: 1000;
+    /* Asegúrate de que el navbar esté sobre el sidebar */
 }
 
 .navbar-nav .nav-link {
@@ -75,11 +85,6 @@ body {
     height: 60px;
 }
 
-@media (max-width: 991.98px) {
-    .logo {
-        display: none;
-    }
-}
 
 .footer {
     background-color: #4792DD;
@@ -209,18 +214,6 @@ input[type="number"]::-webkit-outer-spin-button {
     text-align: center;
 }
 
-@media (max-width: 767.98px) {
-    .range-container {
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    .number-container {
-        flex-direction: column;
-        gap: 10px;
-    }
-}
-
 .carousel {
     width: 70%;
     margin: 0 auto;
@@ -253,12 +246,12 @@ input[type="number"]::-webkit-outer-spin-button {
 /* Sidebar */
 #sidebar {
     width: 250px;
-    height: calc(100vh - 56px);
     background-color: #3268a7;
     position: fixed;
-    top: 56px;
+    top: var(--nav-height);
     left: 0;
     z-index: 900;
+    overflow-y: auto;
 }
 
 .bg-sidebar {
@@ -354,12 +347,10 @@ input[type="number"]::-webkit-outer-spin-button {
 
 /* Toggle para vista móvil */
 #sidebarToggle {
-    position: relative;
-    z-index: 1000;
-    display: none;
-}
-
-#sidebarToggle {
+    position: fixed;
+    top: var(--nav-height);
+    left: 0;
+    z-index: 900;
     transition: transform 0.3s ease-in-out;
 }
 
@@ -367,36 +358,6 @@ input[type="number"]::-webkit-outer-spin-button {
     transform: translateX(250px) rotate(180deg);
 }
 
-@media (max-width: 768px) {
-    #sidebarToggle {
-        display: inline-block;
-    }
-
-    #sidebar {
-        display: none;
-        position: fixed;
-        top: var(--nav-height);
-        left: 0;
-        z-index: 1000;
-        height: calc(100vh - 56px);
-        background-color: #3268a7;
-    }
-
-    #sidebar.active {
-        display: block;
-    }
-
-    #content {
-        margin-left: 0;
-        width: 100%;
-    }
-}
-
-@media (min-width: 769px) {
-    #sidebarToggle {
-        display: none;
-    }
-}
 
 /* Estilos adicionales específicos para el carrito de compras */
 .cart-container {
@@ -509,9 +470,47 @@ input[type="number"]::-webkit-outer-spin-button {
     justify-content: center;
 }
 
+/* Estilos Responsivos */
 
-/* Estilos responsivos */
+@media (max-width: 991.98px) {
+    .logo {
+        display: none;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .range-container {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .number-container {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
 @media (max-width: 768px) {
+    #sidebarToggle {
+        display: inline-block;
+    }
+
+    #sidebar {
+        display: none;
+        height: calc(40vh - var(--nav-height));
+        top: var(--nav-height);
+
+    }
+
+    #sidebar.active {
+        display: inline-block;
+    }
+
+    #content {
+        margin-left: 0;
+        width: 100%;
+    }
+
     .cart-item .row {
         flex-direction: row;
         text-align: center;
@@ -533,4 +532,18 @@ input[type="number"]::-webkit-outer-spin-button {
     .btn-delete-product {
         width: 100%;
     }
+}
+
+@media (min-width: 769px) {
+    #sidebarToggle {
+        display: none;
+    }
+}
+
+.titulo-pagina {
+    margin-top: var(--nav-height);
+}
+
+.socialm {
+    font-size: 20px;
 }

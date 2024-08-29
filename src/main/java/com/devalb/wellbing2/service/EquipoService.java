@@ -20,4 +20,6 @@ public interface EquipoService {
 
     public List<Equipo> getEquiposVisibles();
 
+    public List<Equipo> getEquiposVisiblesByUsuario(Long id);
+
 }

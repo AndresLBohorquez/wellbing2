@@ -54,4 +54,9 @@ public class EquipoServiceImpl implements EquipoService {
         return equipoRepository.findAllVisible();
     }
 
+    @Override
+    public List<Equipo> getEquiposVisiblesByUsuario(Long id) {
+        return equipoRepository.findAllVisibleByUsuario(id);
+    }
+
 }

@@ -17,4 +17,7 @@ public interface EquipoRepository extends JpaRepository<Equipo, Long> {
     @Query(value = "SELECT * FROM equipo WHERE visible = true", nativeQuery = true)
     public List<Equipo> findAllVisible();
 
+    @Query(value = "SELECT * FROM equipo WHERE visible = true and usuario_id = ?1", nativeQuery = true)
+    public List<Equipo> findAllVisibleByUsuario(Long id);
+
 }

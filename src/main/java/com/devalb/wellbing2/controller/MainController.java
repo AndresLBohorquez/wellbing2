@@ -5,14 +5,14 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.devalb.wellbing2.service.CategoriaService;
 import com.devalb.wellbing2.service.ProductoService;
-import com.devalb.wellbing2.service.UsuarioService;
+import com.devalb.wellbing2.service.VistaService;
 
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Controller
 public class MainController {
 
@@ -23,38 +23,13 @@ public class MainController {
     private CategoriaService categoriaService;
 
     @Autowired
-    private UsuarioService usuarioService;
+    private VistaService vService;
 
     @GetMapping("/")
     public String goToIndex(Model model, Authentication auth) {
         model.addAttribute("listaProductosTop", productoService.getProductos());
-        if (auth != null) {
-            model.addAttribute("usuLog", usuarioService.getUsuarioByUsername(auth.getName()));
-        }
+        vService.cargarVistas(model, auth);
         return "index";
-    }
-
-    @GetMapping("/login")
-    public String goToLogin(@RequestParam(value = "error", required = false) String error,
-            @RequestParam(value = "logout", required = false) String logout, Model model) {
-        if (error != null) {
-            model.addAttribute("messageKO", "Nombre de usuario o contraseña incorrectos, o el usuario no está activo.");
-        }
-        if (logout != null) {
-            model.addAttribute("messageOK", "Te has desconectado correctamente.");
-        }
-        return "login";
-    }
-
-    @GetMapping("/login?error=true")
-    public String goToLoginError(RedirectAttributes redirectAttributes) {
-        redirectAttributes.addFlashAttribute("messageKO", "Producto eliminado correctamente");
-        return "login";
-    }
-
-    @GetMapping("/signup")
-    public String goToRegister() {
-        return "register";
     }
 
     @GetMapping("/productos")
@@ -69,11 +44,6 @@ public class MainController {
     @GetMapping("/nosotros")
     public String goToNosotros() {
         return "nosotros";
-    }
-
-    @GetMapping("/recuperar-pass")
-    public String goToRecuperarPass() {
-        return "recuperar-pass";
     }
 
     @GetMapping("/producto_detalle")
@@ -96,15 +66,9 @@ public class MainController {
         return "terminos_condiciones";
     }
 
-    @GetMapping("/usuario")
-    public String getMethodName(Model model, Authentication auth) {
-        model.addAttribute("usuLog", usuarioService.getUsuarioByUsername((auth.getName())));
-        return "usuario/perfil";
-    }
-
-    @GetMapping("/usuario/prueba")
-    public String goToPrueba() {
-        return "usuario/prueba";
+    @GetMapping("/admin")
+    public String goToAdmin() {
+        return "admin/index";
     }
 
     @GetMapping("/carrito")

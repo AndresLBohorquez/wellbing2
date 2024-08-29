@@ -1,8 +1,12 @@
 package com.devalb.wellbing2.service;
 
+import com.devalb.wellbing2.entity.Email;
+
 import jakarta.mail.MessagingException;
 
-public interface SendEmailService {
+public interface EmailService {
+
+    public void enviarEmail(Email email);
 
     public void sendEmail(String to, String subject, String content);
 

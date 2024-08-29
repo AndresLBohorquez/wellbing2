@@ -31,7 +31,6 @@
     <link rel="stylesheet" href="/css/fonts.css">
 
     <!-- JS -->
-    <script src="/js/usuario.js"></script>
     <script src="/js/logout.js"></script>
     <script src="/js/main.js"></script>
     <!-- Favicon -->
@@ -78,8 +77,21 @@
                     aria-expanded="false">
                     <img class="nav-link-img" src="/images/perfil.jpg" alt="Usuario">
                 </button>
+
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                    <li><a class="dropdown-item" href="#">Perfil</a></li>
+                    <div th:if="${nombre != null}" class="border-bottom">
+                        <p class="col-center" th:text="${nombre} + ' ' + ${apellido}">Nombre Apellido</p>
+                    </div>
+                    <div class="border-bottom" th:if="${listaRolesUsuario?.size() > 1 && usuLog != null}">
+                        <div th:each="rol : ${listaRolesUsuario}">
+                            <li th:unless="${rol.nombre == 'Usuario'}">
+                                <a class="dropdown-item"
+                                    th:href="'/' + ${#strings.toLowerCase(rol.nombre)}">[[${rol.nombre}]]</a>
+                            </li>
+                        </div>
+                    </div>
+
+                    <li><a class="dropdown-item" href="/usuario">Perfil</a></li>
                     <li><a class="dropdown-item" href="#">Mis Pedidos</a></li>
                     <li><a class="dropdown-item" href="#" onclick="logout()">Cerrar Sesión</a></li>
                 </ul>
@@ -141,4 +153,43 @@
             });
         </script>
     </div>
+</div>
+
+
+<!-- Sidebar Usuario -->
+
+<div th:fragment="sidebar-usuario(perfil, activacion, equipo, ordenes, pqrs, wellpoints)" id="sidebar"
+    class="bg-sidebar p-3">
+    <ul class="nav nav-pills flex-column mb-auto">
+        <li class="nav-item mt-3">
+            <a href="#" th:class="|nav-link ${perfil}|">
+                <i class="fa-solid fa-user"></i> Perfil
+            </a>
+        </li>
+        <li class="nav-item mt-3">
+            <a href="#" th:class="|nav-link ${activacion}|">
+                <i class="fas fa-bolt"></i> Activación
+            </a>
+        </li>
+        <li class="nav-item mt-3">
+            <a href="#" th:class="|nav-link ${equipo}|">
+                <i class="fas fa-users"></i> Equipo
+            </a>
+        </li>
+        <li class="nav-item mt-3">
+            <a href="#" th:class="|nav-link ${ordenes}|">
+                <i class="fas fa-box"></i> Órdenes
+            </a>
+        </li>
+        <li class="nav-item mt-3">
+            <a href="#" th:class="|nav-link ${pqrs}|">
+                <i class="fas fa-comments"></i> PQRS
+            </a>
+        </li>
+        <li class="nav-item mt-3">
+            <a href="#" th:class="|nav-link ${wellpoints}|">
+                <i class="fas fa-coins"></i> WellPoints
+            </a>
+        </li>
+    </ul>
 </div>

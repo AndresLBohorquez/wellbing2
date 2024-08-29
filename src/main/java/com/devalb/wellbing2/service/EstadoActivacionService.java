@@ -15,4 +15,6 @@ public interface EstadoActivacionService {
     public EstadoActivacion editEstadoActivacion(EstadoActivacion estadoActivacion);
 
     public void deleteEstadoActivacion(Long id);
+
+    public EstadoActivacion getEstadoActivacionByNombre(String nombre);
 }
