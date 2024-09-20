@@ -14,6 +14,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Transient;
 import lombok.Data;
 
 @Data
@@ -65,4 +66,8 @@ public class Usuario {
     private EstadoUsuario estadoUsuario;
 
     private Double wellPoints;
+
+    @Transient
+    private Activacion ultimaActivacion;
+
 }

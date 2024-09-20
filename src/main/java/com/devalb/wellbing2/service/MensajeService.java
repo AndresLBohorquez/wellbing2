@@ -15,4 +15,6 @@ public interface MensajeService {
     public Mensaje editMensaje(Mensaje mensaje);
 
     public void deleteMensaje(Long id);
+
+    public List<Mensaje> getByIdPqrs(Long id);
 }

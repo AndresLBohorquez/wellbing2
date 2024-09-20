@@ -16,5 +16,5 @@ public interface WellPointsService {
 
     public void deleteWellPoints(Long id);
 
-    public WellPoints getWellPointsByUsuario(Long id);
+    public List<WellPoints> getWellPointsByUsuario(Long id);
 }

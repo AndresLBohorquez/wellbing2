@@ -33,7 +33,8 @@ public class MainController {
     }
 
     @GetMapping("/productos")
-    public String goToProductos(Model model) {
+    public String goToProductos(Model model, Authentication auth) {
+        vService.cargarVistas(model, auth);
         model.addAttribute("maxPrecio", productoService.getMaxPrecioProducto());
         model.addAttribute("listaCategorias", categoriaService.getCategorias());
         model.addAttribute("listaProductos", productoService.getProductos());
@@ -42,27 +43,32 @@ public class MainController {
     }
 
     @GetMapping("/nosotros")
-    public String goToNosotros() {
+    public String goToNosotros(Model model, Authentication auth) {
+        vService.cargarVistas(model, auth);
         return "nosotros";
     }
 
     @GetMapping("/producto_detalle")
-    public String goToProductoDetalle() {
+    public String goToProductoDetalle(Model model, Authentication auth) {
+        vService.cargarVistas(model, auth);
         return "producto_detalle";
     }
 
     @GetMapping("/politicas_privacidad")
-    public String goToPoliticasPrivacidad() {
+    public String goToPoliticasPrivacidad(Model model, Authentication auth) {
+        vService.cargarVistas(model, auth);
         return "politicas_privacidad";
     }
 
     @GetMapping("/aviso_legal")
-    public String goToAvisoLegal() {
+    public String goToAvisoLegal(Model model, Authentication auth) {
+        vService.cargarVistas(model, auth);
         return "aviso_legal";
     }
 
     @GetMapping("/terminos_condiciones")
-    public String goToTerminosCondiciones() {
+    public String goToTerminosCondiciones(Model model, Authentication auth) {
+        vService.cargarVistas(model, auth);
         return "terminos_condiciones";
     }
 
@@ -71,9 +77,6 @@ public class MainController {
         return "admin/index";
     }
 
-    @GetMapping("/carrito")
-    public String goToCarrito() {
-        return "carrito";
-    }
+    
 
 }

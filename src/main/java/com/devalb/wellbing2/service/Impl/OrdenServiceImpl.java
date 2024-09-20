@@ -59,4 +59,9 @@ public class OrdenServiceImpl implements OrdenService {
         return ordenRepository.findAllVisible();
     }
 
+    @Override
+    public List<Orden> getOrdenesVisiblesByUsuario(Long id) {
+        return ordenRepository.findAllVisibleByUsuario(id);
+    }
+
 }

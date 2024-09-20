@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="es">
+
+<head th:replace="~{layout/plantilla :: head('Órdenes')}"></head>
+
+<body>
+    <!-- Navbar -->
+
+    <nav th:replace="~{layout/plantilla :: navbar('', '', '', '', '')}"></nav>
+
+    <!-- Contenedor principal -->
+    <div class="container-fluid d-flex flex-column flex-md-row">
+        <!-- Sidebar -->
+        <nav th:replace="~{layout/plantilla :: sidebar-usuario('', '', '', 'active', '','')}"></nav>
+
+        <!-- Contenido principal -->
+        <div id="content" class="flex-grow-1 p-3">
+            <!-- Botón para mostrar el sidebar en móvil -->
+            <button id="sidebarToggle" class="d-md-none btn btn-primary">
+                <i class="bi bi-arrow-bar-right"></i>
+            </button>
+            <h1 class="mb-4 titulo-pagina">WellPoints</h1>
+
+            <!-- Card Principal con Información del Usuario -->
+            <div class="card card-perfil mb-4">
+                <a href="/productos" type="button" class="btn btn-primary derecha">
+                    <i class="bi bi-plus-circle"></i>
+                </a>
+                <div class="card-body">
+                    <div class="row">
+                        <table id="example" class="table bg-white rounded shadow-sm  table-hover tabla">
+                            <thead>
+                                <tr>
+                                    <th class="align-left">Fecha Creación</th>
+                                    <th class="align-center">Fecha Actualización</th>
+                                    <th class="align-center">Estado</th>
+                                    <th class="align-center">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="orden : ${listaOrdenes}">
+                                    <td class="no-bold align-left"
+                                        th:text="${#temporals.format(orden.fechaCreacion, 'MMMM dd, yyyy')}">fecha</td>
+                                    <td class="no-bold align-left"
+                                        th:text="${#temporals.format(orden.fechaActualizacion, 'MMMM dd, yyyy')}">fecha
+                                    </td>
+                                    <td class="no-bold align-center">
+                                        <span class="badge rounded-pill"
+                                            th:classappend="${orden.estadoOrden.nombre == 'Completada'} ? 'bg-success' : 'bg-warning'"
+                                            th:text="${orden.estadoOrden.nombre}">
+                                        </span>
+                                    </td>
+                                    <td class="no-bold align-center"
+                                        th:text="${#numbers.formatDecimal(orden.total, 2 , 'COMMA', 2, 'POINT')}">0.00
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer th:replace="~{layout/plantilla :: footer}"></footer>
+    <div th:replace="~{layout/plantilla :: alertas}"></div>
+    <script src="/js/datatable.js"></script>
+</body>
+
+
+
+</html>

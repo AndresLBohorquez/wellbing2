@@ -21,4 +21,6 @@ public interface OrdenService {
     public List<Orden> getOrdenesByUsuario(Long id);
 
     public List<Orden> getOrdenesVisibles();
+
+    public List<Orden> getOrdenesVisiblesByUsuario(Long id);
 }

@@ -49,7 +49,7 @@ public class SecurityConfig {
                                                 .requestMatchers("/admin/**").hasAuthority("Admin")
                                                 .requestMatchers("/secretario/**").hasAuthority("Secretario")
                                                 .requestMatchers("/tesorero/**").hasAuthority("Tesorero")
-                                                .requestMatchers("/usuario/**", "/carrito").hasAuthority("Usuario")
+                                                .requestMatchers("/usuario/**", "/carrito/**", "/checkout/**").hasAuthority("Usuario")
                                                 .anyRequest().denyAll()
 
                                 // .requestMatchers("/**").hasRole("USER")

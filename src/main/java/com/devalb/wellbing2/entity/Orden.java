@@ -35,4 +35,12 @@ public class Orden {
     private LocalDateTime fechaActualizacion;
 
     private boolean visible;
+
+    private String nombre;
+
+    private String direccion;
+
+    private String ciudad;
+
+    private String barrio;
 }

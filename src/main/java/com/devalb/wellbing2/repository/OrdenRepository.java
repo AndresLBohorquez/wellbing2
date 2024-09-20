@@ -19,4 +19,7 @@ public interface OrdenRepository extends JpaRepository<Orden, Long> {
 
     @Query(value = "SELECT * FROM orden WHERE visible = true", nativeQuery = true)
     public List<Orden> findAllVisible();
+
+    @Query(value = "SELECT * FROM orden WHERE visible = true and usuario_id = ?1", nativeQuery = true)
+    public List<Orden> findAllVisibleByUsuario(Long id);
 }

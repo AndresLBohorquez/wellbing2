@@ -20,4 +20,9 @@ public interface EquipoRepository extends JpaRepository<Equipo, Long> {
     @Query(value = "SELECT * FROM equipo WHERE visible = true and usuario_id = ?1", nativeQuery = true)
     public List<Equipo> findAllVisibleByUsuario(Long id);
 
+    public boolean existsByUsuarioIdAndIdHijoId(Long usuarioId, Long idHijoId);
+
+    @Query(value = "SELECT * FROM equipo WHERE id_hijo = ?1", nativeQuery = true)
+    public Equipo findByIdHijo(Long idHijo);
+
 }

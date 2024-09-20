@@ -95,5 +95,5 @@ public class UsuarioController {
         List<Rol> rolUsuario = new ArrayList<>();
         rolUsuario.add(rolService.getRolByNombre("Usuario"));
         usuario.setRoles(rolUsuario);
-    }
+    }    
 }

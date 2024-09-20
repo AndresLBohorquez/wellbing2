@@ -59,4 +59,11 @@ public class EquipoServiceImpl implements EquipoService {
         return equipoRepository.findAllVisibleByUsuario(id);
     }
 
+    public boolean existeRelacion(Long idUsuario1, Long idUsuario2) {
+        return equipoRepository.existsByUsuarioIdAndIdHijoId(idUsuario1, idUsuario2);
+    }
+
+    public Equipo getEquipoPorIdHijo(Long idHijo) {
+        return equipoRepository.findByIdHijo(idHijo);
+    }
 }

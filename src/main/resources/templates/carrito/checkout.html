@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="es">
+
+<head th:replace="~{layout/plantilla :: head('Resumen de Compra')}"></head>
+
+<body>
+    <!-- Navbar -->
+    <nav th:replace="~{layout/plantilla :: navbar('', '', '', '', '')}"></nav>
+
+    <div class="container cart-container">
+
+        <h2 class="text-center mb-4 section-title titulo-pagina">Resumen de Compra</h2>
+
+        <form th:action="@{/carrito/createOrden}" method="post">
+            <!-- Sección de información de envío -->
+            <div class="row">
+                <div class="col-md-7 col-12 mb-4">
+                    <h4 class="mb-3">Información de envío</h4>
+                    <input type="hidden" th:value="${total}" name="total" />
+                    <input type="hidden" th:value="${usuario.id}" name="usuarioId" />
+                    <div class="form-group">
+                        <label for="name">Nombre</label>
+                        <input type="text" class="form-control" id="name" name="nombre"
+                            th:value="${usuario.nombre} + ' ' + ${usuario.apellido}" placeholder="Nombre">
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Dirección</label>
+                        <input type="text" class="form-control" id="address" name="direccion"
+                            th:value="${usuario.direccion}" placeholder="Dirección">
+                    </div>
+                    <div class="form-group">
+                        <label for="zip">Celular</label>
+                        <input type="text" class="form-control" id="celular" name="celular" th:value="${usuario.celular}"
+                            placeholder="Celular">
+                    </div>
+                    <div class="form-group">
+                        <label for="city">Ciudad</label>
+                        <input type="text" class="form-control" id="ciudad" name="ciudad"  placeholder="Ciudad">
+                    </div>
+                    <div class="form-group">
+                        <label for="state">Barrio</label>
+                        <input type="text" class="form-control" id="barrio" name="barrio" placeholder="Barrio">
+                    </div>
+                </div>
+
+                <!-- Sección de resumen de pedido -->
+                <div class="col-md-5 col-12 mb-4">
+                    <h4 class="mb-3">Resumen</h4>
+                    <ul class="list-group">
+                        <!-- Iterar sobre la lista de carritos -->
+                        <li th:each="carrito : ${carritos}" class="list-group-item">
+                            [[${carrito.producto.nombre}]]: $ [[${carrito.producto.precio}]] <span
+                                class="text-danger"><small>x[[${carrito.cantidad}]]</small></span> = $
+                            [[${carrito.producto.precio} * ${carrito.cantidad}]]
+                        </li>
+
+                        <li class="list-group-item text-center text-success">Total: $ [[${total}]]</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Botón de pago -->
+            <button class="btn btn-primary btn-block">Realizar Compra</button>
+        </form>
+    </div>
+
+    <!-- Footer -->
+    <footer th:replace="~{layout/plantilla :: footer}"></footer>
+    <div th:replace="~{layout/plantilla :: alertas}"></div>
+
+    <script src="/js/carrito.js"></script>
+    <script src="/js/checkout.js"></script>
+</body>
+
+</html>

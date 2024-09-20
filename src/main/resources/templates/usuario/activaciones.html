@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="es">
+
+<head th:replace="~{layout/plantilla :: head('Activaciones')}"></head>
+
+<body>
+    <!-- Navbar -->
+
+    <nav th:replace="~{layout/plantilla :: navbar('', '', '', '', '')}"></nav>
+
+
+
+    <!-- Contenedor principal -->
+    <div class="container-fluid d-flex flex-column flex-md-row">
+        <!-- Sidebar -->
+        <nav th:replace="~{layout/plantilla :: sidebar-usuario('', 'active', '', '', '','')}"></nav>
+
+        <!-- Contenido principal -->
+        <div id="content" class="flex-grow-1 p-3">
+            <!-- Botón para mostrar el sidebar en móvil -->
+            <button id="sidebarToggle" class="d-md-none btn btn-primary">
+                <i class="bi bi-arrow-bar-right"></i>
+            </button>
+            <h1 class="mb-4 titulo-pagina">Activaciones</h1>
+
+            <!-- Card Principal con Información del Usuario -->
+            <div class="card card-perfil mb-4">
+                <div class="card-body">
+                    <div class="row">
+                        <table id="example" class="table bg-white rounded shadow-sm  table-hover tabla">
+                            <thead>
+                                <tr>
+                                    <th class="align-left">Fecha de activación</th>
+                                    <th class="align-center">Fin del periodo</th>
+                                    <th class="align-center">Valor registrado</th>
+                                    <th class="align-center">Estado</th>
+                                    <th class="align-center">Imagen</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="activacion : ${listaActivacionesUsuario}">
+                                    <th class="no-bold align-left"
+                                        th:text="${#temporals.format(activacion.fecha, 'MMMM dd, yyyy')}">fecha</th>
+                                    <td class="align-center"
+                                        th:text="${#temporals.format(activacion.fechaFin, 'MMMM dd, yyyy')}">Fin</td>
+                                    <td class="align-center" th:text="'$ ' + ${activacion.valor}">$ 35000</td>
+
+                                    <td th:if="${activacion.estadoActivacion.nombre == 'Pre Activado'}"
+                                        class="align-center"><span th:text="${activacion.estadoActivacion.nombre}"
+                                            class="badge rounded-pill bg-primary">Pre Activado</span>
+                                    </td>
+                                    <td th:if="${activacion.estadoActivacion.nombre == 'Activado'}"
+                                        class="align-center"><span th:text="${activacion.estadoActivacion.nombre}"
+                                            class="badge rounded-pill bg-success">Activado</span>
+                                    </td>
+                                    <td th:if="${activacion.estadoActivacion.nombre == 'Inactivo'}"
+                                        class="align-center"><span th:text="${activacion.estadoActivacion.nombre}"
+                                            class="badge rounded-pill bg-dark">Inactivo</span>
+                                    </td>
+                                    <td th:if="${activacion.estadoActivacion.nombre == 'Rechazada'}"
+                                        class="align-center"><span th:text="${activacion.estadoActivacion.nombre}"
+                                            class="badge rounded-pill bg-danger">Rechazada</span>
+                                    </td>
+                                    <td th:if="${activacion.estadoActivacion.nombre == 'Validado'}"
+                                        class="align-center"><span th:text="${activacion.estadoActivacion.nombre}"
+                                            class="badge rounded-pill bg-info">Validado</span>
+                                    </td>
+
+                                    <td class="align-center">
+                                        <a th:href="@{/images/activaciones/} + ${activacion.comprobante}"
+                                            target="_blank">Imagen</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer th:replace="~{layout/plantilla :: footer}"></footer>
+    <div th:replace="~{layout/plantilla :: alertas}"></div>
+    <script src="/js/datatable.js"></script>
+</body>
+
+
+
+</html>

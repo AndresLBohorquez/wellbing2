@@ -5,7 +5,7 @@
 
 <body>
     <nav th:replace="~{layout/plantilla :: navbar('', active, '', '', '')}"></nav>
-    <div class="container mt-5 mb-5">
+    <div class="container-fluid mt-5 mb-5">
         <h2 class="text-center section-title titulo-pagina">Productos</h2>
 
         <!-- Filtros -->
@@ -21,7 +21,7 @@
                 </select>
             </div>
             <div class="col-md-4">
-                <div class="row range-container">
+                <div class="row range-container ">
                     <h3 class="col-md-1 mt-1"><i class="bi bi-currency-dollar"></i></h3>
                     <div class="col-md-5">
                         <input type="range" id="filterMinPrice" min="0" th:max="${maxPrecio}" value="0"
@@ -40,22 +40,31 @@
         </div>
 
         <!-- Listado de productos -->
-        <div class="row" id="productList">
-            <div th:each="producto : ${listaProductos}" class="col-md-4 mb-4 product" th:data-name="${producto.nombre}"
-                th:data-category="${producto.categoria.nombre}" th:data-price="${producto.precio}">
+        <div class="row mx-auto" id="productList">
+            <div th:each="producto : ${listaProductos}" class="col-md-4 mb-4 product" th:data-id="${producto.id}"
+                th:data-name="${producto.nombre}" th:data-category="${producto.categoria.nombre}"
+                th:data-price="${producto.precio}">
+
                 <div class="card card-producto">
-                    <a href="/producto_detalle">
+                    <a th:href="@{/producto_detalle}">
                         <img th:src="@{/images/productos/} + ${producto.imagen}" class="card-img-top" alt="ProductoImg">
                     </a>
                     <div class="card-body">
-                        <h5 th:text="${producto.nombre}" class="card-title">Televisor</h5>
+                        <h5 th:text="${producto.nombre}" class="card-title"></h5>
                         <p class="card-text card-descripcion"
                             th:text="${producto.descripcion.length() > 85 ? producto.descripcion.substring(0, 85) + '...' : producto.descripcion}">
-                            Descripción del Producto 1</p>
+                        </p>
                         <p class="card-text"><strong
-                                th:text="'$ ' + ${#numbers.formatDecimal(producto.precio, 0 , 'COMMA', 0, 'POINT')}">Precio:
-                                $1200000</strong></p>
-                        <p  class="card-text"><em th:text="${producto.categoria.nombre}">Categoría: Electrónica</em></p>
+                                th:text="'$ ' + ${#numbers.formatDecimal(producto.precio, 0 , 'COMMA', 0, 'POINT')}"></strong>
+                        </p>
+                        <p class="card-text"><em th:text="${producto.categoria.nombre}"></em></p>
+
+                        <!-- Formulario para agregar al carrito -->
+                        <form th:action="@{/carrito/agregar}" method="post">
+                            <input type="hidden" name="productoId" th:value="${producto.id}" />
+                            <input type="hidden" name="cantidad" value="1" min="1" class="form-control mb-2" />
+                            <button type="submit" class="btn btn-primary">Agregar al carrito</button>
+                        </form>
                     </div>
                 </div>
             </div>

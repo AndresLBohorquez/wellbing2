@@ -22,4 +22,8 @@ public interface EquipoService {
 
     public List<Equipo> getEquiposVisiblesByUsuario(Long id);
 
+    public boolean existeRelacion(Long idUsuario1, Long idUsuario2);
+
+    public Equipo getEquipoPorIdHijo(Long idHijo);
+
 }

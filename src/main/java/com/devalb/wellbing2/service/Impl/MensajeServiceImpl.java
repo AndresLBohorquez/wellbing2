@@ -40,4 +40,9 @@ public class MensajeServiceImpl implements MensajeService {
         mensajeRepository.deleteById(id);
     }
 
+    @Override
+    public List<Mensaje> getByIdPqrs(Long id) {
+        return mensajeRepository.findByIdPqrs(id);
+    }
+
 }

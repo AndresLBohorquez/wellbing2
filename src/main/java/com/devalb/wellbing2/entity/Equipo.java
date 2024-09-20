@@ -8,6 +8,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Transient;
 import lombok.Data;
 
 @Data
@@ -32,4 +33,7 @@ public class Equipo {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(nullable = false)
     private EstadoEquipo estadoEquipo;
+
+    @Transient
+    private int cantidadNietos;
 }

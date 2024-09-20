@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="es">
+
+<head th:replace="~{layout/plantilla :: head('Equipo')}"></head>
+
+<body>
+    <!-- Navbar -->
+
+    <nav th:replace="~{layout/plantilla :: navbar('', '', '', '', '')}"></nav>
+
+
+
+    <!-- Contenedor principal -->
+    <div class="container-fluid d-flex flex-column flex-md-row">
+        <!-- Sidebar -->
+        <nav th:replace="~{layout/plantilla :: sidebar-usuario('', '', 'active', '', '','')}"></nav>
+
+        <!-- Contenido principal -->
+        <div id="content" class="flex-grow-1 p-3">
+            <!-- Botón para mostrar el sidebar en móvil -->
+            <button id="sidebarToggle" class="d-md-none btn btn-primary">
+                <i class="bi bi-arrow-bar-right"></i>
+            </button>
+            <h1 class="mb-4 titulo-pagina">Equipo</h1>
+
+
+            <!-- Card Principal con Información del Usuario -->
+            <div class="card card-perfil mb-4">
+                <button th:if="${ultimaActivacion != null and 
+                    (ultimaActivacion.estadoActivacion.nombre == 'Pre Activado' or 
+                     ultimaActivacion.estadoActivacion.nombre == 'Activado' or 
+                     ultimaActivacion.estadoActivacion.nombre == 'Validado')}" type="button"
+                    class="btn btn-primary derecha" data-bs-toggle="modal" data-bs-target="#crearEquipoModal">
+                    <i class="bi bi-plus-circle"></i>
+                </button>
+                <div class="card-body">
+                    <div class="row">
+                        <table id="example" class="table bg-white rounded shadow-sm  table-hover tabla">
+                            <thead>
+                                <tr>
+                                    <th class="align-left">Nombre</th>
+                                    <th class="align-center">Apellido</th>
+                                    <th class="align-center">Celular</th>
+                                    <th class="align-center">Usuario</th>
+                                    <th class="align-center">Activación</th>
+                                    <th class="align-center">Equipo</th>
+                                    <th class="align-center">Hijos</th>
+
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="equipo : ${listaEquipo}">
+                                    <td class="align-left" th:text="${equipo.idHijo.nombre}">
+                                    </td>
+                                    <td class="align-center" th:text="${equipo.idHijo.apellido}">Apellido</td>
+                                    <td class="align-center" th:text="${equipo.idHijo.celular}">Celular</td>
+
+                                    <td class="align-center">
+                                        <span th:if="${equipo.idHijo.estadoUsuario.nombre == 'Activo'}"
+                                            th:text="${equipo.idHijo.estadoUsuario.nombre}"
+                                            class="badge rounded-pill text-bg-success">Activo</span>
+
+                                        <span th:if="${equipo.idHijo.estadoUsuario.nombre == 'Baneado'}"
+                                            th:text="${equipo.idHijo.estadoUsuario.nombre}"
+                                            class="badge rounded-pill text-bg-dark">Baneado</span>
+
+                                        <span th:if="${equipo.idHijo.estadoUsuario.nombre == 'Eliminado'}"
+                                            th:text="${equipo.idHijo.estadoUsuario.nombre}"
+                                            class="badge rounded-pill text-bg-danger">Eliminado</span>
+
+                                    </td>
+
+                                    <td class="align-center">
+                                        <span th:if="${equipo.idHijo.ultimaActivacion != null}">
+                                            <span
+                                                th:if="${equipo.idHijo.ultimaActivacion.estadoActivacion.nombre == 'Pre Activado'}"
+                                                th:text="${equipo.idHijo.ultimaActivacion.estadoActivacion.nombre}"
+                                                class="badge rounded-pill bg-primary">Pre Activado</span>
+                                            <span
+                                                th:if="${equipo.idHijo.ultimaActivacion.estadoActivacion.nombre == 'Activado'}"
+                                                th:text="${equipo.idHijo.ultimaActivacion.estadoActivacion.nombre}"
+                                                class="badge rounded-pill bg-success">Activado</span>
+                                            <span
+                                                th:if="${equipo.idHijo.ultimaActivacion.estadoActivacion.nombre == 'Inactivo'}"
+                                                th:text="${equipo.idHijo.ultimaActivacion.estadoActivacion.nombre}"
+                                                class="badge rounded-pill bg-dark">Inactivo</span>
+                                            <span
+                                                th:if="${equipo.idHijo.ultimaActivacion.estadoActivacion.nombre == 'Rechazada'}"
+                                                th:text="${equipo.idHijo.ultimaActivacion.estadoActivacion.nombre}"
+                                                class="badge rounded-pill bg-danger">Rechazada</span>
+                                            <span
+                                                th:if="${equipo.idHijo.ultimaActivacion.estadoActivacion.nombre == 'Validado'}"
+                                                th:text="${equipo.idHijo.ultimaActivacion.estadoActivacion.nombre}"
+                                                class="badge rounded-pill bg-info">Validado</span>
+
+                                        </span>
+                                        <span class="badge rounded-pill bg-light text-dark border"
+                                            th:if="${equipo.idHijo.ultimaActivacion == null}">
+                                            Sin activaciones
+                                        </span>
+                                    </td>
+
+                                    <td class="align-center" th:if="${equipo.estadoEquipo.nombre == 'Pendiente'}"><span
+                                            class="badge rounded-pill bg-warning">Pendiente</span></td>
+                                    <td class="align-center" th:if="${equipo.estadoEquipo.nombre == 'Aprobado'}"><span
+                                            class="badge rounded-pill bg-success">Aprobado</span></td>
+                                    <td class="align-center" th:if="${equipo.estadoEquipo.nombre == 'Rechazado'}"><span
+                                            class="badge rounded-pill bg-danger">Rechazado</span></td>
+                                    <td class="align-left" th:text="${equipo.cantidadNietos}">
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Modal para Crear Equipo -->
+    <div class="modal fade" id="crearEquipoModal" tabindex="-1" aria-labelledby="crearEquipoModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="crearEquipoModalLabel">Crear Equipo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <form th:object="${equipo}" th:action="@{/usuario/equipo/crear}" method="post">
+                        <div class="mb-3">
+                            <label for="codigoUsuario" class="form-label">Código de Usuario</label>
+                            <input type="text" class="form-control" th:field="*{idHijo.codigoUsuario}" required>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Crear Equipo</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <footer th:replace="~{layout/plantilla :: footer}"></footer>
+    <div th:replace="~{layout/plantilla :: alertas}"></div>
+    <script src="/js/datatable.js"></script>
+</body>
+
+
+
+</html>

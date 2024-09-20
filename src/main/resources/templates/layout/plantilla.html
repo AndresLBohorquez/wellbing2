@@ -26,6 +26,7 @@
         rel="stylesheet">
     <!-- SweetAlert -->
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <!-- CSS -->
     <link rel="stylesheet" href="/css/styles.css">
     <link rel="stylesheet" href="/css/fonts.css">
@@ -33,8 +34,19 @@
     <!-- JS -->
     <script src="/js/logout.js"></script>
     <script src="/js/main.js"></script>
+
     <!-- Favicon -->
     <link rel="icon" type="image/jpg" href="/images/favicon.ico" />
+
+    <!-- Jquery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <!-- Datatables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.5/css/dataTables.dataTables.min.css">
+    <!-- Datatables JS -->
+    <script src="https://cdn.datatables.net/2.1.5/js/dataTables.min.js"></script>
+
+
 </head>
 
 <nav th:fragment="navbar(inicio, productos, nosotros, signup, login)"
@@ -65,11 +77,13 @@
                 <button class="btn dropdown-toggle cart-btn position-relative" type="button" id="cartDropdown"
                     data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="bi bi-cart" style="font-size: 23px; color: #FFFFFF;"></i>
-                    <span class="badge position-absolute top-0 start-100 translate-middle rounded-pill">3</span>
+                    <span id="badge" class="badge position-absolute top-0 start-100 translate-middle rounded-pill" th:if="${cantidadCarrito > 0}">
+                        [[${cantidadCarrito}]]
+                    </span>
                 </button>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="cartDropdown">
-                    <li><a class="dropdown-item" href="#">Ver Carrito</a></li>
-                    <li><a class="dropdown-item" href="#">Finalizar Compra</a></li>
+                    <li><a class="dropdown-item" href="/carrito">Ver Carrito</a></li>
+                    <li th:if="${cantidadCarrito > 0}"><a class="dropdown-item" href="/carrito/checkout">Finalizar Compra</a></li>
                 </ul>
             </div>
             <div class="dropdown">
@@ -162,32 +176,32 @@
     class="bg-sidebar p-3">
     <ul class="nav nav-pills flex-column mb-auto">
         <li class="nav-item mt-3">
-            <a href="#" th:class="|nav-link ${perfil}|">
+            <a href="/usuario" th:class="|nav-link ${perfil}|">
                 <i class="fa-solid fa-user"></i> Perfil
             </a>
         </li>
         <li class="nav-item mt-3">
-            <a href="#" th:class="|nav-link ${activacion}|">
+            <a href="/usuario/activaciones" th:class="|nav-link ${activacion}|">
                 <i class="fas fa-bolt"></i> Activación
             </a>
         </li>
         <li class="nav-item mt-3">
-            <a href="#" th:class="|nav-link ${equipo}|">
+            <a href="/usuario/equipo" th:class="|nav-link ${equipo}|">
                 <i class="fas fa-users"></i> Equipo
             </a>
         </li>
         <li class="nav-item mt-3">
-            <a href="#" th:class="|nav-link ${ordenes}|">
+            <a href="/usuario/ordenes" th:class="|nav-link ${ordenes}|">
                 <i class="fas fa-box"></i> Órdenes
             </a>
         </li>
         <li class="nav-item mt-3">
-            <a href="#" th:class="|nav-link ${pqrs}|">
+            <a href="/usuario/pqrs" th:class="|nav-link ${pqrs}|">
                 <i class="fas fa-comments"></i> PQRS
             </a>
         </li>
         <li class="nav-item mt-3">
-            <a href="#" th:class="|nav-link ${wellpoints}|">
+            <a href="/usuario/wellpoints" th:class="|nav-link ${wellpoints}|">
                 <i class="fas fa-coins"></i> WellPoints
             </a>
         </li>

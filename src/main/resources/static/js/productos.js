@@ -1,3 +1,4 @@
+// Filtro de productos por nombre, categoría y rango de precios
 function filterProducts() {
     const nameFilter = document.getElementById('filterName').value.toLowerCase();
     const categoryFilter = document.getElementById('filterCategory').value;
@@ -31,29 +32,25 @@ document.addEventListener('DOMContentLoaded', function () {
     const filterMaxPrice = document.getElementById('filterMaxPrice');
     const filterMaxPriceInput = document.getElementById('filterMaxPriceInput');
 
-    // Sincronizar los valores del rango y del input para el precio mínimo
     filterMinPrice.addEventListener('input', function () {
         filterMinPriceInput.value = filterMinPrice.value;
-        filterProducts(); // Filtrar productos en tiempo real
+        filterProducts();
     });
     filterMinPriceInput.addEventListener('input', function () {
         filterMinPrice.value = filterMinPriceInput.value;
-        filterProducts(); // Filtrar productos en tiempo real
+        filterProducts();
     });
 
-    // Sincronizar los valores del rango y del input para el precio máximo
     filterMaxPrice.addEventListener('input', function () {
         filterMaxPriceInput.value = filterMaxPrice.value;
-        filterProducts(); // Filtrar productos en tiempo real
+        filterProducts();
     });
     filterMaxPriceInput.addEventListener('input', function () {
         filterMaxPrice.value = filterMaxPriceInput.value;
-        filterProducts(); // Filtrar productos en tiempo real
+        filterProducts();
     });
 });
 
-// Event listeners para los demás filtros
+// Filtros de nombre y categoría
 document.getElementById('filterName').addEventListener('input', filterProducts);
 document.getElementById('filterCategory').addEventListener('change', filterProducts);
-document.getElementById('filterMinPrice').addEventListener('input', filterProducts);
-document.getElementById('filterMaxPrice').addEventListener('input', filterProducts);

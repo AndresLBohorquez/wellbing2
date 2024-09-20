@@ -41,7 +41,7 @@ public class WellPointsServiceImpl implements WellPointsService{
     }
 
     @Override
-    public WellPoints getWellPointsByUsuario(Long id) {
+    public List<WellPoints> getWellPointsByUsuario(Long id) {
         return wellPointsRepository.findByUsuario(id);
     }
 

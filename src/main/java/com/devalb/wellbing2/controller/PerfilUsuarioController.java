@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -402,7 +401,7 @@ public class PerfilUsuarioController {
 
     private void guardarArchivo(MultipartFile archivo, String nombreArchivo) throws IOException {
         Path ruta = Paths.get("src/main/resources/static/images/activaciones/" + nombreArchivo);
-        Files.createDirectories(ruta.getParent()); // Asegúrate de que la carpeta exista
+        Files.createDirectories(ruta.getParent()); 
         Files.write(ruta, archivo.getBytes());
     }
 
