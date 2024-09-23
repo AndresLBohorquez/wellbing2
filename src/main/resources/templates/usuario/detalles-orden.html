@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="es">
+
+<head th:replace="~{layout/plantilla :: head('Detalles de la Orden')}"></head>
+
+<body>
+    <!-- Navbar -->
+    <nav th:replace="~{layout/plantilla :: navbar('', '', '', '', '')}"></nav>
+
+    <!-- Contenedor principal -->
+    <div class="container-fluid d-flex flex-column flex-md-row">
+        <!-- Sidebar -->
+        <nav th:replace="~{layout/plantilla :: sidebar-usuario('', '', '', 'active', '', '')}"></nav>
+
+        <!-- Contenido principal -->
+        <div id="content" class="flex-grow-1 p-3">
+            <!-- Botón para mostrar el sidebar en móvil -->
+            <button id="sidebarToggle" class="d-md-none btn btn-primary">
+                <i class="bi bi-arrow-bar-right"></i>
+            </button>
+
+            <h1 class="mb-4 titulo-pagina">Detalles de la Orden</h1>
+
+            <!-- Card con información de la orden -->
+            <div class="card card-perfil mb-4">
+                <div class="card-body">
+                    <h3>Información de la Orden</h3>
+                    <p><strong>Nombre de la Orden:</strong> <span th:text="${orden.nombre}"></span></p>
+                    <p><strong>Fecha de Creación:</strong> <span
+                            th:text="${#temporals.format(orden.fechaCreacion, 'MMMM dd, yyyy')}"></span></p>
+                    <p><strong>Fecha de Actualización:</strong> <span
+                            th:text="${#temporals.format(orden.fechaActualizacion, 'MMMM dd, yyyy')}"></span></p>
+                    <p><strong>Estado:</strong>
+                        <span class="badge rounded-pill" th:if="${orden.estadoOrden.nombre == 'Pendiente'}"
+                            th:classappend="'estado-pendiente'" th:text="${orden.estadoOrden.nombre}">
+                        </span>
+                        <span class="badge rounded-pill" th:if="${orden.estadoOrden.nombre == 'En proceso'}"
+                            th:classappend="'estado-en-proceso'" th:text="${orden.estadoOrden.nombre}">
+                        </span>
+                        <span class="badge rounded-pill" th:if="${orden.estadoOrden.nombre == 'Enviado'}"
+                            th:classappend="'estado-enviado'" th:text="${orden.estadoOrden.nombre}">
+                        </span>
+                        <span class="badge rounded-pill" th:if="${orden.estadoOrden.nombre == 'Entregado'}"
+                            th:classappend="'estado-entregado'" th:text="${orden.estadoOrden.nombre}">
+                        </span>
+                        <span class="badge rounded-pill" th:if="${orden.estadoOrden.nombre == 'Cancelado'}"
+                            th:classappend="'estado-cancelado'" th:text="${orden.estadoOrden.nombre}">
+                        </span>
+                        <span class="badge rounded-pill" th:if="${orden.estadoOrden.nombre == 'Devuelto'}"
+                            th:classappend="'estado-devuelto'" th:text="${orden.estadoOrden.nombre}">
+                        </span>
+                        <span class="badge rounded-pill" th:if="${orden.estadoOrden.nombre == 'Reembolsado'}"
+                            th:classappend="'estado-reembolsado'" th:text="${orden.estadoOrden.nombre}">
+                        </span>
+                        <span class="badge rounded-pill" th:if="${orden.estadoOrden.nombre == 'Pago pendiente'}"
+                            th:classappend="'estado-pago-pendiente'" th:text="${orden.estadoOrden.nombre}">
+                        </span>
+                        <span class="badge rounded-pill" th:if="${orden.estadoOrden.nombre == 'Pago rechazado'}"
+                            th:classappend="'estado-pago-rechazado'" th:text="${orden.estadoOrden.nombre}">
+                        </span>
+                        <span class="badge rounded-pill" th:if="${orden.estadoOrden.nombre == 'En hold'}"
+                            th:classappend="'estado-en-hold'" th:text="${orden.estadoOrden.nombre}">
+                        </span>
+
+                    </p>
+                    <p><strong>Total:</strong> $<span
+                            th:text="${#numbers.formatDecimal(orden.total, 2 , 'COMMA', 2, 'POINT')}">0.00</span></p>
+                </div>
+            </div>
+
+            <!-- Card con el listado de productos de la orden -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h3>Productos en la Orden</h3>
+                    <table class="table bg-white rounded shadow-sm table-hover tabla">
+                        <thead>
+                            <tr>
+                                <th class="align-left">Producto</th>
+                                <th class="align-left">Cantidad</th>
+                                <th class="align-right">Precio Unitario</th>
+                                <th class="align-right">Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="item : ${itemsOrden}">
+                                <td th:text="${item.producto.nombre}">Nombre del Producto</td>
+                                <td th:text="${item.cantidad}">0</td>
+                                <td class="align-right"
+                                    th:text="${#numbers.formatDecimal(item.producto.precio, 2 , 'COMMA', 2, 'POINT')}">
+                                    0.00
+                                </td>
+                                <td class="align-right"
+                                    th:text="${#numbers.formatDecimal(item.producto.precio * item.cantidad, 2 , 'COMMA', 2, 'POINT')}">
+                                    0.00</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer th:replace="~{layout/plantilla :: footer}"></footer>
+    <div th:replace="~{layout/plantilla :: alertas}"></div>
+</body>
+
+</html>

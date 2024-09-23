@@ -44,4 +44,9 @@ public class ItemsOrdenServiceImpl implements ItemsOrdenService {
     public List<ItemsOrden> getItemsOrdenByIdOrden(Long id) {
         return itemsOrdenRepository.findAllByIdOrden(id);
     }
+
+    @Override
+    public List<Object[]> obtenerTop10ProductosMasVendidos() {
+        return itemsOrdenRepository.findTop10ProductosMasVendidos();
+    }
 }

@@ -17,4 +17,6 @@ public interface ItemsOrdenService {
     public void deleteItemsOrden(Long id);
 
     public List<ItemsOrden> getItemsOrdenByIdOrden(Long id);
+
+    public List<Object[]> obtenerTop10ProductosMasVendidos();
 }

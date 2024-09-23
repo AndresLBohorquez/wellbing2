@@ -6,4 +6,6 @@ import org.springframework.ui.Model;
 public interface VistaService {
 
     public void cargarVistas(Model model, Authentication auth);
+
+    public void verTopProductos(Model model);
 }

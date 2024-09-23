@@ -27,6 +27,7 @@ public class MainController {
 
     @GetMapping("/")
     public String goToIndex(Model model, Authentication auth) {
+        vService.verTopProductos(model);
         model.addAttribute("listaProductosTop", productoService.getProductos());
         vService.cargarVistas(model, auth);
         return "index";

@@ -27,6 +27,7 @@ import com.devalb.wellbing2.service.OrdenService;
 import com.devalb.wellbing2.service.ProductoService;
 import com.devalb.wellbing2.service.UsuarioService;
 import com.devalb.wellbing2.service.VistaService;
+import com.devalb.wellbing2.util.PlantillaNotificacion;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -55,6 +56,9 @@ public class CarritoController {
 
     @Autowired
     private VistaService vService;
+
+    @Autowired
+    private PlantillaNotificacion pNotificacion;
 
     @GetMapping()
     public String verCarrito(Authentication auth, Model model) {
@@ -229,6 +233,13 @@ public class CarritoController {
         // Borrar todos los elementos del carrito
         carritoService.deleteAllElements(usuario.getId());
         log.info("Carrito vaciado correctamente");
+
+        // Enviar email con la información de la orden
+        try {
+            pNotificacion.enviarEmailDeConfirmacionOrden(usuario, orden, carritoElements);
+        } catch (Exception e) {
+            log.error("Error al enviar el correo de confirmación: {}", e.getMessage());
+        }
 
         redirectAttributes.addFlashAttribute("messageOK", "La orden ha sido creada correctamente.");
 

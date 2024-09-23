@@ -11,10 +11,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.devalb.wellbing2.entity.Email;
 import com.devalb.wellbing2.entity.Usuario;
-import com.devalb.wellbing2.service.EmailService;
 import com.devalb.wellbing2.service.UsuarioService;
 import com.devalb.wellbing2.util.CrearCodigo;
+import com.devalb.wellbing2.util.PlantillaNotificacion;
 
+import jakarta.mail.MessagingException;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -25,7 +26,7 @@ public class AuthController {
     private UsuarioService usuarioService;
 
     @Autowired
-    private EmailService emailService;
+    private PlantillaNotificacion pNotificacion;
 
     @Autowired
     private CrearCodigo crearCodigo;
@@ -68,7 +69,7 @@ public class AuthController {
         Usuario usuario = usuarioService.getUsuarioByEmail(email.getDestinatario());
         if (usuario == null) {
             log.warn("No se encontró ningún usuario con el correo: {}", email.getDestinatario());
-            model.addAttribute("enviarKO", "No se encontró ningún usuario con ese correo electrónico.");
+            model.addAttribute("messageKO", "No se encontró ningún usuario con ese correo electrónico.");
             return "recuperar-pass";
         }
 
@@ -80,13 +81,17 @@ public class AuthController {
         usuarioService.editUsuario(usuario);
         log.info("Se ha generado una nueva contraseña para el usuario: {}", usuario.getUsername());
 
-        // Configurar y enviar el correo electrónico
-        email.setAsunto("Recuperación de contraseña");
-        email.setMensaje("Hola " + usuario.getNombre() + ",\n\nTu nueva contraseña es: " + nuevaPassword
-                + "\n\nPor favor, cámbiala después de iniciar sesión.");
-        emailService.enviarEmail(email);
+        // Enviar email de recuperación de contraseña
+        try {
+            pNotificacion.enviarEmailRecuperacionPassword(usuario, nuevaPassword);
+            log.info("Email de recuperación de contraseña enviado a {}", usuario.getEmail());
+        } catch (MessagingException e) {
+            log.error("Error al enviar el correo de recuperación: {}", e.getMessage());
+            model.addAttribute("messageKO", "Hubo un problema al enviar el correo de recuperación.");
+            return "recuperar-pass";
+        }
 
-        redirectAttributes.addFlashAttribute("enviarOK",
+        redirectAttributes.addFlashAttribute("messageOK",
                 "Se ha enviado una nueva contraseña a tu correo electrónico.");
         return "redirect:/login";
     }

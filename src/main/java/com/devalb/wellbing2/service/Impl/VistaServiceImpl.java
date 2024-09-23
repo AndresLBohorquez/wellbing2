@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import com.devalb.wellbing2.entity.Carrito;
 import com.devalb.wellbing2.entity.Usuario;
 import com.devalb.wellbing2.service.CarritoService;
+import com.devalb.wellbing2.service.ItemsOrdenService;
 import com.devalb.wellbing2.service.UsuarioService;
 import com.devalb.wellbing2.service.VistaService;
 import com.devalb.wellbing2.util.FormatoTexto;
@@ -25,6 +26,9 @@ public class VistaServiceImpl implements VistaService {
 
     @Autowired
     private CarritoService carritoService;
+
+    @Autowired
+    private ItemsOrdenService itemsOrdenService;
 
     @Autowired
     private FormatoTexto ft;
@@ -47,6 +51,27 @@ public class VistaServiceImpl implements VistaService {
         } catch (Exception e) {
             log.warn("ha ocurrido un error al cargar la vista");
             System.out.println("VistaService.cargarVistas()" + e.getMessage());
+        }
+    }
+
+    @Override
+    public void verTopProductos(Model model) {
+        log.info("Iniciando la carga de los productos más vendidos.");
+
+        try {
+            List<Object[]> productosMasVendidos = itemsOrdenService.obtenerTop10ProductosMasVendidos();
+            log.debug("Cantidad de productos obtenidos: {}", productosMasVendidos.size());
+
+            if (productosMasVendidos.isEmpty()) {
+                log.warn("No se encontraron productos más vendidos.");
+            } else {
+                log.info("Productos más vendidos cargados correctamente.");
+            }
+
+            model.addAttribute("listaProductosTop", productosMasVendidos);
+        } catch (Exception e) {
+            log.error("Error al intentar cargar los productos más vendidos: {}", e.getMessage(), e);
+            model.addAttribute("messageKO", "Error al intentar cargar los productos más vendidos");
         }
     }
 
