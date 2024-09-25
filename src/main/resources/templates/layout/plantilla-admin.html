@@ -1,7 +1,13 @@
 <!-- Head -->
+
 <head th:fragment="head-admin(titulo)">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="_csrf" th:content="${_csrf.token}" />
+    <meta name="_csrf_header" th:content="${_csrf.headerName}" />
+    <meta name="_csrf_parameter" th:content="${_csrf.parameterName}" />
+
     <title th:text="${titulo}">Dashboard Administrador</title>
 
     <!-- Google Fonts -->
@@ -29,13 +35,24 @@
     <!-- CSS -->
     <link rel="stylesheet" href="/css/admin-styles.css">
     <!-- JS -->
+    <script src="/js/logout.js"></script>
     <script src="/js/admin.js"></script>
+
+    <!-- Jquery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <!-- Datatables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.5/css/dataTables.dataTables.min.css">
+    <!-- Datatables JS -->
+    <script src="https://cdn.datatables.net/2.1.5/js/dataTables.min.js"></script>
 </head>
 
 <!-- Navbar -->
 <nav th:fragment="navbar-admin" class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">Administrador</a>
+        <a th:if="${rolPrincipal == 'Admin'}" class="navbar-brand" href="/admin" th:text="${rolPrincipal}"></a>
+        <a th:if="${rolPrincipal == 'Secretario' || rolPrincipal == 'Tesorero' || rolPrincipal == 'Domiciliario'}"
+            class="navbar-brand" href="/admin/usuarios" th:text="${rolPrincipal}"></a>
         <button class="navbar-toggler sidebar-toggle" type="button">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -44,12 +61,14 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button"
                         data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="https://via.placeholder.com/30" alt="Usuario" class="rounded-circle"> Usuario
+                        <img src="/images/img-nobg.png" alt="Usuario" class="rounded-circle logo"> [[${nombre} + ' ' +
+                        ${apellido}]]
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
-                        <li><a class="dropdown-item" href="#">Perfil</a></li>
-                        <li><a class="dropdown-item" href="#">Configuración</a></li>
-                        <li><a class="dropdown-item" href="#">Cerrar sesión</a></li>
+                        <li><a class="dropdown-item border-bottom" href="/">Inicio</a></li>
+                        <li><a class="dropdown-item" href="/usuario">Perfil</a></li>
+
+                        <li><a class="dropdown-item" href="#" onclick="logout()">Cerrar sesión</a></li>
                     </ul>
                 </li>
             </ul>
@@ -58,35 +77,61 @@
 </nav>
 
 <!-- Sidebar -->
-<div th:fragment="sidebar-admin" class="sidebar">
+<div th:fragment="sidebar-admin(dashboard, usuarios, categorias, productos, activaciones, equipo, ordenes, pagos, pqrs, wellpoints)"
+    class="sidebar">
     <ul class="nav nav-pills flex-column mb-auto">
-        <li class="nav-item mt-3">
-            <a href="#" class="nav-link active">
-                <i class="fa-solid fa-user"></i> Perfil
+        <li class="nav-item mt-3" th:if="${rolPrincipal == 'Admin'}">
+            <a href="/admin" th:class="|nav-link ${dashboard}|">
+                <i class="bi bi-speedometer2"></i> Dashboard
             </a>
         </li>
-        <li class="nav-item mt-3">
-            <a href="#" class="nav-link">
-                <i class="fas fa-bolt"></i> Activación
+        <li class="nav-item mt-3"
+            th:if="${rolPrincipal == 'Admin' || rolPrincipal == 'Secretario' || rolPrincipal == 'Tesorero' || rolPrincipal == 'Domiciliario'}">
+            <a href="/admin/usuarios" th:class="|nav-link ${usuarios}|">
+                <i class="fa-solid fa-user"></i> Usuarios
             </a>
         </li>
-        <li class="nav-item mt-3">
-            <a href="#" class="nav-link">
+        <li class="nav-item mt-3"
+            th:if="${rolPrincipal == 'Admin' || rolPrincipal == 'Secretario' || rolPrincipal == 'Domiciliario'}">
+            <a href="#" th:class="|nav-link ${categorias}|">
+                <i class="bi bi-tags-fill"></i> Categorias
+            </a>
+        </li>
+        <li class="nav-item mt-3"
+            th:if="${rolPrincipal == 'Admin' || rolPrincipal == 'Secretario' || rolPrincipal == 'Domiciliario'}">
+            <a href="#" th:class="|nav-link ${productos}|">
+                <i class="bi bi-cart-check-fill"></i> Productos
+            </a>
+        </li>
+        <li class="nav-item mt-3"
+            th:if="${rolPrincipal == 'Admin' || rolPrincipal == 'Secretario' || rolPrincipal == 'Tesorero'}">
+            <a href="#" th:class="|nav-link ${activaciones}|">
+                <i class="fas fa-bolt"></i> Activaciones
+            </a>
+        </li>
+        <li class="nav-item mt-3"
+            th:if="${rolPrincipal == 'Admin' || rolPrincipal == 'Secretario' || rolPrincipal == 'Tesorero'}">
+            <a href="#" th:class="|nav-link ${equipo}|">
                 <i class="fas fa-users"></i> Equipo
             </a>
         </li>
-        <li class="nav-item mt-3">
-            <a href="#" class="nav-link">
+        <li class="nav-item mt-3" th:if="${rolPrincipal == 'Admin' || rolPrincipal == 'Domiciliario'}">
+            <a href="#" th:class="|nav-link ${ordenes}|">
                 <i class="fas fa-box"></i> Órdenes
             </a>
         </li>
-        <li class="nav-item mt-3">
-            <a href="#" class="nav-link">
+        <li class="nav-item mt-3" th:if="${rolPrincipal == 'Admin' || rolPrincipal == 'Tesorero'}">
+            <a href="#" th:class="|nav-link ${pagos}|">
+                <i class="bi bi-cash-stack"></i> Pagos
+            </a>
+        </li>
+        <li class="nav-item mt-3" th:if="${rolPrincipal == 'Admin' || rolPrincipal == 'Secretario'}">
+            <a href="#" th:class="|nav-link ${pqrs}|">
                 <i class="fas fa-comments"></i> PQRS
             </a>
         </li>
-        <li class="nav-item mt-3">
-            <a href="#" class="nav-link">
+        <li class="nav-item mt-3" th:if="${rolPrincipal == 'Admin'}">
+            <a href="#" th:class="|nav-link ${wellpoints}|">
                 <i class="fas fa-coins"></i> WellPoints
             </a>
         </li>
@@ -99,7 +144,7 @@
         <div class="card text-white bg-primary mb-3">
             <div class="card">
                 <h5 class="card-title">Usuarios</h5>
-                <p class="card-text">Cantidad: 1200</p>
+                <p class="card-text">Cantidad: [[${cantidadUsuarios}]]</p>
                 <div class="chart-container">
                     <canvas id="usersChart"></canvas>
                 </div>
@@ -110,7 +155,7 @@
         <div class="card text-white bg-success mb-3">
             <div class="card">
                 <h5 class="card-title">Órdenes</h5>
-                <p class="card-text">Cantidad: 350</p>
+                <p class="card-text">Cantidad: [[${cantidadOrdenes}]]</p>
                 <div class="chart-container">
                     <canvas id="ordersChart"></canvas>
                 </div>
@@ -121,7 +166,7 @@
         <div class="card text-white bg-info mb-3">
             <div class="card">
                 <h5 class="card-title">PQRs</h5>
-                <p class="card-text">Cantidad: 45</p>
+                <p class="card-text">Cantidad: [[${cantidadPqrs}]]</p>
                 <div class="chart-container">
                     <canvas id="pqrsChart"></canvas>
                 </div>
@@ -132,7 +177,7 @@
         <div class="card text-white bg-danger mb-3">
             <div class="card">
                 <h5 class="card-title">Productos</h5>
-                <p class="card-text">Cantidad: 670</p>
+                <p class="card-text">Cantidad: [[${cantidadProductos}]]</p>
                 <div class="chart-container">
                     <canvas id="productsChart"></canvas>
                 </div>
@@ -143,75 +188,86 @@
 
 
 <!-- Scripts -->
-<script th:fragment="graficas">
+<script th:inline="javascript" th:fragment="graficas">
+    document.addEventListener("DOMContentLoaded", function () {
+        /* Datos de usuarios */
+        var labelsUsuarios = /*[[${registrosMensualesUsuarios.keySet()}]]*/[];
+        var usuariosData = /*[[${registrosMensualesUsuarios.values()}]]*/[];
 
-    
-    // Gráficas en las cards
-    var usersCtx = document.getElementById('usersChart').getContext('2d');
-    var ordersCtx = document.getElementById('ordersChart').getContext('2d');
-    var pqrsCtx = document.getElementById('pqrsChart').getContext('2d');
-    var productsCtx = document.getElementById('productsChart').getContext('2d');
+        /* Datos de órdenes */
+        var labelsOrdenes = /*[[${registrosMensualesOrdenes.keySet()}]]*/[];
+        var ordenesData = /*[[${registrosMensualesOrdenes.values()}]]*/[];
 
-    // Gráfica de Usuarios
-    var usersChart = new Chart(usersCtx, {
-        type: 'line',
-        data: {
-            labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun'],
-            datasets: [{
-                data: [200, 400, 600, 800, 1000, 1200],
-                borderColor: 'rgba(13, 110, 253, 1)', // Color de la línea (coincide con el color de la card)
-                borderWidth: 2,
-                fill: false
-            }]
-        },
-        options: chartOptions
+        /* Datos de PQRs */
+        var labelsPqrs = /*[[${registrosMensualesPqrs.keySet()}]]*/[];
+        var pqrsData = /*[[${registrosMensualesPqrs.values()}]]*/[];
+
+        /* Datos de productos */
+        var labelsProductos = /*[[${registrosMensualesProductos.keySet()}]]*/[];
+        var productosData = /*[[${registrosMensualesProductos.values()}]]*/[];
+
+        // Gráfica de Usuarios
+        var usersCtx = document.getElementById('usersChart').getContext('2d');
+        var usersChart = new Chart(usersCtx, {
+            type: 'line',
+            data: {
+                labels: labelsUsuarios,
+                datasets: [{
+                    data: usuariosData,
+                    borderColor: 'rgba(13, 110, 253, 1)',
+                    borderWidth: 2,
+                    fill: false
+                }]
+            },
+            options: chartOptions
+        });
+
+        // Gráfica de Órdenes
+        var ordersCtx = document.getElementById('ordersChart').getContext('2d');
+        var ordersChart = new Chart(ordersCtx, {
+            type: 'line',
+            data: {
+                labels: labelsOrdenes,
+                datasets: [{
+                    data: ordenesData,
+                    borderColor: 'rgba(25, 135, 84, 1)',
+                    borderWidth: 2,
+                    fill: false
+                }]
+            },
+            options: chartOptions
+        });
+
+        // Gráfica de PQRs
+        var pqrsCtx = document.getElementById('pqrsChart').getContext('2d');
+        var pqrsChart = new Chart(pqrsCtx, {
+            type: 'line',
+            data: {
+                labels: labelsPqrs,
+                datasets: [{
+                    data: pqrsData,
+                    borderColor: 'rgba(13, 202, 240, 1)',
+                    borderWidth: 2,
+                    fill: false
+                }]
+            },
+            options: chartOptions
+        });
+
+        // Gráfica de Productos
+        var productsCtx = document.getElementById('productsChart').getContext('2d');
+        var productsChart = new Chart(productsCtx, {
+            type: 'line',
+            data: {
+                labels: labelsProductos,
+                datasets: [{
+                    data: productosData,
+                    borderColor: 'rgba(220, 53, 69, 1)',
+                    borderWidth: 2,
+                    fill: false
+                }]
+            },
+            options: chartOptions
+        });
     });
-
-    // Gráfica de Órdenes
-    var ordersChart = new Chart(ordersCtx, {
-        type: 'line',
-        data: {
-            labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun'],
-            datasets: [{
-                data: [50, 100, 150, 200, 250, 350],
-                borderColor: 'rgba(25, 135, 84, 1)', // Color de la línea (verde para la card verde)
-                borderWidth: 2,
-                fill: false
-            }]
-        },
-        options: chartOptions
-    });
-
-    // Gráfica de PQRs
-    var pqrsChart = new Chart(pqrsCtx, {
-        type: 'line',
-        data: {
-            labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun'],
-            datasets: [{
-                data: [5, 10, 15, 25, 35, 45],
-                borderColor: 'rgba(13, 202, 240, 1)', // Color de la línea (azul claro para la card azul)
-                borderWidth: 2,
-                fill: false
-            }]
-        },
-        options: chartOptions
-    });
-
-    // Gráfica de Productos
-    var productsChart = new Chart(productsCtx, {
-        type: 'line',
-        data: {
-            labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun'],
-            datasets: [{
-                data: [100, 200, 300, 400, 500, 670],
-                borderColor: 'rgba(220, 53, 69, 1)', // Color de la línea (rojo para la card roja)
-                borderWidth: 2,
-                fill: false
-            }]
-        },
-        options: chartOptions
-    });
-
-
-    
 </script>

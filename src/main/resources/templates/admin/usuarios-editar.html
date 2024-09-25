@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="es">
+
+<!-- Head -->
+
+<head th:replace="~{layout/plantilla-admin :: head-admin('Editar Usuario - ' + ${rolPrincipal})}"></head>
+
+<body>
+
+    <!-- Navbar -->
+
+    <head th:replace="~{layout/plantilla-admin :: navbar-admin}"></head>
+
+    <!-- Sidebar -->
+    <div th:replace="~{layout/plantilla-admin :: sidebar-admin('','active','','','','','','','','')}"></div>
+
+    <!-- Contenido principal -->
+    <div class="main-content">
+        <div class="content container-fluid">
+            <!-- Título -->
+            <h2 class="section-title">Editar Usuario</h2>
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <form th:action="@{/admin/usuarios/editar/{id}(id=${usuarioForm.id})}" method="post"
+                                th:object="${usuarioForm}">
+                                <div class="row">
+                                    <div class="col-12 col-md-6 form-group row">
+                                        <label for="nombre" class="col-sm-4 col-form-label">Nombre:</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" id="nombre" th:field="*{nombre}" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6 form-group row">
+                                        <label for="apellido" class="col-sm-4 col-form-label">Apellido:</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" id="apellido" th:field="*{apellido}"
+                                                class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6 form-group row mt-4">
+                                        <label for="celular" class="col-sm-4 col-form-label">Celular:</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" id="celular" th:field="*{celular}"
+                                                class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6 form-group row mt-4">
+                                        <label for="codigoUsuario" class="col-sm-4 col-form-label">Código
+                                            Usuario:</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" id="codigoUsuario" th:field="*{codigoUsuario}"
+                                                class="form-control" />
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-md-6 form-group row mt-4">
+                                        <label for="username" class="col-sm-4 col-form-label">Username:</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" id="username" th:field="*{username}"
+                                                class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6 form-group row mt-4">
+                                        <label for="direccion" class="col-sm-4 col-form-label">Dirección:</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" id="direccion" th:field="*{direccion}"
+                                                class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6 form-group row mt-4">
+                                        <label for="email" class="col-sm-4 col-form-label">Email:</label>
+                                        <div class="col-sm-8">
+                                            <input type="email" id="email" th:field="*{email}" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6 form-group row mt-4">
+                                        <label for="password" class="col-sm-4 col-form-label">Contraseña:</label>
+                                        <div class="col-sm-8">
+                                            <input type="password" id="password" th:field="*{password}"
+                                                class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group row mt-4">
+                                                <label for="roles" class="col-sm-4 col-form-label">Roles:</label>
+                                                <div class="col-sm-8">
+                                                    <div th:each="rol : ${roles}">
+                                                        <div class="form-check">
+                                                            <input type="checkbox" id="rol-${rol.id}"
+                                                                th:value="${rol.id}"
+                                                                th:checked="${usuarioForm.roles.contains(rol)}"
+                                                                name="roles">
+                                                            <label for="rol-${rol.id}" th:text="${rol.nombre}"></label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group row mt-4">
+                                                <label for="wellPoints"
+                                                    class="col-sm-4 col-form-label">WellPoints:</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" id="wellPoints" th:field="*{wellPoints}"
+                                                        class="form-control" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group row mt-4">
+                                                <label for="estadoUsuario"
+                                                    class="col-sm-4 col-form-label">Estado:</label>
+                                                <div class="col-sm-8">
+                                                    <select id="estadoUsuario" th:field="*{estadoUsuario}"
+                                                        class="form-control">
+                                                        <option th:each="estados : ${listaEstadosUsuario}"
+                                                            th:value="${estados.id}" th:text="${estados.nombre}">Opción
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+
+
+                        <div class="form-group row">
+                            <div class="col-sm-12 text-center">
+                                <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                            </div>
+                        </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div th:replace="~{layout/plantilla :: alertas}"></div>
+    <script src="/js/datatable.js"></script>
+    <!-- Footer -->
+    <footer th:replace="~{layout/plantilla :: footer}"></footer>
+
+    <script th:inline="javascript">
+        document.querySelector('.sidebar-toggle').addEventListener('click', function () {
+            document.querySelector('.sidebar').classList.toggle('active');
+        });
+
+    </script>
+</body>
+
+</html>

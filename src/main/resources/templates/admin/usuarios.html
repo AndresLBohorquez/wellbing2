@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="es">
+
+<!-- Head -->
+
+<head th:replace="~{layout/plantilla-admin :: head-admin('Usuarios - ' + ${rolPrincipal})}"></head>
+
+<body>
+
+    <!-- Navbar -->
+
+    <head th:replace="~{layout/plantilla-admin :: navbar-admin}"></head>
+
+    <!-- Sidebar -->
+    <div th:replace="~{layout/plantilla-admin :: sidebar-admin('','active','','','','','','','','')}"></div>
+
+    <!-- Contenido principal -->
+    <div class="main-content">
+        <div class="content container-fluid">
+            <!-- Título -->
+            <h2 class="section-title">Usuarios</h2>
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <table id="example" class="custom-table bg-white rounded shadow-sm">
+                                <thead class="custom-table-header text-center">
+                                    <tr>
+                                        <th>Nombre Completo</th>
+                                        <th>Celular</th>
+                                        <th>Código Usuario</th>
+                                        <th>Username</th>
+                                        <th>Fecha de Registro</th>
+                                        <th>Estado</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="usuario : ${usuarios}">
+                                        <td>
+                                            <a th:href="@{/admin/usuarios/detalle/{id}(id=${usuario.id})}" class="enlace-detalle-usuario">
+                                                [[${usuario.nombre} + ' ' + ${usuario.apellido}]]
+                                            </a>
+                                        </td>
+                                        <td th:text="${usuario.celular}"></td>
+                                        <td th:text="${usuario.codigoUsuario}"></td>
+                                        <td th:text="${usuario.username}"></td>
+                                        <td th:text="${#temporals.format(usuario.fechaRegistro, 'dd/MM/yyyy')}"></td>
+                                        <td class="text-center" th:if="${usuario.estadoUsuario.nombre == 'Activo' }">
+                                            <span class="badge rounded-pill bg-success">Activo</span>
+                                        </td>
+                                        <td class="text-center" th:if="${usuario.estadoUsuario.nombre == 'Baneado' }">
+                                            <span class="badge rounded-pill bg-danger">Baneado</span>
+                                        </td>
+                                        <td class="text-center" th:if="${usuario.estadoUsuario.nombre == 'Eliminado' }">
+                                            <span class="badge rounded-pill bg-dark">Eliminado</span>
+                                        </td>
+                                        <td class="text-center">
+                                            <!-- Icono de editar -->
+                                            <a th:href="@{/admin/usuarios/editar/{id}(id=${usuario.id})}"
+                                                class="custom-icon text-success me-2">
+                                                <i class="bi bi-pencil-square"></i>
+                                            </a>
+                                            <!-- Icono de eliminar -->
+                                            <a th:href="@{/admin/usuarios/eliminar/{id}(id=${usuario.id})}"
+                                                class="custom-icon text-danger me-2">
+                                                <i class="bi bi-trash3-fill"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="~{layout/plantilla :: alertas}"></div>
+    <script src="/js/datatable.js"></script>
+    <!-- Footer -->
+    <footer th:replace="~{layout/plantilla :: footer}"></footer>
+
+    <script th:inline="javascript">
+        document.querySelector('.sidebar-toggle').addEventListener('click', function () {
+            document.querySelector('.sidebar').classList.toggle('active');
+        });
+
+    </script>
+</body>
+
+</html>

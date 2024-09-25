@@ -25,7 +25,7 @@
             <div class="card card-perfil mb-4">
                 <div class="card-body">
                     <div class="row">
-                        <table id="example" class="table bg-white rounded shadow-sm  table-hover tabla">
+                        <table id="example" class="bg-white rounded shadow-sm">
                             <thead>
                                 <tr>
                                     <th class="align-left">Descripción</th>
@@ -45,7 +45,7 @@
                                     <td class="no-bold align-left"
                                         th:text="${#temporals.format(wellpoints.fecha, 'MMMM dd, yyyy')}">fecha</td>
 
-                                    <td th:if="${wellpoints.accion.nombre == 'Agregar'}" class="no-bold align-left">
+                                    <td th:if="${wellpoints.accion.nombre == 'Adicionar'}" class="no-bold align-left">
                                         <span class="badge rounded-pill bg-success"
                                             th:text="${wellpoints.accion.nombre}">
                                     </td>

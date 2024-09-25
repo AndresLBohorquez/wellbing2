@@ -1,5 +1,6 @@
 package com.devalb.wellbing2.service.Impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,7 @@ import com.devalb.wellbing2.repository.RolRepository;
 import com.devalb.wellbing2.service.RolService;
 
 @Service
-public class RolServiceImpl implements RolService{
+public class RolServiceImpl implements RolService {
 
     @Autowired
     private RolRepository rolRepository;
@@ -45,4 +46,15 @@ public class RolServiceImpl implements RolService{
         return rolRepository.findByNombre(nombre);
     }
 
+    @Override
+    public List<Rol> getRolesByIds(List<Long> ids) {
+        List<Rol> roles = new ArrayList<>();
+        for (Long id : ids) {
+            Rol rol = rolRepository.findById(id).orElse(null);
+            if (rol != null) {
+                roles.add(rol);
+            }
+        }
+        return roles;
+    }
 }

@@ -1,6 +1,12 @@
 package com.devalb.wellbing2.service.Impl;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.TextStyle;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -54,4 +60,25 @@ public class PqrsServiceImpl implements PqrsService {
     public List<Pqrs> getPqrsByUsuario(Long id) {
         return pqrsRepository.findAllByUsuarioId(id);
     }
+
+    @Override
+    public Map<String, Integer> getPqrsLast6Months() {
+        Map<String, Integer> registrosMensualesPqrs = new LinkedHashMap<>();
+
+        for (int i = 5; i >= 0; i--) {
+
+            LocalDateTime fechaInicioMes = LocalDate.now().minusMonths(i).withDayOfMonth(1).atStartOfDay();
+            LocalDateTime fechaFinMes = fechaInicioMes.withDayOfMonth(fechaInicioMes.toLocalDate().lengthOfMonth())
+                    .withHour(23).withMinute(59).withSecond(59);
+
+            int cantidadPqrs = pqrsRepository.countByFechaRegistroBetween(fechaInicioMes, fechaFinMes);
+
+            registrosMensualesPqrs.put(
+                    fechaInicioMes.getMonth().getDisplayName(TextStyle.SHORT, new Locale("es", "ES")),
+                    cantidadPqrs);
+        }
+
+        return registrosMensualesPqrs;
+    }
+
 }

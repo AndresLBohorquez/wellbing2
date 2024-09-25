@@ -17,4 +17,6 @@ public interface RolService {
     public void deleteRol(Long id);
 
     public Rol getRolByNombre(String nombre);
+
+    public List<Rol> getRolesByIds(List<Long> ids);
 }

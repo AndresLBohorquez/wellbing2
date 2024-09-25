@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="es">
+
+<!-- Head -->
+
+<head th:replace="~{layout/plantilla-admin :: head-admin('Detalle Usuario - ' + ${rolPrincipal})}"></head>
+
+<body>
+
+    <!-- Navbar -->
+
+    <head th:replace="~{layout/plantilla-admin :: navbar-admin}"></head>
+
+    <!-- Sidebar -->
+    <div th:replace="~{layout/plantilla-admin :: sidebar-admin('','active','','','','','','','','')}"></div>
+
+    <!-- Contenido principal -->
+    <div class="main-content">
+        <div class="content container-fluid">
+            <!-- Título -->
+            <h2 class="section-title">Detalle Usuario</h2>
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12 col-md-6 form-group row">
+                                    <label for="nombre" class="col-sm-4 col-form-label">Nombre:</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" id="nombre" th:value="${usuarioForm.nombre}"
+                                            class="form-control" disabled>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 form-group row">
+                                    <label for="apellido" class="col-sm-4 col-form-label">Apellido:</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" id="apellido" th:value="${usuarioForm.apellido}"
+                                            class="form-control" disabled>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 form-group row mt-4">
+                                    <label for="celular" class="col-sm-4 col-form-label">Celular:</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" id="celular" th:value="${usuarioForm.celular}"
+                                            class="form-control" disabled>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 form-group row mt-4">
+                                    <label for="codigoUsuario" class="col-sm-4 col-form-label">Código Usuario:</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" id="codigoUsuario" th:value="${usuarioForm.codigoUsuario}"
+                                            class="form-control" disabled>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-6 form-group row mt-4">
+                                    <label for="username" class="col-sm-4 col-form-label">Username:</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" id="username" th:value="${usuarioForm.username}"
+                                            class="form-control" disabled>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 form-group row mt-4">
+                                    <label for="direccion" class="col-sm-4 col-form-label">Dirección:</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" id="direccion" th:value="${usuarioForm.direccion}"
+                                            class="form-control" disabled>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 form-group row mt-4">
+                                    <label for="email" class="col-sm-4 col-form-label">Email:</label>
+                                    <div class="col-sm-8">
+                                        <input type="email" id="email" th:value="${usuarioForm.email}"
+                                            class="form-control" disabled>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 form-group row mt-4">
+                                    <label for="fechaRegistro" class="col-sm-4 col-form-label">Fecha de
+                                        Registro:</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" id="fechaRegistro" th:value="${usuarioForm.fechaRegistro}"
+                                            class="form-control" disabled>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group row mt-4">
+                                            <label for="roles" class="col-sm-4 col-form-label">Roles:</label>
+                                            <div class="col-sm-8">
+                                                <ul>
+                                                    <li th:each="rol : ${usuarioForm.roles}">[[${rol.nombre}]]</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group row mt-4">
+                                            <label for="wellPoints" class="col-sm-4 col-form-label">WellPoints:</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" id="wellPoints" th:value="${usuarioForm.wellPoints}"
+                                                    class="form-control" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row mt-4">
+                                            <label for="estadoUsuario" class="col-sm-4 col-form-label">Estado:</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" id="estadoUsuario"
+                                                    th:value="${usuarioForm.estadoUsuario.nombre}" class="form-control"
+                                                    disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-12 text-center">
+                                <label
+                                    th:if="${ultimaActivacion != null and ultimaActivacion.estadoActivacion.nombre == 'Pre Activado'}"
+                                    for="estadoUsuario" class="col-sm-4 col-form-label">Estado Última Activación: <span
+                                        th:text="${ultimaActivacion.estadoActivacion.nombre}"
+                                        class="badge rounded-pill bg-primary">Pre Activado</span>
+                                </label>
+                                <label
+                                    th:if="${ultimaActivacion != null and ultimaActivacion.estadoActivacion.nombre == 'Activado'}"
+                                    for="estadoUsuario" class="col-sm-4 col-form-label">Estado Última Activación: <span
+                                        th:text="${ultimaActivacion.estadoActivacion.nombre}"
+                                        class="badge rounded-pill bg-success">Activado</span>
+                                </label>
+                                <label
+                                    th:if="${ultimaActivacion != null and ultimaActivacion.estadoActivacion.nombre == 'Inactivo'}"
+                                    for="estadoUsuario" class="col-sm-4 col-form-label">Estado Última Activación: <span
+                                        th:text="${ultimaActivacion.estadoActivacion.nombre}"
+                                        class="badge rounded-pill bg-dark">Inactivo</span>
+                                </label>
+                                <label
+                                    th:if="${ultimaActivacion != null and ultimaActivacion.estadoActivacion.nombre == 'Rechazada'}"
+                                    for="estadoUsuario" class="col-sm-4 col-form-label">Estado Última Activación: <span
+                                        th:text="${ultimaActivacion.estadoActivacion.nombre}"
+                                        class="badge rounded-pill bg-danger">Rechazada</span>
+                                </label>
+                                <label
+                                    th:if="${ultimaActivacion != null and ultimaActivacion.estadoActivacion.nombre == 'Validado'}"
+                                    for="estadoUsuario" class="col-sm-4 col-form-label">Estado Última Activación: <span
+                                        th:text="${ultimaActivacion.estadoActivacion.nombre}"
+                                        class="badge rounded-pill bg-info">Validado</span>
+                                </label>
+                                <label th:if="${ultimaActivacion == null}" for="estadoUsuario"
+                                    class="col-sm-4 col-form-label">Estado Última Activación: <span>SIN ACTIVACIONES</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div th:replace="~{layout/plantilla :: alertas}"></div>
+    <script src="/js/datatable.js"></script>
+    <!-- Footer -->
+    <footer th:replace="~{layout/plantilla :: footer}"></footer>
+
+    <script th:inline="javascript">
+        document.querySelector('.sidebar-toggle').addEventListener('click', function () {
+            document.querySelector('.sidebar').classList.toggle('active');
+        });
+
+    </script>
+</body>
+
+</html>

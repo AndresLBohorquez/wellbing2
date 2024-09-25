@@ -1,6 +1,12 @@
 package com.devalb.wellbing2.service.Impl;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.TextStyle;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -62,6 +68,53 @@ public class OrdenServiceImpl implements OrdenService {
     @Override
     public List<Orden> getOrdenesVisiblesByUsuario(Long id) {
         return ordenRepository.findAllVisibleByUsuario(id);
+    }
+
+    @Override
+    public Map<String, Integer> getOrdenesLast6Months() {
+        Map<String, Integer> registrosMensualesOrdenes = new LinkedHashMap<>();
+
+        // Obtener los últimos 6 meses
+        for (int i = 5; i >= 0; i--) {
+            LocalDateTime fechaInicioMes = LocalDate.now().minusMonths(i).withDayOfMonth(1).atStartOfDay();
+            LocalDateTime fechaFinMes = fechaInicioMes.withDayOfMonth(fechaInicioMes.toLocalDate().lengthOfMonth())
+                    .withHour(23).withMinute(59).withSecond(59);
+
+            int cantidadOrdenes = ordenRepository.countByFechaCreacionBetween(fechaInicioMes, fechaFinMes);
+
+            registrosMensualesOrdenes.put(
+                    fechaInicioMes.getMonth().getDisplayName(TextStyle.SHORT, new Locale("es", "ES")),
+                    cantidadOrdenes);
+        }
+
+        return registrosMensualesOrdenes;
+    }
+
+    @Override
+    public Map<String, Double> getIngresosLast6Months() {
+        Map<String, Double> ingresosMensuales = new LinkedHashMap<>();
+
+        for (int i = 5; i >= 0; i--) {
+
+            LocalDateTime fechaInicioMes = LocalDate.now().minusMonths(i).withDayOfMonth(1).atStartOfDay();
+            LocalDateTime fechaFinMes = fechaInicioMes.withDayOfMonth(fechaInicioMes.toLocalDate().lengthOfMonth())
+                    .withHour(23).withMinute(59).withSecond(59);
+
+            // Sumar el total de las órdenes del mes
+            Double totalIngresos = ordenRepository.sumTotalByFechaCreacionBetween(fechaInicioMes, fechaFinMes);
+
+            // Si no hay ingresos, asignar 0.0
+            if (totalIngresos == null) {
+                totalIngresos = 0.0;
+            }
+
+            // Agregar al mapa el nombre del mes y el total de ingresos
+            ingresosMensuales.put(
+                    fechaInicioMes.getMonth().getDisplayName(TextStyle.SHORT, new Locale("es", "ES")),
+                    totalIngresos);
+        }
+
+        return ingresosMensuales;
     }
 
 }

@@ -11,7 +11,7 @@
     <head th:replace="~{layout/plantilla-admin :: navbar-admin}"></head>
 
     <!-- Sidebar -->
-    <div th:replace="~{layout/plantilla-admin :: sidebar-admin}"></div>
+    <div th:replace="~{layout/plantilla-admin :: sidebar-admin('active','','','','','','','','','')}"></div>
 
     <!-- Contenido principal -->
     <div class="main-content">
@@ -39,26 +39,32 @@
             </div>
         </div>
     </div>
-
+    
+    <div th:replace="~{layout/plantilla :: alertas}"></div>
     <!-- Footer -->
     <footer th:replace="~{layout/plantilla :: footer}"></footer>
-
     <script th:replace="~{layout/plantilla-admin :: graficas}"></script>
 
-    <script>
+    <script th:inline="javascript">
         document.querySelector('.sidebar-toggle').addEventListener('click', function () {
             document.querySelector('.sidebar').classList.toggle('active');
         });
+
+        // Obtenemos los meses y los ingresos desde el backend como un array de JavaScript
+        var incomeLabels = /*[[${ingresosMensuales.keySet()}]]*/[];
+        var incomeData = /*[[${ingresosMensuales.values()}]]*/[];
+
+        console.log(incomeData);
 
         // Gráfica de ingresos
         var ctx = document.getElementById('incomeChart').getContext('2d');
         var incomeChart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio'],
+                labels: incomeLabels, // Utiliza los meses generados desde el backend
                 datasets: [{
                     label: 'Ingresos',
-                    data: [1200, 1900, 3000, 5000, 2300, 3200],
+                    data: incomeData,  // Utiliza los valores de ingresos generados desde el backend
                     borderColor: 'rgba(75, 192, 192, 1)',
                     borderWidth: 2,
                     fill: false

@@ -1,6 +1,11 @@
 package com.devalb.wellbing2.service.Impl;
 
+import java.time.LocalDate;
+import java.time.format.TextStyle;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -62,6 +67,24 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     public List<Usuario> getUsuariosVisibles() {
         return usuarioRepository.findAllVisible();
+    }
+
+    @Override
+    public Map<String, Integer> getUsuariosLast6Months() {
+        Map<String, Integer> registrosMensuales = new LinkedHashMap<>();
+
+        // Obtener los últimos 6 meses
+        for (int i = 5; i >= 0; i--) {
+            LocalDate fechaInicioMes = LocalDate.now().minusMonths(i).withDayOfMonth(1);
+            LocalDate fechaFinMes = fechaInicioMes.withDayOfMonth(fechaInicioMes.lengthOfMonth());
+
+            int cantidadUsuarios = usuarioRepository.countByFechaRegistroBetween(fechaInicioMes, fechaFinMes);
+
+            registrosMensuales.put(fechaInicioMes.getMonth().getDisplayName(TextStyle.SHORT, new Locale("es", "ES")),
+                    cantidadUsuarios);
+        }
+
+        return registrosMensuales;
     }
 
 }

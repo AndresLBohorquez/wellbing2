@@ -1,6 +1,11 @@
 package com.devalb.wellbing2.service.Impl;
 
+import java.time.LocalDate;
+import java.time.format.TextStyle;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -57,6 +62,23 @@ public class ProductoServiceImpl implements ProductoService {
     @Override
     public Double getMaxPrecioProducto() {
         return productoRepository.findMaxPrice();
+    }
+
+    @Override
+    public Map<String, Integer> getProductosLast6Months() {
+        Map<String, Integer> registrosMensualesProductos = new LinkedHashMap<>();
+
+        for (int i = 5; i >= 0; i--) {
+            LocalDate fechaInicioMes = LocalDate.now().minusMonths(i).withDayOfMonth(1);
+            LocalDate fechaFinMes = fechaInicioMes.withDayOfMonth(fechaInicioMes.lengthOfMonth());
+
+            int cantidadProductos = productoRepository.countByFechaBetween(fechaInicioMes, fechaFinMes);
+            registrosMensualesProductos.put(
+                    fechaInicioMes.getMonth().getDisplayName(TextStyle.SHORT, new Locale("es", "ES")),
+                    cantidadProductos);
+        }
+
+        return registrosMensualesProductos;
     }
 
 }

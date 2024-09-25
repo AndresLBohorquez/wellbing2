@@ -109,6 +109,7 @@ body {
     margin: 0;
 }
 
+/*alertas*/
 .swal2-styled {
     transition: none !important;
     box-shadow: none !important;
@@ -604,51 +605,71 @@ input[type="number"]::-webkit-outer-spin-button {
 
 /* Estados de la orden */
 .estado-pendiente {
-    background-color: #ffc107; /* Amarillo */
-    color: #000; /* Texto negro */
+    background-color: #ffc107;
+    /* Amarillo */
+    color: #000;
+    /* Texto negro */
 }
 
 .estado-en-proceso {
-    background-color: #fd7e14; /* Naranja */
-    color: #fff; /* Texto blanco */
+    background-color: #fd7e14;
+    /* Naranja */
+    color: #fff;
+    /* Texto blanco */
 }
 
 .estado-enviado {
-    background-color: #0dcaf0; /* Azul claro */
-    color: #fff; /* Texto blanco */
+    background-color: #0dcaf0;
+    /* Azul claro */
+    color: #fff;
+    /* Texto blanco */
 }
 
 .estado-entregado {
-    background-color: #28a745; /* Verde */
-    color: #fff; /* Texto blanco */
+    background-color: #28a745;
+    /* Verde */
+    color: #fff;
+    /* Texto blanco */
 }
 
 .estado-cancelado {
-    background-color: #dc3545; /* Rojo */
-    color: #fff; /* Texto blanco */
+    background-color: #dc3545;
+    /* Rojo */
+    color: #fff;
+    /* Texto blanco */
 }
 
 .estado-devuelto {
-    background-color: #6f42c1; /* Violeta */
-    color: #fff; /* Texto blanco */
+    background-color: #6f42c1;
+    /* Violeta */
+    color: #fff;
+    /* Texto blanco */
 }
 
 .estado-reembolsado {
-    background-color: #155724; /* Verde oscuro */
-    color: #fff; /* Texto blanco */
+    background-color: #155724;
+    /* Verde oscuro */
+    color: #fff;
+    /* Texto blanco */
 }
 
 .estado-pago-pendiente {
-    background-color: #ffeeba; /* Amarillo claro */
-    color: #000; /* Texto negro */
+    background-color: #ffeeba;
+    /* Amarillo claro */
+    color: #000;
+    /* Texto negro */
 }
 
 .estado-pago-rechazado {
-    background-color: #b21f2d; /* Rojo oscuro */
-    color: #fff; /* Texto blanco */
+    background-color: #b21f2d;
+    /* Rojo oscuro */
+    color: #fff;
+    /* Texto blanco */
 }
 
 .estado-en-hold {
-    background-color: #6c757d; /* Gris */
-    color: #fff; /* Texto blanco */
+    background-color: #6c757d;
+    /* Gris */
+    color: #fff;
+    /* Texto blanco */
 }

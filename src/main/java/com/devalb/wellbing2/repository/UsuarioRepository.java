@@ -1,5 +1,6 @@
 package com.devalb.wellbing2.repository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -19,4 +20,6 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
     @Query(value = "SELECT * FROM usuario WHERE visible = true", nativeQuery = true)
     public List<Usuario> findAllVisible();
+
+    public int countByFechaRegistroBetween(LocalDate fechaInicio, LocalDate fechaFin);
 }

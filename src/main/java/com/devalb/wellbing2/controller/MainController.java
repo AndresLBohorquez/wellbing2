@@ -73,11 +73,4 @@ public class MainController {
         return "terminos_condiciones";
     }
 
-    @GetMapping("/admin")
-    public String goToAdmin() {
-        return "admin/index";
-    }
-
-    
-
 }

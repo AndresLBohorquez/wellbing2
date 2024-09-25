@@ -1,6 +1,7 @@
 package com.devalb.wellbing2.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.devalb.wellbing2.entity.Usuario;
 
@@ -23,5 +24,7 @@ public interface UsuarioService {
     public Usuario getUsuarioByCodigoUsuario(String codigoUsuario);
 
     public List<Usuario> getUsuariosVisibles();
+
+    public Map<String, Integer> getUsuariosLast6Months();
 
 }

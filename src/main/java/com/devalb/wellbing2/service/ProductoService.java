@@ -1,6 +1,7 @@
 package com.devalb.wellbing2.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.devalb.wellbing2.entity.Producto;
 
@@ -21,4 +22,6 @@ public interface ProductoService {
     public List<Producto> getProductosByCategoria(Long id);
 
     public Double getMaxPrecioProducto();
+
+    public Map<String, Integer> getProductosLast6Months();
 }
