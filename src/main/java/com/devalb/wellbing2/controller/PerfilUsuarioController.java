@@ -392,8 +392,7 @@ public class PerfilUsuarioController {
         wellPoints.setTotal(usuario.getWellPoints() - valor);
         wellPoints.setFecha(fechaActual);
         WellPoints savedWellPoints = wellPointsService.addWellPoints(wellPoints);
-        Long wellPointsId = savedWellPoints.getId();
-        activacion.setWellPointsId(wellPointsId);
+        activacion.setWellPoints(savedWellPoints);
 
         usuario.setWellPoints(usuario.getWellPoints() - valor);
         usuarioService.addUsuario(usuario);
@@ -401,7 +400,7 @@ public class PerfilUsuarioController {
 
     private void guardarArchivo(MultipartFile archivo, String nombreArchivo) throws IOException {
         Path ruta = Paths.get("src/main/resources/static/images/activaciones/" + nombreArchivo);
-        Files.createDirectories(ruta.getParent()); 
+        Files.createDirectories(ruta.getParent());
         Files.write(ruta, archivo.getBytes());
     }
 

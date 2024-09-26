@@ -31,7 +31,9 @@
                         <img th:src="@{/images/productos/} + ${producto.imagen}" class="d-block" alt="Imagen">
                     </a>
                     <div class="carousel-caption d-none d-md-block">
-                        <h5 th:text="${producto.nombre}">Producto Destacado 1</h5>
+                        <h5>
+                            <span class="bg-nombre-prod" th:text="${producto.nombre}">Producto Destacado 1</span>
+                        </h5>
                         <p
                             th:text="${producto.descripcion.length() > 85 ? producto.descripcion.substring(0, 85) + '...' : producto.descripcion}">
                             Descripción del producto destacado 1.

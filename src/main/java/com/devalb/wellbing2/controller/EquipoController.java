@@ -3,12 +3,15 @@ package com.devalb.wellbing2.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.devalb.wellbing2.entity.Activacion;
 import com.devalb.wellbing2.entity.Equipo;
@@ -152,6 +155,64 @@ public class EquipoController {
         model.addAttribute("listaEquipo", equipos);
         model.addAttribute("ultimaActivacion", activacionService.getUltimActivacion(usuarioActual.getId()));
         model.addAttribute("equipo", new Equipo());
+    }
+
+    @GetMapping("/admin/equipo")
+    @PreAuthorize("hasAnyAuthority('Admin', 'Secretario', 'Tesorero')")
+    public String goToEquipo(Model model, Authentication auth) {
+        vService.cargarVistasAdmin(model, auth);
+        model.addAttribute("listaEquipos", equipoService.getEquipos());
+        return "admin/equipo";
+    }
+
+    @GetMapping("/admin/equipo/aprobar/{id}")
+    @PreAuthorize("hasAnyAuthority('Admin', 'Secretario', 'Tesorero')")
+    public String aprobarEquipo(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        try {
+            Equipo equipo = equipoService.getEquipoById(id);
+            equipo.setEstadoEquipo(estadoEquipoService.getByNombreEstado("Aprobado"));
+            equipoService.editEquipo(equipo);
+            log.info("Equipo aprobado con éxito. ID: {}", id);
+            redirectAttributes.addFlashAttribute("messageOK", "Equipo aprobado con éxito");
+            return "redirect:/admin/equipo";
+        } catch (Exception e) {
+            log.error("Error al aprobar equipo. ID: {}", id, e);
+            redirectAttributes.addFlashAttribute("messageKO", "Error al aprobar equipo");
+            return "redirect:/admin/equipo";
+        }
+    }
+
+    @GetMapping("/admin/equipo/pendiente/{id}")
+    @PreAuthorize("hasAnyAuthority('Admin', 'Secretario', 'Tesorero')")
+    public String pendienteEquipo(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        try {
+            Equipo equipo = equipoService.getEquipoById(id);
+            equipo.setEstadoEquipo(estadoEquipoService.getByNombreEstado("Pendiente"));
+            equipoService.editEquipo(equipo);
+            log.info("Equipo puesto en pendiente con éxito. ID: {}", id);
+            redirectAttributes.addFlashAttribute("messageOK", "Equipo puesto en pendiente con éxito");
+            return "redirect:/admin/equipo";
+        } catch (Exception e) {
+            log.error("Error al poner equipo en pendiente. ID: {}", id, e);
+            redirectAttributes.addFlashAttribute("messageKO", "Error al poner equipo en pendiente");
+            return "redirect:/admin/equipo";
+        }
+    }
+
+    @GetMapping("/admin/equipo/rechazar/{id}")
+    public String rechazarEquipo(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        try {
+            Equipo equipo = equipoService.getEquipoById(id);
+            equipo.setEstadoEquipo(estadoEquipoService.getByNombreEstado("Rechazado"));
+            equipoService.editEquipo(equipo);
+            log.info("Equipo rechazado con éxito. ID: {}", id);
+            redirectAttributes.addFlashAttribute("messageOK", "Equipo rechazado con éxito");
+            return "redirect:/admin/equipo";
+        } catch (Exception e) {
+            log.error("Error al rechazar equipo. ID: {}", id, e);
+            redirectAttributes.addFlashAttribute("messageKO", "Error al rechazar equipo");
+            return "redirect:/admin/equipo";
+        }
     }
 
 }

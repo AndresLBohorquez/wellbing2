@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="es">
+
+<!-- Head -->
+
+<head th:replace="~{layout/plantilla-admin :: head-admin('Equipo - ' + ${rolPrincipal})}"></head>
+
+<body>
+
+    <!-- Navbar -->
+
+    <head th:replace="~{layout/plantilla-admin :: navbar-admin}"></head>
+
+    <!-- Sidebar -->
+    <div th:replace="~{layout/plantilla-admin :: sidebar-admin('','','','','','active','','','','')}"></div>
+
+    <!-- Contenido principal -->
+    <div class="main-content">
+        <div class="content container-fluid">
+            <!-- Título -->
+            <h2 class="section-title">Equipo</h2>
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <table id="example" class="bg-white rounded shadow-sm">
+                                <thead>
+                                    <tr>
+                                        <th>Nombre</th>
+
+                                        <th>Usuario</th>
+                                        <th class="align-center">Solicitud</th>
+                                        <th class="align-center">Nombre</th>
+
+                                        <th>Usuario</th>
+                                        <th class="align-center">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="equipo : ${listaEquipos}">
+                                        <td>
+                                            <a class="enlace-no-subr"
+                                                th:href="@{/admin/usuarios/detalle/{id}(id=${equipo.usuario.id})}"
+                                                th:text="${equipo.usuario.nombre.split(' ')[0]} + ' ' + ${equipo.usuario.apellido.split(' ')[0]}"></a>
+                                        </td>
+                                        <td><a class="enlace-no-subr"
+                                                th:href="@{/admin/usuarios/detalle/{id}(id=${equipo.usuario.id})}"
+                                                th:text="${equipo.usuario.username}"></a>
+                                        </td>
+
+                                        <td th:if="${equipo.estadoEquipo.nombre == 'Aprobado'}"><span
+                                                class="badge rounded-pill bg-success">Aprobado</span></td>
+                                        <td th:if="${equipo.estadoEquipo.nombre == 'Pendiente'}"><span
+                                                class="badge rounded-pill bg-warning">Pendiente</span></td>
+                                        <td th:if="${equipo.estadoEquipo.nombre == 'Rechazado'}"><span
+                                                class="badge rounded-pill bg-danger">Rechazado</span></td>
+
+                                        <td>
+                                            <a class="enlace-no-subr"
+                                                th:href="@{/admin/usuarios/detalle/{id}(id=${equipo.idHijo.id})}"
+                                                th:text="${equipo.idHijo.nombre.split(' ')[0]} + ' ' + ${equipo.idHijo.apellido.split(' ')[0]}"></a>
+                                        </td>
+                                        <td>
+                                            <a class="enlace-no-subr"
+                                                th:href="@{/admin/usuarios/detalle/{id}(id=${equipo.idHijo.id})}"
+                                                th:text="${equipo.idHijo.username}"></a>
+                                        </td>
+
+                                        <td class="text-center">
+
+                                            <a th:href="@{/admin/equipo/aprobar/{id}(id=${equipo.id})}"
+                                                class="custom-icon text-success me-2">
+                                                <i class="bi bi-check-circle-fill"></i>
+                                            </a>
+                                            <a th:href="@{/admin/equipo/pendiente/{id}(id=${equipo.id})}"
+                                                class="custom-icon text-warning me-2">
+                                                <i class="bi bi-dash-circle-fill"></i>
+                                            </a>
+
+                                            <a th:href="@{/admin/equipo/rechazar/{id}(id=${equipo.id})}"
+                                                class="custom-icon text-danger me-2">
+                                                <i class="bi bi-ban-fill"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="~{layout/plantilla :: alertas}"></div>
+    <script src="/js/datatable.js"></script>
+    <!-- Footer -->
+    <footer th:replace="~{layout/plantilla :: footer}"></footer>
+
+    <script th:inline="javascript">
+        document.querySelector('.sidebar-toggle').addEventListener('click', function () {
+            document.querySelector('.sidebar').classList.toggle('active');
+        });
+
+    </script>
+</body>
+
+</html>

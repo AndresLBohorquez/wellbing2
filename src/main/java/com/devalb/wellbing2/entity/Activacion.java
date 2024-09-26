@@ -36,7 +36,9 @@ public class Activacion {
     @Transient
     private MultipartFile comprobanteFile;
 
-    private Long wellPointsId;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(nullable = true)
+    private WellPoints wellPoints;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(nullable = false)

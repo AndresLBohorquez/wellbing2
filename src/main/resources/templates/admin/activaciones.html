@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="es">
+
+<!-- Head -->
+
+<head th:replace="~{layout/plantilla-admin :: head-admin('Activaciones - ' + ${rolPrincipal})}"></head>
+
+<body>
+
+    <!-- Navbar -->
+
+    <head th:replace="~{layout/plantilla-admin :: navbar-admin}"></head>
+
+    <!-- Sidebar -->
+    <div th:replace="~{layout/plantilla-admin :: sidebar-admin('','','','','active','','','','','')}"></div>
+
+    <!-- Contenido principal -->
+    <div class="main-content">
+        <div class="content container-fluid">
+            <!-- Título -->
+            <h2 class="section-title">Activaciones</h2>
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="d-flex justify-content-end">
+                            <a class="btn btn-success btn-circular" th:href="@{/admin/categorias/crear}">
+                                <i class="bi bi-plus-circle"></i>
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <table id="example" class="custom-table bg-white rounded shadow-sm">
+                                <thead class="custom-table-header text-center">
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th>Fecha</th>
+                                        <th>Fecha Fin</th>
+                                        <th>Valor</th>
+                                        <th>Estado</th>
+                                        <th>WellPoints</th>
+                                        <th>Acciones</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="activacion : ${activaciones}">
+                                        <td>
+                                            <a class="enlace-no-subr"
+                                                th:href="@{/admin/usuarios/detalle/{id}(id=${activacion.usuario.id})}"
+                                                th:text="${activacion.usuario.nombre} + ' ' + ${activacion.usuario.apellido}">
+                                            </a>
+                                        </td>
+                                        <td th:text="${activacion.fecha}"></td>
+                                        <td th:text="${activacion.fechaFin}"></td>
+                                        <td th:text="${activacion.valor}"></td>
+                                        <td class="text-center">
+                                            <span th:switch="${activacion.estadoActivacion.nombre}">
+                                                <span th:case="'Pre Activado'" class="badge rounded-pill bg-primary">Pre
+                                                    Activado</span>
+                                                <span th:case="Activado"
+                                                    class="badge rounded-pill bg-success">Activado</span>
+                                                <span th:case="Inactivo"
+                                                    class="badge rounded-pill bg-dark">Inactivo</span>
+                                                <span th:case="Rechazada"
+                                                    class="badge rounded-pill bg-danger">Rechazada</span>
+                                                <span th:case="Validado"
+                                                    class="badge rounded-pill bg-info">Validado</span>
+                                            </span>
+                                        </td>
+                                        <td th:if="${activacion.wellPoints != null}">
+                                            <a class="text-success" href="#" data-bs-toggle="modal"
+                                                data-bs-target="#wellpoints-modal-{{activacion.wellPoints.id}}">
+                                                <i class="bi bi-info-circle-fill"></i>
+                                            </a>
+                                        </td>
+                                        <td th:if="${activacion.wellPoints == null}" th:text="'NO'"></td>
+                                        <td class="text-center">
+                                            <a th:href="@{/admin/activaciones/preactivar/{id}(id=${activacion.id})}"
+                                                class="custom-icon text-primary me-2">
+                                                <i class="bi bi-arrow-left-right"></i>
+                                            </a>
+                                            <a th:href="@{/admin/activaciones/activar/{id}(id=${activacion.id})}"
+                                                class="custom-icon text-success me-2">
+                                                <i class="bi bi-arrow-left-right"></i>
+                                            </a>
+                                            <a th:href="@{/admin/activaciones/inactivar/{id}(id=${activacion.id})}"
+                                                class="custom-icon text-dark me-2">
+                                                <i class="bi bi-arrow-left-right"></i>
+                                            </a>
+
+                                            <a th:href="@{/admin/activaciones/rechazar/{id}(id=${activacion.id})}"
+                                                class="custom-icon text-danger me-2">
+                                                <i class="bi bi-arrow-left-right"></i>
+                                            </a>
+                                            <a th:href="@{/admin/activaciones/validar/{id}(id=${activacion.id})}"
+                                                class="custom-icon text-info me-2">
+                                                <i class="bi bi-arrow-left-right"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+    <!-- Modal dinámico -->
+    <div th:each="activacion : ${activaciones}">
+        <div th:if="${activacion.wellPoints != null}" id="wellpoints-modal-{{activacion.wellPoints.id}}" class="modal"
+            tabindex="-1">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Detalles de WellPoints</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+
+                    </div>
+                    <div class="modal-body">
+
+                        <p>Usuario: <span
+                                th:text="${activacion.wellPoints.usuario.nombre} + ' ' + ${activacion.wellPoints.usuario.apellido}"></span>
+                        </p>
+                        <p>Acción: <span th:text="${activacion.wellPoints.accion.nombre}"></span></p>
+                        <p>Descripción: <span th:text="${activacion.wellPoints.descripcion}"></span></p>
+                        <p>Cantidad: <span th:text="${activacion.wellPoints.cantidad}"></span></p>
+                        <p>Total: <span th:text="${activacion.wellPoints.total}"></span></p>
+                        <p>Fecha: <span th:text="${activacion.wellPoints.fecha}"></span></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="~{layout/plantilla :: alertas}"></div>
+    <script src="/js/datatable.js"></script>
+    <!-- Footer -->
+    <footer th:replace="~{layout/plantilla :: footer}"></footer>
+
+    <script th:inline="javascript">
+        document.querySelector('.sidebar-toggle').addEventListener('click', function () {
+            document.querySelector('.sidebar').classList.toggle('active');
+        });
+
+    </script>
+</body>
+
+</html>
