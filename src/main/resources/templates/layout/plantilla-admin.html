@@ -93,45 +93,45 @@
         </li>
         <li class="nav-item mt-3"
             th:if="${rolPrincipal == 'Admin' || rolPrincipal == 'Secretario' || rolPrincipal == 'Domiciliario'}">
-            <a href="#" th:class="|nav-link ${categorias}|">
+            <a href="/admin/categorias" th:class="|nav-link ${categorias}|">
                 <i class="bi bi-tags-fill"></i> Categorias
             </a>
         </li>
         <li class="nav-item mt-3"
             th:if="${rolPrincipal == 'Admin' || rolPrincipal == 'Secretario' || rolPrincipal == 'Domiciliario'}">
-            <a href="#" th:class="|nav-link ${productos}|">
+            <a href="/admin/productos" th:class="|nav-link ${productos}|">
                 <i class="bi bi-cart-check-fill"></i> Productos
             </a>
         </li>
         <li class="nav-item mt-3"
             th:if="${rolPrincipal == 'Admin' || rolPrincipal == 'Secretario' || rolPrincipal == 'Tesorero'}">
-            <a href="#" th:class="|nav-link ${activaciones}|">
+            <a href="/admin/activaciones" th:class="|nav-link ${activaciones}|">
                 <i class="fas fa-bolt"></i> Activaciones
             </a>
         </li>
         <li class="nav-item mt-3"
             th:if="${rolPrincipal == 'Admin' || rolPrincipal == 'Secretario' || rolPrincipal == 'Tesorero'}">
-            <a href="#" th:class="|nav-link ${equipo}|">
+            <a href="/admin/equipo" th:class="|nav-link ${equipo}|">
                 <i class="fas fa-users"></i> Equipo
             </a>
         </li>
         <li class="nav-item mt-3" th:if="${rolPrincipal == 'Admin' || rolPrincipal == 'Domiciliario'}">
-            <a href="#" th:class="|nav-link ${ordenes}|">
+            <a href="/admin/ordenes" th:class="|nav-link ${ordenes}|">
                 <i class="fas fa-box"></i> Órdenes
             </a>
         </li>
         <li class="nav-item mt-3" th:if="${rolPrincipal == 'Admin' || rolPrincipal == 'Tesorero'}">
-            <a href="#" th:class="|nav-link ${pagos}|">
+            <a href="/admin/pagos" th:class="|nav-link ${pagos}|">
                 <i class="bi bi-cash-stack"></i> Pagos
             </a>
         </li>
         <li class="nav-item mt-3" th:if="${rolPrincipal == 'Admin' || rolPrincipal == 'Secretario'}">
-            <a href="#" th:class="|nav-link ${pqrs}|">
+            <a href="/admin/pqrs" th:class="|nav-link ${pqrs}|">
                 <i class="fas fa-comments"></i> PQRS
             </a>
         </li>
         <li class="nav-item mt-3" th:if="${rolPrincipal == 'Admin'}">
-            <a href="#" th:class="|nav-link ${wellpoints}|">
+            <a href="/admin/wellpoints" th:class="|nav-link ${wellpoints}|">
                 <i class="fas fa-coins"></i> WellPoints
             </a>
         </li>

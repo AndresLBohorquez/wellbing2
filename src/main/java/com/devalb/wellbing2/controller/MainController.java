@@ -5,6 +5,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import com.devalb.wellbing2.service.CategoriaService;
 import com.devalb.wellbing2.service.ProductoService;
@@ -38,7 +39,7 @@ public class MainController {
         vService.cargarVistas(model, auth);
         model.addAttribute("maxPrecio", productoService.getMaxPrecioProducto());
         model.addAttribute("listaCategorias", categoriaService.getCategorias());
-        model.addAttribute("listaProductos", productoService.getProductos());
+        model.addAttribute("listaProductos", productoService.getProductosVisibles());
 
         return "productos";
     }
@@ -49,9 +50,10 @@ public class MainController {
         return "nosotros";
     }
 
-    @GetMapping("/producto_detalle")
-    public String goToProductoDetalle(Model model, Authentication auth) {
+    @GetMapping("/producto_detalle/{id}")
+    public String goToProductoDetalle(@PathVariable Long id, Model model, Authentication auth) {
         vService.cargarVistas(model, auth);
+        model.addAttribute("producto", productoService.getProductoById(id));
         return "producto_detalle";
     }
 

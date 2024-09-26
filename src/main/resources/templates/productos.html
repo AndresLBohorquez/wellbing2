@@ -40,14 +40,15 @@
         </div>
 
         <!-- Listado de productos -->
-        <div class="row mx-auto" id="productList">
+        <div class="row mx-auto justify-content-around" id="productList">
             <div th:each="producto : ${listaProductos}" class="col-md-4 mb-4 product" th:data-id="${producto.id}"
                 th:data-name="${producto.nombre}" th:data-category="${producto.categoria.nombre}"
                 th:data-price="${producto.precio}">
 
                 <div class="card card-producto">
-                    <a th:href="@{/producto_detalle}">
-                        <img th:src="@{/images/productos/} + ${producto.imagen}" class="card-img-top" alt="ProductoImg">
+                    <a th:href="@{/producto_detalle/{id}(id=${producto.id})}">
+                        <img th:src="@{/images/productos/} + ${producto.imagen}" class="card-img-top" alt="ProductoImg"
+                            style="height: 220px; object-fit: cover;">
                     </a>
                     <div class="card-body">
                         <h5 th:text="${producto.nombre}" class="card-title"></h5>

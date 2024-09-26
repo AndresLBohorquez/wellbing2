@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="es">
+
+<!-- Head -->
+
+<head th:replace="~{layout/plantilla-admin :: head-admin('Detalle de producto - ' + ${rolPrincipal})}"></head>
+
+<body>
+
+    <!-- Navbar -->
+
+    <head th:replace="~{layout/plantilla-admin :: navbar-admin}"></head>
+
+    <!-- Sidebar -->
+    <div th:replace="~{layout/plantilla-admin :: sidebar-admin('','','','active','','','','','','')}"></div>
+
+    <!-- Contenido principal -->
+    <div class="main-content">
+        <div class="content container-fluid">
+            <!-- Título -->
+            <h2 class="section-title">Detalle de producto</h2>
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="card card-content">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    
+                                    <img th:src="@{'/images/productos/'} + ${producto.imagen}" alt="Imagen del producto"
+                                        class="img-fluid">
+                                </div>
+                                <div class="col-md-6">
+                                    
+                                    <p><strong>Nombre:</strong> <span th:text="${producto.nombre}"></span></p>
+                                    <p><strong>Precio:</strong> <span th:text="${producto.precio}"></span></p>
+                                    <p><strong>Bono:</strong> <span th:text="${producto.bono}"></span></p>
+                                    <p><strong>Descripción:</strong> <span th:text="${producto.descripcion}"></span></p>
+                                    <p><strong>Fecha:</strong> <span
+                                            th:text="${#temporals.format(producto.fecha, 'dd/MM/yyyy')}"></span></p>
+                                    <p><strong>Categoría:</strong> <span th:text="${producto.categoria.nombre}"></span>
+                                    </p>
+                                    <p><strong>Visible:</strong>
+                                        <span th:switch="${producto.visible}">
+                                            <span th:case="true" class="badge rounded-pill bg-success">Si</span>
+                                            <span th:case="false" class="badge rounded-pill bg-danger">No</span>
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="~{layout/plantilla :: alertas}"></div>
+    <!-- Footer -->
+    <footer th:replace="~{layout/plantilla :: footer}"></footer>
+
+    <script th:inline="javascript">
+        document.querySelector('.sidebar-toggle').addEventListener('click', function () {
+            document.querySelector('.sidebar').classList.toggle('active');
+        });
+
+    </script>
+</body>
+
+</html>

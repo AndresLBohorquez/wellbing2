@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="es">
+
+<!-- Head -->
+
+<head th:replace="~{layout/plantilla-admin :: head-admin('Productos - ' + ${rolPrincipal})}"></head>
+
+<body>
+
+    <!-- Navbar -->
+
+    <head th:replace="~{layout/plantilla-admin :: navbar-admin}"></head>
+
+    <!-- Sidebar -->
+    <div th:replace="~{layout/plantilla-admin :: sidebar-admin('','','','active','','','','','','')}"></div>
+
+    <!-- Contenido principal -->
+    <div class="main-content">
+        <div class="content container-fluid">
+            <!-- Título -->
+            <h2 class="section-title">Productos</h2>
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="card card-content">
+                        <div class="d-flex justify-content-end">
+                            <a class="btn btn-success btn-circular" th:href="@{/admin/productos/crear}">
+                                <i class="bi bi-plus-circle"></i>
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <table id="example" class="custom-table bg-white rounded shadow-sm">
+                                <thead class="custom-table-header text-center">
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th>Precio</th>
+                                        <th>Bono</th>
+                                        <th>Descripción</th>
+                                        <th>Fecha</th>
+                                        <th>Imagen</th>
+                                        <th>Categoría</th>
+                                        <th>Visible</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="producto : ${productos}">
+
+                                        <td><a class="enlace-no-subr"
+                                                th:href="@{/admin/productos/detalle/{id}(id=${producto.id})}"
+                                                th:text="${producto.nombre}"></a></td>
+                                        <td th:text="${producto.precio}"></td>
+                                        <td th:text="${producto.bono}"></td>
+                                        <td
+                                            th:text="${producto.descripcion.length() > 30 ? producto.descripcion.substring(0, 30) + '...' : producto.descripcion}">
+                                        </td>
+                                        <td th:text="${#temporals.format(producto.fecha, 'dd/MM/yyyy')}"></td>
+                                        <td>
+                                            <a class="enlace-no-subr"
+                                                th:href="@{'/images/productos/'} + ${producto.imagen}" target="_blank">
+                                                Imagen
+                                            </a>
+                                        </td>
+                                        <td th:text="${producto.categoria.nombre}"></td>
+                                        <td class="text-center">
+                                            <span th:switch="${producto.visible}">
+                                                <span th:case="true" class="badge rounded-pill bg-success">Si</span>
+                                                <span th:case="false" class="badge rounded-pill bg-danger">No</span>
+                                            </span>
+                                        </td>
+                                        <td class="text-center">
+                                            <!-- Icono de editar -->
+                                            <a th:href="@{/admin/productos/editar/{id}(id=${producto.id})}"
+                                                class="custom-icon text-success me-2">
+                                                <i class="bi bi-pencil-square"></i>
+                                            </a>
+                                            <!-- Icono de eliminar -->
+                                            <a th:href="@{/admin/productos/eliminar/{id}(id=${producto.id})}"
+                                                class="custom-icon text-danger me-2">
+                                                <i class="bi bi-trash3-fill"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="~{layout/plantilla :: alertas}"></div>
+    <script src="/js/datatable.js"></script>
+    <!-- Footer -->
+    <footer th:replace="~{layout/plantilla :: footer}"></footer>
+
+    <script th:inline="javascript">
+        document.querySelector('.sidebar-toggle').addEventListener('click', function () {
+            document.querySelector('.sidebar').classList.toggle('active');
+        });
+
+    </script>
+
+</body>
+
+</html>

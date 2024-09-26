@@ -39,7 +39,7 @@
                                 <tbody>
                                     <tr th:each="usuario : ${usuarios}">
                                         <td>
-                                            <a th:href="@{/admin/usuarios/detalle/{id}(id=${usuario.id})}" class="enlace-detalle-usuario">
+                                            <a th:href="@{/admin/usuarios/detalle/{id}(id=${usuario.id})}" class="enlace-no-subr">
                                                 [[${usuario.nombre} + ' ' + ${usuario.apellido}]]
                                             </a>
                                         </td>

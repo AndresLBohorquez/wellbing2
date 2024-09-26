@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="es">
+
+<!-- Head -->
+
+<head th:replace="~{layout/plantilla-admin :: head-admin('Categorías - ' + ${rolPrincipal})}"></head>
+
+<body>
+
+    <!-- Navbar -->
+
+    <head th:replace="~{layout/plantilla-admin :: navbar-admin}"></head>
+
+    <!-- Sidebar -->
+    <div th:replace="~{layout/plantilla-admin :: sidebar-admin('','','active','','','','','','','')}"></div>
+
+    <!-- Contenido principal -->
+    <div class="main-content">
+        <div class="content container-fluid">
+            <!-- Título -->
+            <h2 class="section-title">Categorías</h2>
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="d-flex justify-content-end">
+                            <a class="btn btn-success btn-circular" th:href="@{/admin/categorias/crear}">
+                                <i class="bi bi-plus-circle"></i>
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <table id="example" class="custom-table bg-white rounded shadow-sm">
+                                <thead class="custom-table-header text-center">
+                                    <tr>
+                                        <th>Nombre</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="categoria : ${listaCategorias}">
+                                        <td>
+                                            <a class="enlace-no-subr" th:href="@{/admin/categorias/editar/{id}(id=${categoria.id})}"
+                                                th:text="${categoria.nombre}">
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+    <div th:replace="~{layout/plantilla :: alertas}"></div>
+    <script src="/js/datatable.js"></script>
+    <!-- Footer -->
+    <footer th:replace="~{layout/plantilla :: footer}"></footer>
+
+    <script th:inline="javascript">
+        document.querySelector('.sidebar-toggle').addEventListener('click', function () {
+            document.querySelector('.sidebar').classList.toggle('active');
+        });
+
+    </script>
+</body>
+
+</html>

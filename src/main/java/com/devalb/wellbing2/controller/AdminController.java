@@ -220,59 +220,47 @@ public class AdminController {
         return "redirect:/admin/usuarios";
     }
 
-    @GetMapping("/admin/categorias")
-    @PreAuthorize("hasAnyAuthority('Admin', 'Secretario', 'Domiciliario')")
-    public String goToCategorias(Model model, Authentication auth) {
-
-        return "admin/categorias";
-    }
-
-    @GetMapping("/admin/productos")
-    @PreAuthorize("hasAnyAuthority('Admin', 'Secretario', 'Domiciliario')")
-    public String goToProductos(Model model, Authentication auth) {
-
-        return "admin/productos";
-    }
+    
 
     @GetMapping("/admin/activaciones")
     @PreAuthorize("hasAnyAuthority('Admin', 'Secretario', 'Tesorero')")
     public String goToActivaciones(Model model, Authentication auth) {
-
+        vService.cargarVistasAdmin(model, auth);
         return "admin/activaciones";
     }
 
     @GetMapping("/admin/equipo")
     @PreAuthorize("hasAnyAuthority('Admin', 'Secretario', 'Tesorero')")
     public String goToEquipo(Model model, Authentication auth) {
-
+        vService.cargarVistasAdmin(model, auth);
         return "admin/equipo";
     }
 
     @GetMapping("/admin/ordenes")
     @PreAuthorize("hasAnyAuthority('Admin', 'Domiciliario')")
     public String goToOrdenes(Model model, Authentication auth) {
-
+        vService.cargarVistasAdmin(model, auth);
         return "admin/ordenes";
     }
 
     @GetMapping("/admin/pagos")
     @PreAuthorize("hasAnyAuthority('Admin', 'Tesorero')")
     public String goToPagos(Model model, Authentication auth) {
-
+        vService.cargarVistasAdmin(model, auth);
         return "admin/pagos";
     }
 
     @GetMapping("/admin/pqrs")
     @PreAuthorize("hasAnyAuthority('Admin', 'Secretario')")
     public String goToPqrs(Model model, Authentication auth) {
-
+        vService.cargarVistasAdmin(model, auth);
         return "admin/pqrs";
     }
 
     @GetMapping("/admin/wellpoints")
     @PreAuthorize("hasAuthority('Admin')")
     public String goTowellpoints(Model model, Authentication auth) {
-
+        vService.cargarVistasAdmin(model, auth);
         return "admin/wellpoints";
     }
 

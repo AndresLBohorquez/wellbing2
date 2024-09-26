@@ -162,7 +162,7 @@ canvas {
     /* Color personalizado para el encabezado */
     color: white;
     /* Texto blanco en el encabezado */
-    font-size: 0.8rem;
+    font-size: 0.7rem;
     /* Tamaño de letra más pequeño para los títulos */
     text-transform: uppercase;
     /* Mayúsculas en los títulos */
@@ -175,7 +175,7 @@ canvas {
 .custom-table td {
     border: 1px solid rgba(30, 153, 143, 0.4);
     /* Color de los bordes de las celdas */
-    padding: 8px;
+    padding: 4px;
     /* Relleno en las celdas */
     text-align: left;
     /* Alineación del texto */
@@ -216,7 +216,40 @@ canvas {
     border-radius: 25% 10%;
 }
 
-.enlace-detalle-usuario {
+.enlace-no-subr {
     color: #337ab7;
     text-decoration: none;
+}
+
+.col-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-circular {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    font-size: 24px;
+    line-height: 40px;
+    text-align: center;
+}
+
+.sidebar {
+    overflow-y: auto;
+    max-height: 100vh;
+    margin-bottom: 68px;
+
+}
+
+.textarea-edit-prod {
+    height: 150px;
+    resize: none;
+}
+
+.img-edit-prod {
+    height: 150px;
+    width: auto;
 }
