@@ -227,12 +227,7 @@ public class AdminController {
     
 
 
-    @GetMapping("/admin/pqrs")
-    @PreAuthorize("hasAnyAuthority('Admin', 'Secretario')")
-    public String goToPqrs(Model model, Authentication auth) {
-        vService.cargarVistasAdmin(model, auth);
-        return "admin/pqrs";
-    }
+    
 
     @GetMapping("/admin/wellpoints")
     @PreAuthorize("hasAuthority('Admin')")

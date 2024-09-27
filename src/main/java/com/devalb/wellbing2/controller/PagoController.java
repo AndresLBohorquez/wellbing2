@@ -132,6 +132,7 @@ public class PagoController {
     }
 
     @PostMapping("/admin/pagos/editar/{id}")
+    @PreAuthorize("hasAnyAuthority('Admin', 'Tesorero')")
     public String editarEstadoPago(@PathVariable Long id, @RequestParam("estadoPago") String estadoPago,
             RedirectAttributes redirectAttributes) {
         Pago pago = pagoService.getPagoById(id);
@@ -144,6 +145,7 @@ public class PagoController {
     }
 
     @PostMapping("/admin/pagos/eliminar/{id}")
+    @PreAuthorize("hasAnyAuthority('Admin', 'Tesorero')")
     public String eliminarPago(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         pagoService.deletePago(id);
         redirectAttributes.addFlashAttribute("messageOK", "Pago eliminado correctamente");

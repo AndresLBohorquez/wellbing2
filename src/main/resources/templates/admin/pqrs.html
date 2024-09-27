@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="es">
+
+<!-- Head -->
+
+<head th:replace="~{layout/plantilla-admin :: head-admin('PQRS - ' + ${rolPrincipal})}"></head>
+
+<body>
+
+    <!-- Navbar -->
+
+    <head th:replace="~{layout/plantilla-admin :: navbar-admin}"></head>
+
+    <!-- Sidebar -->
+    <div th:replace="~{layout/plantilla-admin :: sidebar-admin('','','','','','','','','active','')}"></div>
+
+    <!-- Contenido principal -->
+    <div class="main-content">
+        <div class="content container-fluid">
+            <!-- Título -->
+            <h2 class="section-title">PQRS</h2>
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <table id="example" class="custom-table bg-white rounded shadow-sm">
+                                <thead class="custom-table-header text-center">
+                                    <tr>
+                                        <th>Descripción</th>
+                                        <th>Fecha</th>
+                                        <th>Usuario</th>
+                                        <th>Tipo</th>
+                                        <th>Estado</th>
+                                        <th>Actualizada</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="pqrs : ${listaPqrs}">
+                                        <td><a th:href="@{/admin/pqrs/responder/{id}(id=${pqrs.id})}"
+                                                th:text="${pqrs.descripcion}"></a></td>
+                                        <td th:text="${#temporals.format(pqrs.fechaRegistro, 'dd/MM/yyyy')}">
+                                        </td>
+                                        <td><a th:href="@{/admin/usuarios/detalle/{id}(id=${pqrs.usuario.id})}"
+                                                th:text="${pqrs.usuario.username}"></a></td>
+                                        <td th:text="${pqrs.tipoPqrs.nombre}"></td>
+                                        <td th:text="${pqrs.estadoPqrs.nombre}"></td>
+                                        <td th:text="${#temporals.format(pqrs.fechaActualizacion, 'dd/MM/yyyy')}">
+                                        </td>
+                                        <td class="text-center">
+                                            <a th:href="@{/admin/pqrs/abrir/{id}(id=${pqrs.id})}"
+                                                class="custom-icon text-success me-2"><i
+                                                    class="bi bi-check-circle-fill"></i></a>
+                                            <a th:href="@{/admin/pqrs/eliminar/{id}(id=${pqrs.id})}"
+                                                class="custom-icon text-danger me-2"> <i class="bi bi-ban-fill"></i></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="~{layout/plantilla :: alertas}"></div>
+    <script src="/js/datatable.js"></script>
+    <!-- Footer -->
+    <footer th:replace="~{layout/plantilla :: footer}"></footer>
+
+    <script th:inline="javascript">
+        document.querySelector('.sidebar-toggle').addEventListener('click', function () {
+            document.querySelector('.sidebar').classList.toggle('active');
+        });
+
+    </script>
+</body>
+
+</html>

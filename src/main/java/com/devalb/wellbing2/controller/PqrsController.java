@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -201,6 +203,98 @@ public class PqrsController {
         }
 
         return "redirect:/usuario/pqrs-detalle/" + pqrsId;
+    }
+
+    @GetMapping("/admin/pqrs")
+    @PreAuthorize("hasAnyAuthority('Admin', 'Secretario')")
+    public String goToPqrsAdmin(Model model, Authentication auth) {
+        vService.cargarVistasAdmin(model, auth);
+        model.addAttribute("listaPqrs", pqrsService.getPqrs());
+        return "admin/pqrs";
+    }
+
+    @RequestMapping("/admin/pqrs/abrir/{id}")
+    @PreAuthorize("hasAnyAuthority('Admin', 'Secretario')")
+    public String abrirPqrs(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        try {
+            var pqrs = pqrsService.getPqrsById(id);
+            var estadoPqrs = estadoPqrsService.getEstadoPqrsByNombre("Abierta");
+            pqrs.setEstadoPqrs(estadoPqrs);
+            pqrs.setFechaActualizacion(LocalDateTime.now());
+            pqrsService.editPqrs(pqrs);
+            redirectAttributes.addFlashAttribute("messageOK", "PQRS abierta correctamente");
+        } catch (Exception e) {
+            System.out.println("PqrsController.abrirPqrs()" + e.getMessage());
+            redirectAttributes.addFlashAttribute("messageKO", "No ha sido posible abrir la PQRS");
+        }
+        return "redirect:/admin/pqrs";
+    }
+
+    @RequestMapping("/admin/pqrs/eliminar/{id}")
+    @PreAuthorize("hasAnyAuthority('Admin', 'Secretario')")
+    public String eliminarPqrs(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        try {
+            var pqrs = pqrsService.getPqrsById(id);
+            var estadoPqrs = estadoPqrsService.getEstadoPqrsByNombre("Eliminada");
+            pqrs.setEstadoPqrs(estadoPqrs);
+            pqrs.setFechaActualizacion(LocalDateTime.now());
+            pqrsService.editPqrs(pqrs);
+            redirectAttributes.addFlashAttribute("messageOK", "PQRS eliminada correctamente");
+        } catch (Exception e) {
+            System.out.println("PqrsController.eliminarPqrs()" + e.getMessage());
+            redirectAttributes.addFlashAttribute("messageKO", "No ha sido posible eliminar la PQRS");
+        }
+        return "redirect:/admin/pqrs";
+    }
+
+    @GetMapping("/admin/pqrs/responder/{id}")
+    public String goToResponderPqrs(@PathVariable Long id, Model model, Authentication auth) {
+        vService.cargarVistasAdmin(model, auth);
+        var pqrsUsuario = pqrsService.getPqrsById(id);
+
+        List<Map.Entry<String, Mensaje>> listaMensajes = new ArrayList<>();
+        var mensajes = mensajeService.getByIdPqrs(pqrsUsuario.getId());
+
+        for (Mensaje mens : mensajes) {
+            String tipoUsuario = mens.getUsuario().getRoles().size() > 1 ? "Admin" : "User";
+            listaMensajes.add(new AbstractMap.SimpleEntry<>(tipoUsuario, mens));
+        }
+
+        model.addAttribute("pqrsUsuario", pqrsUsuario);
+        model.addAttribute("mensajeObj", new Mensaje());
+        model.addAttribute("listaMensajes", listaMensajes);
+
+        return "admin/pqrs-responder";
+    }
+
+    @PostMapping("/admin/pqrs/responder")
+    @PreAuthorize("hasAnyAuthority('Admin', 'Secretario')")
+    public String postMethodName(@RequestParam("pqrsId") Long pqrsId, @ModelAttribute("mensajeObj") Mensaje mensaje,
+            Authentication auth,
+            RedirectAttributes redirectAttributes) {
+        try {
+            if (mensaje.getContenido().isEmpty() || mensaje.getContenido() == null) {
+                redirectAttributes.addFlashAttribute("message",
+                        "No se ha podido responder la PQRS, el mensaje no puede estar vacío");
+                return "redirect:/admin/pqrs";
+            }
+            var pqrs = pqrsService.getPqrsById(pqrsId);
+            pqrs.setFechaActualizacion(LocalDateTime.now());
+            var ep = estadoPqrsService.getEstadoPqrsByNombre("Cerrada");
+            pqrs.setEstadoPqrs(ep);
+            pqrsService.editPqrs(pqrs);
+
+            mensaje.setFecha(LocalDateTime.now());
+            mensaje.setPqrs(pqrs);
+            mensaje.setUsuario(usuarioService.getUsuarioByUsername(auth.getName()));
+            mensajeService.addMensaje(mensaje);
+            redirectAttributes.addFlashAttribute("messageOK", "Respuesta enviada correctamente");
+        } catch (Exception e) {
+            System.out.println("PqrsController.postMethodName()" + e.getMessage());
+            redirectAttributes.addFlashAttribute("message", "No se ha podido responder la PQRS");
+        }
+
+        return "redirect:/admin/pqrs";
     }
 
     private void actualizarEstadoYFechaPqrs(Pqrs pqrs) {

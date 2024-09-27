@@ -315,6 +315,33 @@ canvas {
     text-align: center !important;
 }
 
+.chat {
+    display: flex;
+    align-items: center;
+    min-width: 100%;
+}
+
+.chat-hora-user {
+    margin-left: auto;
+    font-size: 11px;
+}
+
+.chat-hora-admin {
+    margin-right: auto;
+    font-size: 11px;
+}
+
+.user-chat {
+    max-width: 50px;
+    border-radius: 50%;
+
+}
+
+.card-chat {
+    max-height: 450px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
 
 @media (max-width: 768px) {
     .sidebar {
