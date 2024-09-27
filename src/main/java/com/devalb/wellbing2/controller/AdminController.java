@@ -220,19 +220,11 @@ public class AdminController {
         return "redirect:/admin/usuarios";
     }
 
-    
-
-    
-
-    
-
-
-    
-
     @GetMapping("/admin/wellpoints")
     @PreAuthorize("hasAuthority('Admin')")
     public String goTowellpoints(Model model, Authentication auth) {
         vService.cargarVistasAdmin(model, auth);
+        model.addAttribute("listaWellPoints", wellPointsService.getWellPoints());
         return "admin/wellpoints";
     }
 
