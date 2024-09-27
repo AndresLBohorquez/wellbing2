@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="es">
+
+<!-- Head -->
+
+<head th:replace="~{layout/plantilla-admin :: head-admin('Órdenes - ' + ${rolPrincipal})}"></head>
+
+<body>
+
+    <!-- Navbar -->
+
+    <head th:replace="~{layout/plantilla-admin :: navbar-admin}"></head>
+
+    <!-- Sidebar -->
+    <div th:replace="~{layout/plantilla-admin :: sidebar-admin('','','','','','','active','','','')}"></div>
+
+    <!-- Contenido principal -->
+    <div class="main-content">
+        <div class="content container-fluid">
+            <!-- Título -->
+            <h2 class="section-title">Órdenes</h2>
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <table id="example" class="bg-white rounded shadow-sm">
+                                <thead>
+                                    <tr>
+                                        <th>Usuario</th>
+                                        <th>Fecha Actualización</th>
+                                        <th>Fecha Creación</th>
+                                        <th>Total</th>
+                                        <th>Estado Orden</th>
+                                        <th>Pago</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="orden : ${listaOrdenes}">
+                                        <td> <a class="enlace-no-subr"
+                                                th:href="@{/admin/usuarios/detalle/{id}(id=${orden.usuario.id})}"
+                                                th:text="${orden.usuario.nombre.split(' ')[0]} + ' ' + ${orden.usuario.apellido.split(' ')[0]}"></a>
+                                        </td>
+                                        <td
+                                            th:text="${#temporals.format(orden.fechaActualizacion, 'dd/MM/yyyy - HH:mm:ss')}">
+                                        </td>
+                                        <td
+                                            th:text="${#temporals.format(orden.fechaCreacion, 'dd/MM/yyyy - HH:mm:ss')}">
+                                        </td>
+                                        <td><a class="enlace-no-subr"
+                                                th:href="@{/admin/ordenes/detalle/{id}(id=${orden.id})}"
+                                                th:text="'$ ' + ${#numbers.formatDecimal(orden.total, 0 , 'COMMA', 0, 'POINT')}"></a>
+                                        </td>
+
+                                        <td>
+                                            <a th:href="@{/admin/ordenes/editar/{id}(id=${orden.id})}">
+                                                <span th:switch="${orden.estadoOrden.nombre}">
+                                                    <span th:case="'Pendiente'"
+                                                        class="badge estado-pendiente">Pendiente</span>
+                                                    <span th:case="'En Proceso'" class="badge estado-en-proceso">En
+                                                        Proceso</span>
+                                                    <span th:case="'Enviada'"
+                                                        class="badge estado-enviado">Enviada</span>
+                                                    <span th:case="'Entregada'"
+                                                        class="badge estado-entregado">Entregada</span>
+                                                    <span th:case="'Cancelada'"
+                                                        class="badge estado-cancelado">Cancelada</span>
+                                                    <span th:case="'Devuelta'"
+                                                        class="badge estado-devuelto">Devuelta</span>
+                                                    <span th:case="'Reembolsada'"
+                                                        class="badge estado-reembolsado">Reembolsada</span>
+                                                    <span th:case="'Pago Pendiente'"
+                                                        class="badge estado-pago-pendiente">Pago Pendiente</span>
+                                                    <span th:case="'Pago Rechazado'"
+                                                        class="badge estado-pago-rechazado">Pago Rechazado</span>
+                                                    <span th:case="'En Hold'" class="badge estado-en-hold">En
+                                                        Hold</span>
+                                                </span>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <span th:if="${pagosMap[orden.id] != null}"
+                                                th:text="${pagosMap[orden.id].estadoPago.nombre}">
+                                                <span th:switch="${pagosMap[orden.id].estadoPago.nombre}">
+                                                    <span th:case="'Pendiente'"
+                                                        class="badge rounded-pill bg-warning">Pendiente</span>
+                                                    <span th:case="'Aprobado'"
+                                                        class="badge rounded-pill bg-success">Aprobado</span>
+                                                    <span th:case="'Rechazado'"
+                                                        class="badge rounded-pill bg-danger">Rechazado</span>
+                                                </span>
+                                            </span>
+                                            <span th:if="${pagosMap[orden.id] == null}">
+                                                <span class="badge rounded-pill bg-dark">Sin Pago</span>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="~{layout/plantilla :: alertas}"></div>
+    <script src="/js/datatable.js"></script>
+    <!-- Footer -->
+    <footer th:replace="~{layout/plantilla :: footer}"></footer>
+
+    <script th:inline="javascript">
+        document.querySelector('.sidebar-toggle').addEventListener('click', function () {
+            document.querySelector('.sidebar').classList.toggle('active');
+        });
+
+    </script>
+</body>
+
+</html>

@@ -178,7 +178,7 @@
 
 <!-- Sidebar Usuario -->
 
-<div th:fragment="sidebar-usuario(perfil, activacion, equipo, ordenes, pqrs, wellpoints)" id="sidebar"
+<div th:fragment="sidebar-usuario(perfil, activacion, equipo, pagos, ordenes, pqrs, wellpoints)" id="sidebar"
     class="bg-sidebar p-3">
     <ul class="nav nav-pills flex-column mb-auto">
         <li class="nav-item mt-3">
@@ -194,6 +194,11 @@
         <li class="nav-item mt-3">
             <a href="/usuario/equipo" th:class="|nav-link ${equipo}|">
                 <i class="fas fa-users"></i> Equipo
+            </a>
+        </li>
+        <li class="nav-item mt-3">
+            <a href="/usuario/pagos" th:class="|nav-link ${pagos}|">
+                <i class="bi bi-currency-dollar"></i> Pagos
             </a>
         </li>
         <li class="nav-item mt-3">

@@ -298,7 +298,7 @@ public class PerfilUsuarioController {
 
             // Validar fecha actual
             LocalDate fechaActual = LocalDate.now();
-            if (fechaActual.getDayOfMonth() > 29) {
+            if (fechaActual.getDayOfMonth() > 25) {
                 log.warn("Intento de agregar activación fuera del período permitido");
                 redirectAttributes.addFlashAttribute("messageKO",
                         "Solo puedes agregar una activación durante los primeros 25 días del mes.");

@@ -17,4 +17,9 @@ public interface PagoRepository extends JpaRepository<Pago, Long> {
     @Query(value = "SELECT * FROM pago WHERE usuario_id = ?1", nativeQuery = true)
     public List<Pago> findAllByUsuarioId(Long id);
 
+    @Query(value = "SELECT * FROM pago WHERE orden_id = ?1", nativeQuery = true)
+    public Pago findByOrdenId(Long id);
+
+    public boolean existsByOrdenId(Long id);
+
 }

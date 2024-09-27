@@ -84,27 +84,6 @@ body {
     margin: 0;
 }
 
-@media (max-width: 768px) {
-    .sidebar {
-        width: 100%;
-        height: auto;
-        position: relative;
-        display: none;
-    }
-
-    .sidebar.active {
-        display: block;
-    }
-
-    .content {
-        margin-left: 0;
-    }
-
-    .sidebar-toggle {
-        display: block;
-    }
-}
-
 /* Estilo para el título */
 .section-title {
     font-family: 'Oswald', sans-serif;
@@ -197,6 +176,9 @@ canvas {
     /* Tamaño de los iconos */
     cursor: pointer;
     /* Cambiar cursor a pointer para que se vea clicable */
+    border: none;
+    padding: 0;
+    background-color: transparent;
 }
 
 /* Cambiar color de fondo al pasar el mouse sobre las filas */
@@ -252,4 +234,109 @@ canvas {
 .img-edit-prod {
     height: 150px;
     width: auto;
+}
+
+/* Estados de la orden */
+.estado-pendiente {
+    background-color: #ffc107;
+    /* Amarillo */
+    color: #000;
+    /* Texto negro */
+}
+
+.estado-en-proceso {
+    background-color: #fd7e14;
+    /* Naranja */
+    color: #fff;
+    /* Texto blanco */
+}
+
+.estado-enviado {
+    background-color: #0dcaf0;
+    /* Azul claro */
+    color: #fff;
+    /* Texto blanco */
+}
+
+.estado-entregado {
+    background-color: #28a745;
+    /* Verde */
+    color: #fff;
+    /* Texto blanco */
+}
+
+.estado-cancelado {
+    background-color: #dc3545;
+    /* Rojo */
+    color: #fff;
+    /* Texto blanco */
+}
+
+.estado-devuelto {
+    background-color: #6f42c1;
+    /* Violeta */
+    color: #fff;
+    /* Texto blanco */
+}
+
+.estado-reembolsado {
+    background-color: #155724;
+    /* Verde oscuro */
+    color: #fff;
+    /* Texto blanco */
+}
+
+.estado-pago-pendiente {
+    background-color: #ffeeba;
+    /* Amarillo claro */
+    color: #000;
+    /* Texto negro */
+}
+
+.estado-pago-rechazado {
+    background-color: #b21f2d;
+    /* Rojo oscuro */
+    color: #fff;
+    /* Texto blanco */
+}
+
+.estado-en-hold {
+    background-color: #6c757d;
+    /* Gris */
+    color: #fff;
+    /* Texto blanco */
+}
+
+.align-left {
+    text-align: start !important;
+}
+
+.align-center {
+    text-align: center !important;
+}
+
+
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        display: none;
+    }
+
+    .sidebar.active {
+        display: block;
+    }
+
+    .content {
+        margin-left: 0;
+    }
+
+    .sidebar-toggle {
+        display: block;
+    }
+
+    .w-25 {
+        width: 100% !important;
+    }
 }

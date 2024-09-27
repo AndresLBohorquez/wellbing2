@@ -50,4 +50,14 @@ public class PagoServiceImpl implements PagoService {
         return pagoRepository.findAllByUsuarioId(id);
     }
 
+    @Override
+    public Pago getPagoByOrdenId(Long id) {
+        return pagoRepository.findByOrdenId(id);
+    }
+
+    @Override
+    public boolean existsByOrdenId(Long id) {
+        return pagoRepository.existsByOrdenId(id);
+    }
+
 }

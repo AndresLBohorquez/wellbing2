@@ -13,7 +13,7 @@
     <!-- Contenedor principal -->
     <div class="container-fluid d-flex flex-column flex-md-row">
         <!-- Sidebar -->
-        <nav th:replace="~{layout/plantilla :: sidebar-usuario('active', '', '', '', '','')}"></nav>
+        <nav th:replace="~{layout/plantilla :: sidebar-usuario('active', '', '', '', '','','')}"></nav>
 
         <!-- Contenido principal -->
         <div id="content" class="flex-grow-1 p-3">
@@ -54,11 +54,11 @@
                             <p th:text="${usuLog.username}">juanperez</p>
 
                             <h5>Fecha de Registro:</h5>
-                            <p th:text="${#temporals.format(usuLog.fechaRegistro, 'MMMM dd, yyyy')}">01/01/2022</p>
+                            <p th:text="${#temporals.format(usuLog.fechaRegistro, 'dd/MM/yyy')}">01/01/2022</p>
 
                             <h5>Activo hasta:</h5>
                             <div th:each="act : ${activacion}">
-                                <p th:text="${#temporals.format(act.fechaFin, 'MMMM dd, yyyy')}">01/02/2022</p>
+                                <p th:text="${#temporals.format(act.fechaFin, 'dd/MM/yyy')}">01/02/2022</p>
 
                             </div>
 

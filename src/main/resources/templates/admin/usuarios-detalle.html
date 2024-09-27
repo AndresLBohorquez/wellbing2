@@ -79,7 +79,8 @@
                                     <label for="fechaRegistro" class="col-sm-4 col-form-label">Fecha de
                                         Registro:</label>
                                     <div class="col-sm-8">
-                                        <input type="text" id="fechaRegistro" th:value="${usuarioForm.fechaRegistro}"
+                                        <input type="text" id="fechaRegistro"
+                                            th:value="${#temporals.format(usuarioForm.fechaRegistro, 'dd/MM/yyyy')}"
                                             class="form-control" disabled>
                                     </div>
                                 </div>
@@ -147,7 +148,8 @@
                                         class="badge rounded-pill bg-info">Validado</span>
                                 </label>
                                 <label th:if="${ultimaActivacion == null}" for="estadoUsuario"
-                                    class="col-sm-6 col-form-label">Estado última activación: <span>SIN ACTIVACIONES</span>
+                                    class="col-sm-6 col-form-label">Estado última activación: <span>SIN
+                                        ACTIVACIONES</span>
                                 </label>
                             </div>
                         </div>

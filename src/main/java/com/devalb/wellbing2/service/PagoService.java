@@ -19,4 +19,8 @@ public interface PagoService {
     public List<Pago> getPagosByEstado(Long id);
 
     public List<Pago> getPagosByUsuario(Long id);
+
+    public Pago getPagoByOrdenId(Long id);
+
+    public boolean existsByOrdenId(Long id);
 }

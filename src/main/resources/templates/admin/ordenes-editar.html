@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="es">
+
+<!-- Head -->
+
+<head th:replace="~{layout/plantilla-admin :: head-admin('Órdenes - ' + ${rolPrincipal})}"></head>
+
+<body>
+
+    <!-- Navbar -->
+
+    <head th:replace="~{layout/plantilla-admin :: navbar-admin}"></head>
+
+    <!-- Sidebar -->
+    <div th:replace="~{layout/plantilla-admin :: sidebar-admin('','','','','','','active','','','')}"></div>
+
+    <!-- Contenido principal -->
+    <div class="main-content">
+        <div class="content container-fluid">
+            <!-- Título -->
+            <h2 class="section-title">Editar Orden</h2>
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <!-- Formulario para agregar productos a la orden -->
+                            <div class="mt-2">
+                                <h3>Agregar Producto a la Orden</h3>
+                                <form th:action="@{/admin/ordenes/agregar-producto-orden/{id}(id=${orden.id})}"
+                                    method="post">
+                                    <div class="row">
+                                        <div class="col-12 col-md-6 form-group mt-2">
+                                            <label for="producto">Producto</label>
+                                            <select class="form-control" id="producto" name="producto">
+                                                <option th:each="producto : ${productos}" th:value="${producto.id}"
+                                                    th:text="${producto.nombre}">
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div class="col-12 col-md-6 form-group mt-2">
+                                            <label for="cantidad">Cantidad</label>
+                                            <input type="number" class="form-control" id="cantidad" name="cantidad">
+                                        </div>
+                                    </div>
+
+
+                                    <!-- Botón Agregar -->
+                                    <div class="text-center mt-3">
+                                        <button type="submit" class="btn btn-primary w-25">Agregar</button>
+                                    </div>
+
+                                </form>
+                            </div>
+
+                            <!-- Productos en la orden -->
+                            <div class="mt-3">
+                                <h3>Productos de la Orden</h3>
+                                <div class="table-responsive mt-3">
+                                    <table class="table table-striped">
+                                        <tr>
+                                            <th>Producto</th>
+                                            <th>Cantidad</th>
+                                            <th>Precio Unitario</th>
+                                            <th>Subtotal</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                        <tr th:each="item : ${itemsOrden}">
+                                            <form
+                                                th:action="@{/admin/ordenes/quitar-producto-orden/{id}(id=${item.id})}"
+                                                method="post">
+                                                <input type="hidden" name="ordenId" th:value="${item.orden.id}">
+                                                <td><a class="enlace-no-subr"
+                                                        th:href="@{/admin/productos/detalle/{id}(id=${item.producto.id})}"
+                                                        th:text="${item.producto.nombre}"></a></td>
+                                                <td th:text="${item.cantidad}"></td>
+                                                <td
+                                                    th:text="'$ ' + ${#numbers.formatDecimal(item.producto.precio, 0 , 'COMMA', 0, 'POINT')}">
+                                                </td>
+                                                <td
+                                                    th:text="'$ ' + ${#numbers.formatDecimal(item.cantidad * item.producto.precio, 0 , 'COMMA', 0, 'POINT')}">
+                                                </td>
+                                                <td>
+                                                    <button type="submit" class="custom-icon text-danger me-2">
+                                                        <i class="bi bi-trash-fill"></i>
+                                                    </button>
+                                                </td>
+                                            </form>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!-- Formulario para actualizar el estado de la orden -->
+                            <form th:action="@{/admin/ordenes/editar-orden/{id}(id=${orden.id})}" method="post">
+                                <div class="row">
+                                    <div class="col-12 col-md-3 form-group">
+                                        <label for="total">Total</label>
+                                        <input type="text" class="form-control" id="total"
+                                            th:value="'$ ' + ${#numbers.formatDecimal(orden.total, 0 , 'COMMA', 0, 'POINT')}"
+                                            name="total" disabled>
+                                    </div>
+                                    <div class="col-12 col-md-3 form-group">
+                                        <label for="fechaCreacion">Fecha Creación</label>
+                                        <input type="text" class="form-control" id="fechaCreacion"
+                                            th:value="${#temporals.format(orden.fechaCreacion, 'dd/MM/yyyy - HH:mm:ss')}"
+                                            name="fechaCreacion" disabled>
+                                    </div>
+                                    <div class="col-12 col-md-3 form-group">
+                                        <label for="fechaActualizacion">Fecha Actualización</label>
+                                        <input type="text" class="form-control" id="fechaActualizacion"
+                                            th:value="${#temporals.format(orden.fechaActualizacion, 'dd/MM/yyyy - HH:mm:ss')}"
+                                            name="fechaActualizacion" disabled>
+                                    </div>
+                                    <div class="col-12 col-md-3 form-group">
+                                        <label for="estadoOrden">Estado de la Orden</label>
+                                        <select class="form-control" id="estadoOrden" name="estadoOrden">
+                                            <option th:each="estado : ${estadosOrden}" th:value="${estado.id}"
+                                                th:text="${estado.nombre}"
+                                                th:selected="${estado.id} == ${orden.estadoOrden.id}">
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <!-- Botón para actualizar el estado de la orden -->
+                                <div class="text-center mt-3">
+                                    <button type="submit" class="btn btn-success w-25">Guardar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="~{layout/plantilla :: alertas}"></div>
+    <script src="/js/datatable.js"></script>
+    <!-- Footer -->
+    <footer th:replace="~{layout/plantilla :: footer}"></footer>
+
+    <script th:inline="javascript">
+        document.querySelector('.sidebar-toggle').addEventListener('click', function () {
+            document.querySelector('.sidebar').classList.toggle('active');
+        });
+
+    </script>
+</body>
+
+</html>

@@ -59,7 +59,7 @@ public class SecurityConfig {
                                                 .hasAnyAuthority("Admin", "Secretario", "Tesorero")
                                                 .requestMatchers("/admin/equipo/**")
                                                 .hasAnyAuthority("Admin", "Secretario", "Tesorero")
-                                                .requestMatchers("/admin/ordenes/**")
+                                                .requestMatchers("/admin/ordenes/**", "/admin/ordenes-editar/**")
                                                 .hasAnyAuthority("Admin", "Domiciliario")
                                                 .requestMatchers("/admin/pagos/**").hasAnyAuthority("Admin", "Tesorero")
                                                 .requestMatchers("/admin/pqrs").hasAnyAuthority("Admin", "Secretario")

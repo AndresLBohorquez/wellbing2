@@ -224,19 +224,8 @@ public class AdminController {
 
     
 
-    @GetMapping("/admin/ordenes")
-    @PreAuthorize("hasAnyAuthority('Admin', 'Domiciliario')")
-    public String goToOrdenes(Model model, Authentication auth) {
-        vService.cargarVistasAdmin(model, auth);
-        return "admin/ordenes";
-    }
+    
 
-    @GetMapping("/admin/pagos")
-    @PreAuthorize("hasAnyAuthority('Admin', 'Tesorero')")
-    public String goToPagos(Model model, Authentication auth) {
-        vService.cargarVistasAdmin(model, auth);
-        return "admin/pagos";
-    }
 
     @GetMapping("/admin/pqrs")
     @PreAuthorize("hasAnyAuthority('Admin', 'Secretario')")

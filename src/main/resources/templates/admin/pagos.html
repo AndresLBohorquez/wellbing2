@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="es">
+
+<!-- Head -->
+
+<head th:replace="~{layout/plantilla-admin :: head-admin('Pagos - ' + ${rolPrincipal})}"></head>
+
+<body>
+
+    <!-- Navbar -->
+
+    <head th:replace="~{layout/plantilla-admin :: navbar-admin}"></head>
+
+    <!-- Sidebar -->
+    <div th:replace="~{layout/plantilla-admin :: sidebar-admin('','','','','','','','active','','')}"></div>
+
+    <!-- Contenido principal -->
+    <div class="main-content">
+        <div class="content container-fluid">
+            <!-- Título -->
+            <h2 class="section-title">Pagos</h2>
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="card card-content">
+
+                        <div class="card-body">
+                            <table id="example" class="custom-table bg-white rounded shadow-sm">
+                                <thead class="custom-table-header text-center">
+                                    <tr>
+                                        <th class="align-left">Usuario</th>
+                                        <th class="align-left">Cantidad</th>
+                                        <th class="align-center">Comprobante</th>
+                                        <th class="align-center">Fecha</th>
+                                        <th class="align-center">Estado</th>
+                                        <th class="align-center">Orden</th>
+                                        <th class="align-center">Acciones</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="pago : ${listaPagos}">
+                                        <td class="align-left">
+                                            <a class="enlace-no-subr"
+                                                th:href="@{/admin/usuarios/detalle/{id}(id=${pago.usuario.id})}"
+                                                th:text="${pago.usuario.username}"></a>
+                                        </td>
+                                        <td class="align-left"
+                                            th:text="'$ ' + ${#numbers.formatDecimal(pago.cantidad, 0 , 'COMMA', 0, 'POINT')}">
+                                        </td>
+                                        <td class="no-bold align-center">
+                                            <a class="enlace-no-subr"
+                                                th:href="@{'/images/pagos/'} + ${pago.comprobante}" target="_blank"
+                                                th:text="Imagen">
+
+                                            </a>
+                                        </td>
+                                        <td class="no-bold align-left"
+                                            th:text="${#temporals.format(pago.fecha, 'dd/MM/yyy')}">Fecha</td>
+                                        <td class="no-bold align-left">
+                                            <span th:switch="${pago.estadoPago.nombre}">
+                                                <span th:case="'Pendiente'"
+                                                    class="badge rounded-pill estado-pendiente">Pendiente</span>
+                                                <span th:case="'Aprobado'"
+                                                    class="badge rounded-pill bg-success">Aprobado</span>
+                                                <span th:case="'Rechazado'"
+                                                    class="badge rounded-pill bg-danger">Rechazado</span>
+                                            </span>
+
+                                        </td>
+
+                                        <td class="no-bold align-left">
+                                            <a class="enlace-no-subr"
+                                                th:href="@{/admin/ordenes/detalle/{id}(id=${pago.orden.id})}">Detalle</a>
+                                        </td>
+                                        <td class="text-center">
+                                            <!-- Icono de editar -->
+                                            <a href="javascript:void(0);" class="custom-icon text-success me-2"
+                                                th:attr="data-bs-id=${pago.id}, data-bs-estado=${pago.estadoPago.nombre}"
+                                                data-bs-toggle="modal" data-bs-target="#editarPagoModal">
+                                                <i class="bi bi-pencil-square"></i>
+                                            </a>
+                                            <!-- Enlace para eliminar el pago -->
+                                            <a th:href="@{/admin/pagos/eliminar/{id}/confirmar(id=${pago.id})}"
+                                                class="custom-icon text-danger me-2" data-bs-toggle="modal"
+                                                data-bs-target="#eliminarPagoModal-[[${pago.id}]]"><i
+                                                    class="bi bi-trash3-fill"></i></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal para Editar Estado de Pago -->
+    <div class="modal fade" id="editarPagoModal" tabindex="-1" aria-labelledby="editarPagoModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editarPagoModalLabel">Editar Estado de Pago</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editarPagoForm" th:action="@{/admin/pagos/editar/{id}(id=${pagoId})}" method="post">
+                        <div class="mb-3">
+                            <label for="estadoPago" class="form-label">Estado de Pago</label>
+                            <select class="form-select" id="estadoPago" name="estadoPago">
+                                <th th:each="estado : ${estadosPago}">
+                                    <option th:value="${estado.nombre}" th:text="${estado.nombre}"></option>
+                                </th>
+                            </select>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script th:inline="javascript">
+        var editarPagoModal = document.getElementById('editarPagoModal');
+        editarPagoModal.addEventListener('show.bs.modal', function (event) {
+            var button = event.relatedTarget;
+
+            var pagoId = button.getAttribute('data-bs-id');
+            var estadoActual = button.getAttribute('data-bs-estado');
+
+            var form = document.getElementById('editarPagoForm');
+            var selectEstado = document.getElementById('estadoPago');
+
+            form.setAttribute('action', '/admin/pagos/editar/' + pagoId);
+
+            selectEstado.value = estadoActual;
+        });
+    </script>
+
+    <!-- Modal para confirmar eliminación -->
+    <div th:each="pago : ${listaPagos}">
+        <div class="modal fade" id="eliminarPagoModal-[[${pago.id}]]" tabindex="-1"
+            aria-labelledby="eliminarPagoModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="eliminarPagoModalLabel">Confirmar eliminación de pago</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>¿Estás seguro de que deseas eliminar el pago?</p>
+                        <form th:action="@{/admin/pagos/eliminar/{id}(id=${pago.id})}" method="post">
+                            <div class="row">
+                                <div class="col-6 text-center"><button type="submit"
+                                        class="btn btn-danger">Eliminar</button></div>
+                                <div class="col-6 text-center"><button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Cancelar</button></div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div th:replace="~{layout/plantilla :: alertas}"></div>
+    <script src="/js/datatable.js"></script>
+    <!-- Footer -->
+    <footer th:replace="~{layout/plantilla :: footer}"></footer>
+
+    <script th:inline="javascript">
+        document.querySelector('.sidebar-toggle').addEventListener('click', function () {
+            document.querySelector('.sidebar').classList.toggle('active');
+        });
+
+    </script>
+
+</body>
+
+</html>

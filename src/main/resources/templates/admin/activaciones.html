@@ -50,8 +50,8 @@
                                                 th:text="${activacion.usuario.nombre} + ' ' + ${activacion.usuario.apellido}">
                                             </a>
                                         </td>
-                                        <td th:text="${activacion.fecha}"></td>
-                                        <td th:text="${activacion.fechaFin}"></td>
+                                        <td th:text="${#temporals.format(activacion.fecha, 'dd/MM/yyyy')}"></td>
+                                        <td th:text="${#temporals.format(activacion.fechaFin, 'dd/MM/yyyy')}"></td>
                                         <td th:text="${activacion.valor}"></td>
                                         <td class="text-center">
                                             <span th:switch="${activacion.estadoActivacion.nombre}">
@@ -73,7 +73,12 @@
                                                 <i class="bi bi-info-circle-fill"></i>
                                             </a>
                                         </td>
-                                        <td th:if="${activacion.wellPoints == null}" th:text="'NO'"></td>
+                                        <td th:if="${activacion.wellPoints == null}" >
+                                            <a class="enlace-no-subr"
+                                                th:href="@{'/images/activaciones/'} + ${activacion.comprobante}" target="_blank">
+                                                Imagen
+                                            </a>
+                                        </td>
                                         <td class="text-center">
                                             <a th:href="@{/admin/activaciones/preactivar/{id}(id=${activacion.id})}"
                                                 class="custom-icon text-primary me-2">
