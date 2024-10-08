@@ -46,7 +46,7 @@ public class SecurityConfig {
                                                                 "/terminos_condiciones", "favicon.ico")
                                                 .permitAll()
 
-                                                .requestMatchers("/admin").hasAuthority("Admin")
+                                                .requestMatchers("/admin", "/admin/pago-mensual/**").hasAuthority("Admin")
                                                 .requestMatchers("/admin/usuarios/**")
                                                 .hasAnyAuthority("Admin", "Secretario", "Tesorero", "Domiciliario")
                                                 .requestMatchers("/admin/usuarios/eliminar/**")

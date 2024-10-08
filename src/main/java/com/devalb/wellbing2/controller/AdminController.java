@@ -245,4 +245,13 @@ public class AdminController {
         wellPoints.setFecha(LocalDate.now());
         wellPointsService.addWellPoints(wellPoints);
     }
+
+    @GetMapping("/admin/pago-mensual")
+    @PreAuthorize("hasAuthority('Admin')")
+    public String goToPagoMensual(Model model, Authentication auth) {
+        vService.cargarVistasAdmin(model, auth);
+        model.addAttribute("usuarios", usuarioService.getUsuarios());
+
+        return "admin/pago-mensual";
+    }
 }

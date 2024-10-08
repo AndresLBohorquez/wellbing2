@@ -66,6 +66,10 @@
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
                         <li><a class="dropdown-item border-bottom" href="/">Inicio</a></li>
+                        <li
+                            th:if="${rolPrincipal == 'Admin'}">
+                            <a class="dropdown-item border-bottom" href="/admin/pago-mensual">Pago Mensual</a>
+                        </li>
                         <li><a class="dropdown-item" href="/usuario">Perfil</a></li>
 
                         <li><a class="dropdown-item" href="#" onclick="logout()">Cerrar sesión</a></li>

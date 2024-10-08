@@ -19,14 +19,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.devalb.wellbing2.entity.ItemsOrden;
 import com.devalb.wellbing2.entity.Orden;
 import com.devalb.wellbing2.entity.Pago;
 import com.devalb.wellbing2.entity.Usuario;
+import com.devalb.wellbing2.entity.WellPoints;
+import com.devalb.wellbing2.service.AccionWellPointsService;
 import com.devalb.wellbing2.service.EstadoPagoService;
+import com.devalb.wellbing2.service.ItemsOrdenService;
 import com.devalb.wellbing2.service.OrdenService;
 import com.devalb.wellbing2.service.PagoService;
 import com.devalb.wellbing2.service.UsuarioService;
 import com.devalb.wellbing2.service.VistaService;
+import com.devalb.wellbing2.service.WellPointsService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -48,6 +53,15 @@ public class PagoController {
 
     @Autowired
     private EstadoPagoService estadoPagoService;
+
+    @Autowired
+    private AccionWellPointsService accionWellPointsService;
+
+    @Autowired
+    private WellPointsService wellPointsService;
+
+    @Autowired
+    private ItemsOrdenService itemsOrdenService;
 
     @GetMapping("/usuario/pagos")
     public String goToPagos(Model model, Authentication auth) {
@@ -140,6 +154,18 @@ public class PagoController {
         pago.setEstadoPago(estadoPagoService.getEstadoPagoByNombre(estadoPago));
         pagoService.editPago(pago);
 
+        if (estadoPago.equals("Aprobado")) {
+            var usuario = usuarioService.getUsuarioById(pago.getUsuario().getId());
+            var valor = usuario.getWellPoints();
+            var productosOrden = itemsOrdenService.getItemsOrdenByIdOrden(pago.getOrden().getId());
+            for (ItemsOrden prodOrd : productosOrden) {
+                valor += prodOrd.getProducto().getBono() * prodOrd.getCantidad();
+            }
+            editarWellPoints(pago.getUsuario(), valor, "WellBing");
+            usuario.setWellPoints(valor);
+            usuarioService.editUsuario(usuario);
+        }
+
         redirectAttributes.addFlashAttribute("messageOK", "Estado de pago actualizado con éxito.");
         return "redirect:/admin/pagos";
     }
@@ -150,6 +176,20 @@ public class PagoController {
         pagoService.deletePago(id);
         redirectAttributes.addFlashAttribute("messageOK", "Pago eliminado correctamente");
         return "redirect:/admin/pagos";
+    }
+
+    private void editarWellPoints(Usuario usuario, double valor, String nombre) {
+        WellPoints wellPoints = new WellPoints();
+        wellPoints.setUsuario(usuario);
+
+        wellPoints.setAccion(accionWellPointsService.getAccionWellPointsByNombre("Adicionar"));
+        wellPoints.setCantidad(valor - usuario.getWellPoints());
+
+        wellPoints.setDescripcion("Bonificacion por compra " + nombre);
+
+        wellPoints.setTotal(valor);
+        wellPoints.setFecha(LocalDate.now());
+        wellPointsService.addWellPoints(wellPoints);
     }
 
 }
