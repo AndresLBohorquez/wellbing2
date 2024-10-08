@@ -73,9 +73,10 @@
                                                 <i class="bi bi-info-circle-fill"></i>
                                             </a>
                                         </td>
-                                        <td th:if="${activacion.wellPoints == null}" >
+                                        <td th:if="${activacion.wellPoints == null}">
                                             <a class="enlace-no-subr"
-                                                th:href="@{'/images/activaciones/'} + ${activacion.comprobante}" target="_blank">
+                                                th:href="@{'/images/activaciones/'} + ${activacion.comprobante}"
+                                                target="_blank">
                                                 Imagen
                                             </a>
                                         </td>
@@ -127,7 +128,7 @@
 
                     </div>
                     <div class="modal-body">
-
+                        <p>Id: <span th:text="${activacion.wellPoints.id}"></span></p>
                         <p>Usuario: <span
                                 th:text="${activacion.wellPoints.usuario.nombre} + ' ' + ${activacion.wellPoints.usuario.apellido}"></span>
                         </p>

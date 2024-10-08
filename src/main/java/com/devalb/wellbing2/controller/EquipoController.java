@@ -44,17 +44,13 @@ public class EquipoController {
     private EstadoEquipoService estadoEquipoService;
 
     @GetMapping("/usuario/equipo")
-    public String goToAddequipo(Model model, Authentication auth) {
+    public String goToEquipo(Model model, Authentication auth) {
         vService.cargarVistas(model, auth);
         List<Equipo> equipos = equipoService
                 .getEquipoByIdUsuario(usuarioService.getUsuarioByUsername(auth.getName()).getId());
 
-        // Agregar el estado de la última activación de cada hijo
-        for (Equipo equipo : equipos) {
-            Activacion ultimaActivacion = activacionService.getUltimActivacion(equipo.getIdHijo().getId());
-            equipo.getIdHijo().setUltimaActivacion(ultimaActivacion);
-            equipo.setCantidadNietos(equipoService.getEquiposVisiblesByUsuario(equipo.getIdHijo().getId()).size());
-        }
+        calcularNietos(auth, equipos);
+
         model.addAttribute("ultimaActivacion",
                 activacionService.getUltimActivacion(usuarioService.getUsuarioByUsername(auth.getName()).getId()));
         model.addAttribute("listaEquipo", equipos);
@@ -159,7 +155,7 @@ public class EquipoController {
 
     @GetMapping("/admin/equipo")
     @PreAuthorize("hasAnyAuthority('Admin', 'Secretario', 'Tesorero')")
-    public String goToEquipo(Model model, Authentication auth) {
+    public String goToEquipoAdmin(Model model, Authentication auth) {
         vService.cargarVistasAdmin(model, auth);
         model.addAttribute("listaEquipos", equipoService.getEquipos());
         return "admin/equipo";
@@ -212,6 +208,36 @@ public class EquipoController {
             log.error("Error al rechazar equipo. ID: {}", id, e);
             redirectAttributes.addFlashAttribute("messageKO", "Error al rechazar equipo");
             return "redirect:/admin/equipo";
+        }
+    }
+
+    public void calcularNietos(Authentication auth, List<Equipo> equipos) {
+
+        for (Equipo equipo : equipos) {
+            equipo.getIdHijo().setUltimaActivacion(activacionService.getUltimActivacion(equipo.getIdHijo().getId()));
+
+            List<Equipo> equiposHijo = equipoService
+                    .getEquipoByIdUsuario(equipo.getIdHijo().getId());
+
+            if (equiposHijo != null) {
+                var nietos = 0;
+                for (Equipo equiH : equiposHijo) {
+                    equiH.getIdHijo()
+                            .setUltimaActivacion(activacionService.getUltimActivacion(equiH.getIdHijo().getId()));
+                    if (equiH.getIdHijo().getUltimaActivacion() != null) {
+                        if (equiH.getIdHijo().getUltimaActivacion().getEstadoActivacion().getNombre()
+                                .equals("Pre Activado")
+                                || equiH.getIdHijo().getUltimaActivacion().getEstadoActivacion().getNombre()
+                                        .equals("Activado")
+                                || equiH.getIdHijo().getUltimaActivacion().getEstadoActivacion().getNombre()
+                                        .equals("Validado")) {
+                            nietos++;
+                        }
+                    }
+
+                }
+                equipo.setCantidadNietos(nietos);
+            }
         }
     }
 

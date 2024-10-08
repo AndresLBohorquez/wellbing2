@@ -25,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.devalb.wellbing2.entity.Activacion;
+import com.devalb.wellbing2.entity.Equipo;
 import com.devalb.wellbing2.entity.MedioPago;
 import com.devalb.wellbing2.entity.RedesUsuario;
 import com.devalb.wellbing2.entity.Usuario;
@@ -109,7 +110,7 @@ public class PerfilUsuarioController {
             model.addAttribute("nuevaActivacion", new Activacion());
 
             model.addAttribute("valorActivacion",
-                    calcularValorActivacion(equipoService.getEquiposVisiblesByUsuario(usuario.getId()).size()));
+                    calcularValorActivacion(validarCantidadHijosActivos(usuario)));
 
         } else {
             log.warn("No se encontró usuario con el nombre: {}", username);
@@ -313,9 +314,9 @@ public class PerfilUsuarioController {
                 return "redirect:/usuario";
             }
 
-            // Validar cantidad de hijos
-            long hijosActivos = equipoService.getEquiposVisiblesByUsuario(usuario.getId()).size();
-            double valorActivacion = calcularValorActivacion(hijosActivos);
+            validarCantidadHijosActivos(usuario);
+
+            double valorActivacion = calcularValorActivacion(validarCantidadHijosActivos(usuario));
 
             String nombreMes = fechaActual.getMonth().name().toLowerCase();
             String nombreComprobante;
@@ -404,4 +405,27 @@ public class PerfilUsuarioController {
         Files.write(ruta, archivo.getBytes());
     }
 
+    public int validarCantidadHijosActivos(Usuario usuario) {
+        // Validar cantidad de hijos
+        var hijosActivos = 0;
+        var equipo = equipoService.getEquipoByIdUsuario(usuario.getId());
+
+        for (Equipo equiH : equipo) {
+            equiH.getIdHijo()
+                    .setUltimaActivacion(activacionService.getUltimActivacion(equiH.getIdHijo().getId()));
+            if (equiH.getIdHijo().getUltimaActivacion() != null) {
+                if (equiH.getIdHijo().getUltimaActivacion().getEstadoActivacion().getNombre()
+                        .equals("Pre Activado")
+                        || equiH.getIdHijo().getUltimaActivacion().getEstadoActivacion().getNombre()
+                                .equals("Activado")
+                        || equiH.getIdHijo().getUltimaActivacion().getEstadoActivacion().getNombre()
+                                .equals("Validado")) {
+                    hijosActivos++;
+                }
+            }
+
+        }
+        return hijosActivos;
+
+    }
 }

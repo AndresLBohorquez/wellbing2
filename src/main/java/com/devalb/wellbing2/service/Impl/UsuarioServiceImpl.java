@@ -10,7 +10,9 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.devalb.wellbing2.entity.Activacion;
 import com.devalb.wellbing2.entity.Usuario;
+import com.devalb.wellbing2.repository.ActivacionRepository;
 import com.devalb.wellbing2.repository.UsuarioRepository;
 import com.devalb.wellbing2.service.UsuarioService;
 
@@ -20,9 +22,20 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
+    @Autowired
+    private ActivacionRepository activacionRepository;
+
     @Override
     public List<Usuario> getUsuarios() {
-        return usuarioRepository.findAll();
+        List<Usuario> usuarios = usuarioRepository.findAll();
+
+        // Para cada usuario, buscamos su última activación
+        for (Usuario usuario : usuarios) {
+            Activacion ultimaActivacion = activacionRepository.findLastActivationByIdUsuario(usuario.getId());
+            usuario.setUltimaActivacion(ultimaActivacion); // Campo transitorio
+        }
+
+        return usuarios;
     }
 
     @Override

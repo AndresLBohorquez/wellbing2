@@ -27,6 +27,7 @@
                             <table id="example" class="custom-table bg-white rounded shadow-sm">
                                 <thead class="custom-table-header text-center">
                                     <tr>
+                                        <th>Id</th>
                                         <th>Usuario</th>
                                         <th>Fecha</th>
                                         <th>Cantidad</th>
@@ -37,6 +38,7 @@
                                 </thead>
                                 <tbody>
                                     <tr th:each="wellpoint : ${listaWellPoints}">
+                                        <td th:text="${wellpoint.id}"></td>
                                         <td><a th:href="@{/admin/usuarios/detalle/{id}(id=${wellpoint.usuario.id})}"
                                                 th:text="${wellpoint.usuario.username}"></a></td>
 

@@ -37,11 +37,7 @@ public class EquipoServiceImpl implements EquipoService {
 
     @Override
     public void deleteEquipo(Long id) {
-        Equipo equipo = equipoRepository.findById(id).orElse(null);
-        if (equipo != null) {
-            equipo.setVisible(false);
-            equipoRepository.save(equipo);
-        }
+        equipoRepository.deleteById(id);
     }
 
     @Override
@@ -59,10 +55,12 @@ public class EquipoServiceImpl implements EquipoService {
         return equipoRepository.findAllVisibleByUsuario(id);
     }
 
+    @Override
     public boolean existeRelacion(Long idUsuario1, Long idUsuario2) {
         return equipoRepository.existsByUsuarioIdAndIdHijoId(idUsuario1, idUsuario2);
     }
 
+    @Override
     public Equipo getEquipoPorIdHijo(Long idHijo) {
         return equipoRepository.findByIdHijo(idHijo);
     }
