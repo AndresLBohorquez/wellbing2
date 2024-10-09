@@ -22,4 +22,18 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     public List<Usuario> findAllVisible();
 
     public int countByFechaRegistroBetween(LocalDate fechaInicio, LocalDate fechaFin);
+
+    @Query(value = "SELECT u.* FROM usuario u " +
+            "JOIN activacion a ON a.usuario_id = u.id " +
+            "JOIN estado_activacion ea ON ea.id = a.estado_activacion_id " +
+            "WHERE a.fecha = (SELECT MAX(ac.fecha) FROM activacion ac WHERE ac.usuario_id = u.id) " +
+            "AND ea.nombre = 'Activado'", nativeQuery = true)
+    List<Usuario> findUsuariosByUltimaActivacionEnEstadoActivado();
+
+    @Query(value = "SELECT u.* FROM usuario u " +
+            "JOIN activacion a ON a.usuario_id = u.id " +
+            "JOIN estado_activacion ea ON ea.id = a.estado_activacion_id " +
+            "WHERE a.fecha = (SELECT MAX(ac.fecha) FROM activacion ac WHERE ac.usuario_id = u.id) " +
+            "AND ea.nombre = 'Validado'", nativeQuery = true)
+    List<Usuario> findUsuariosByUltimaActivacionEnEstadoValidado();
 }

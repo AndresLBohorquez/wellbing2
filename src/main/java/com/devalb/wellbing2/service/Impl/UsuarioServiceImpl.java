@@ -100,4 +100,13 @@ public class UsuarioServiceImpl implements UsuarioService {
         return registrosMensuales;
     }
 
+    @Override
+    public List<Usuario> getUsuariosUltimaActivacionOK() {
+        return usuarioRepository.findUsuariosByUltimaActivacionEnEstadoActivado();
+    }
+
+    @Override
+    public List<Usuario> getUsuariosUltimaActivacionValidado() {
+        return usuarioRepository.findUsuariosByUltimaActivacionEnEstadoValidado();
+    }
 }

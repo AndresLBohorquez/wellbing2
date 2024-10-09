@@ -1,5 +1,9 @@
 package com.devalb.wellbing2.controller;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,19 +19,28 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.devalb.wellbing2.entity.EstadoPagoMensual;
+import com.devalb.wellbing2.entity.PagoMensual;
 import com.devalb.wellbing2.entity.Rol;
 import com.devalb.wellbing2.entity.Usuario;
 import com.devalb.wellbing2.entity.WellPoints;
 import com.devalb.wellbing2.service.AccionWellPointsService;
 import com.devalb.wellbing2.service.ActivacionService;
+import com.devalb.wellbing2.service.EstadoPagoMensualService;
 import com.devalb.wellbing2.service.EstadoUsuarioService;
 import com.devalb.wellbing2.service.OrdenService;
+import com.devalb.wellbing2.service.PagoMensualService;
 import com.devalb.wellbing2.service.RolService;
 import com.devalb.wellbing2.service.UsuarioService;
 import com.devalb.wellbing2.service.VistaService;
 import com.devalb.wellbing2.service.WellPointsService;
+import com.devalb.wellbing2.util.CambiarPadre;
+import com.devalb.wellbing2.util.PlantillaNotificacion;
+import com.devalb.wellbing2.util.WellPointsUtil;
 
 import io.micrometer.common.util.StringUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -59,6 +72,21 @@ public class AdminController {
 
     @Autowired
     private ActivacionService activacionService;
+
+    @Autowired
+    private PagoMensualService pagoMensualService;
+
+    @Autowired
+    private EstadoPagoMensualService estadoPagoMensualService;
+
+    @Autowired
+    private PlantillaNotificacion pn;
+
+    @Autowired
+    private WellPointsUtil wpu;
+
+    @Autowired
+    private CambiarPadre cPadre;
 
     @Autowired
     private final BCryptPasswordEncoder ENCODER = new BCryptPasswordEncoder(4);
@@ -177,14 +205,12 @@ public class AdminController {
             usuario.setPassword(ENCODER.encode(usuarioForm.getPassword()));
             usuario.setRoles(usuarioForm.getRoles());
             usuario.setVisible(true);
-            if (usuarioForm.getEstadoUsuario().getNombre().equals("Eliminado")) {
-                usuario.setVisible(false);
-            }
+            usuario.setWellPoints(usuarioActual.getWellPoints());
+
             usuario.setEstadoUsuario(usuarioForm.getEstadoUsuario());
             usuario.setFechaRegistro(usuarioActual.getFechaRegistro());
             usuario.setInactivo(usuarioActual.getInactivo());
 
-            usuario.setWellPoints(usuarioActual.getWellPoints());
             if (isAdmin) {
                 if (!usuarioActual.getWellPoints().equals(usuarioForm.getWellPoints())) {
                     System.out.println(usuarioActual.getWellPoints());
@@ -192,6 +218,19 @@ public class AdminController {
                     editarWellPoints(usuario, usuarioForm.getWellPoints(), usuLog.getCodigoUsuario());
                 }
                 usuario.setWellPoints(usuarioForm.getWellPoints());
+                if (usuarioForm.getEstadoUsuario().getNombre().equals("Eliminado")) {
+                    usuario.setVisible(false);
+                    wpu.quitarWellPoints(usuario, "WellPoints retirados por motivo de eliminación de usuario");
+                    usuario.setWellPoints(0.0);
+                    cPadre.cambiarPadre(usuario);
+                }
+                if (usuarioForm.getEstadoUsuario().getNombre().equals("Baneado")) {
+                    usuario.setVisible(false);
+                    wpu.quitarWellPoints(usuario, "WellPoints retirados por motivo de baneo de usuario");
+                    pn.enviarEmailBaneo(usuario);
+                    usuario.setWellPoints(0.0);
+                    cPadre.cambiarPadre(usuario);
+                }
             }
 
             usuarioService.editUsuario(usuario);
@@ -209,6 +248,12 @@ public class AdminController {
         try {
             var usu = usuarioService.getUsuarioById(id);
             usu.setEstadoUsuario(estadoUsuarioService.getEstadoUsuarioByNombre("Eliminado"));
+
+            Usuario usuAdmin = usuarioService.getUsuarioByUsername("WellBing-Admin");
+            usuAdmin.setWellPoints(usuAdmin.getWellPoints() + usu.getWellPoints());
+            cPadre.cambiarPadre(usu);
+            wpu.quitarWellPoints(usu, "WellPoints retirados por motivo de eliminación de usuario");
+
             usuarioService.editUsuario(usu);
             usuarioService.deleteUsuario(id);
             log.info("Usuario eliminado con éxito. ID: {}", id);
@@ -250,8 +295,100 @@ public class AdminController {
     @PreAuthorize("hasAuthority('Admin')")
     public String goToPagoMensual(Model model, Authentication auth) {
         vService.cargarVistasAdmin(model, auth);
-        model.addAttribute("usuarios", usuarioService.getUsuarios());
+        model.addAttribute("listaPagosMensual", pagoMensualService.getPagosMensual());
+        model.addAttribute("estados", estadoPagoMensualService.getEstadosPagoMensual());
 
         return "admin/pago-mensual";
     }
+
+    @PostMapping("/admin/pago-mensual/actualizar")
+    public String actualizarPagoMensual(@RequestParam("pagoMensualId") Long pagoMensualId,
+            @RequestParam("comprobanteImagen") MultipartFile comprobanteImagen,
+            @RequestParam("estadoPagoMensual") Long estadoId,
+            RedirectAttributes redirectAttributes,
+            Model model) {
+        try {
+            PagoMensual pagoMensual = pagoMensualService.getPagoMensualById(pagoMensualId);
+            EstadoPagoMensual nuevoEstado = estadoPagoMensualService.getEstadoPagoById(estadoId);
+
+            // Guardar el archivo en la carpeta src/main/resources/static/images/pagoMensual
+            String mes = pagoMensual.getMes().toLowerCase();
+            String fileName = mes + "_" + pagoMensual.getUsuario().getId() + ".png";
+            Path path = Paths.get("src/main/resources/static/images/pagoMensual/" + fileName);
+
+            // Registrar la acción de subir el archivo en los logs
+            log.info("Guardando archivo comprobante: {} para el PagoMensual ID: {}", fileName, pagoMensualId);
+
+            Files.write(path, comprobanteImagen.getBytes());
+
+            // Actualizar la información del pago mensual
+            pagoMensual.setComprobante(fileName);
+            pagoMensual.setEstadoPagoMensual(nuevoEstado);
+            pagoMensualService.addPagoMensual(pagoMensual);
+
+            // Quitar WellPoints del usuario debido al pago generado
+            wpu.wellPointPagos(pagoMensual.getUsuario());
+
+            // Registrar la actualización exitosa en los logs
+            log.info("PagoMensual ID: {} actualizado exitosamente con nuevo estado: {}", pagoMensualId,
+                    nuevoEstado.getNombre());
+
+            // Mensaje de éxito para redirigir
+            redirectAttributes.addFlashAttribute("messageOK", "Pago mensual actualizado exitosamente.");
+
+            return "redirect:/admin/pago-mensual";
+        } catch (IOException e) {
+            // Registrar el error en los logs
+            log.error("Error al subir el comprobante para PagoMensual ID: {}", pagoMensualId, e);
+
+            // Mensaje de error para redirigir
+            redirectAttributes.addFlashAttribute("messageKO", "Hubo un error al subir el comprobante.");
+
+            return "redirect:/admin/pago-mensual";
+        } catch (Exception e) {
+            // Registrar errores generales en los logs
+            log.error("Error inesperado al actualizar el PagoMensual ID: {}", pagoMensualId, e);
+
+            // Mensaje de error genérico para redirigir
+            redirectAttributes.addFlashAttribute("messageKO",
+                    "Ocurrió un error inesperado al actualizar el pago mensual.");
+
+            return "redirect:/admin/pago-mensual";
+        }
+    }
+
+    @PostMapping("/admin/pago-mensual/estado-pendiente")
+    public String cambiarEstadoPendiente(@RequestParam("pagoMensualId") Long pagoMensualId,
+            RedirectAttributes redirectAttributes) {
+        try {
+            // Obtener el pago mensual por ID
+            PagoMensual pagoMensual = pagoMensualService.getPagoMensualById(pagoMensualId);
+
+            // Verifica si hay un comprobante y lo elimina
+            if (pagoMensual.getComprobante() != null) {
+                String filePath = "src/main/resources/static/images/pagoMensual/" + pagoMensual.getComprobante();
+                Path path = Paths.get(filePath);
+                Files.deleteIfExists(path); // Elimina el archivo si existe
+            }
+
+            // Obtener el estado "Pendiente"
+            EstadoPagoMensual estadoPendiente = estadoPagoMensualService.getEstadoPagoMensualByNombre("Pendiente");
+
+            // Actualizar el estado del pago mensual y eliminar el comprobante
+            pagoMensual.setEstadoPagoMensual(estadoPendiente);
+            pagoMensual.setComprobante(null); // Eliminar comprobante
+            pagoMensualService.addPagoMensual(pagoMensual);
+
+            // Agregar mensaje de éxito
+            redirectAttributes.addFlashAttribute("messageOK",
+                    "El estado se ha actualizado a Pendiente y se ha eliminado el comprobante.");
+        } catch (Exception e) {
+            // Agregar mensaje de error
+            redirectAttributes.addFlashAttribute("messageKO", "Error al cambiar el estado del pago mensual.");
+            e.printStackTrace();
+        }
+
+        return "redirect:/admin/pago-mensual"; // Redirigir a la lista de pagos
+    }
+
 }

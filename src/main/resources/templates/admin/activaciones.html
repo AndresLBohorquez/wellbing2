@@ -23,11 +23,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <div class="d-flex justify-content-end">
-                            <a class="btn btn-success btn-circular" th:href="@{/admin/categorias/crear}">
-                                <i class="bi bi-plus-circle"></i>
-                            </a>
-                        </div>
+                       
                         <div class="card-body">
                             <table id="example" class="custom-table bg-white rounded shadow-sm">
                                 <thead class="custom-table-header text-center">
@@ -37,7 +33,8 @@
                                         <th>Fecha Fin</th>
                                         <th>Valor</th>
                                         <th>Estado</th>
-                                        <th>WellPoints</th>
+                                        <th>Soporte</th>
+                                        <th>Nueva</th>
                                         <th>Acciones</th>
 
                                     </tr>
@@ -67,12 +64,14 @@
                                                     class="badge rounded-pill bg-info">Validado</span>
                                             </span>
                                         </td>
+                                        <!-- Modal trigger -->
                                         <td th:if="${activacion.wellPoints != null}">
                                             <a class="text-success" href="#" data-bs-toggle="modal"
-                                                data-bs-target="#wellpoints-modal-{{activacion.wellPoints.id}}">
+                                                th:attr="data-bs-target='#wellpoints-modal-' + ${activacion.wellPoints.id}">
                                                 <i class="bi bi-info-circle-fill"></i>
                                             </a>
                                         </td>
+
                                         <td th:if="${activacion.wellPoints == null}">
                                             <a class="enlace-no-subr"
                                                 th:href="@{'/images/activaciones/'} + ${activacion.comprobante}"
@@ -80,6 +79,8 @@
                                                 Imagen
                                             </a>
                                         </td>
+                                        <td class="text-center" th:if="${activacion.nueva}">Si</td>
+                                        <td class="text-center" th:if="${!activacion.nueva}">No</td>
                                         <td class="text-center">
                                             <a th:href="@{/admin/activaciones/preactivar/{id}(id=${activacion.id})}"
                                                 class="custom-icon text-primary me-2">
@@ -117,15 +118,13 @@
 
     <!-- Modal dinámico -->
     <div th:each="activacion : ${activaciones}">
-        <div th:if="${activacion.wellPoints != null}" id="wellpoints-modal-{{activacion.wellPoints.id}}" class="modal"
-            tabindex="-1">
+        <div th:if="${activacion.wellPoints != null}" th:attr="id='wellpoints-modal-' + ${activacion.wellPoints.id}"
+            class="modal" tabindex="-1">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">Detalles de WellPoints</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-
-
                     </div>
                     <div class="modal-body">
                         <p>Id: <span th:text="${activacion.wellPoints.id}"></span></p>

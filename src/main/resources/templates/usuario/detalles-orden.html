@@ -27,9 +27,9 @@
 
                     <p><strong>Nombre:</strong> <span th:text="${orden.nombre}"></span></p>
                     <p><strong>Fecha de Creación:</strong> <span
-                            th:text="${#temporals.format(orden.fechaCreacion, 'MMMM dd, yyyy')}"></span></p>
+                            th:text="${#temporals.format(orden.fechaCreacion, 'dd/MM/yyy - hh:mm:ss')}"></span></p>
                     <p><strong>Fecha de Actualización:</strong> <span
-                            th:text="${#temporals.format(orden.fechaActualizacion, 'MMMM dd, yyyy')}"></span></p>
+                            th:text="${#temporals.format(orden.fechaActualizacion, 'dd/MM/yyy - hh:mm:ss')}"></span></p>
                     <p><strong>Estado:</strong>
                         <span th:switch="${orden.estadoOrden.nombre}">
                             <span th:case="'Pendiente'" class="badge estado-pendiente">Pendiente</span>

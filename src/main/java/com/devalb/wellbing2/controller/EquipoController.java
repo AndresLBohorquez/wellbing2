@@ -49,7 +49,7 @@ public class EquipoController {
         List<Equipo> equipos = equipoService
                 .getEquipoByIdUsuario(usuarioService.getUsuarioByUsername(auth.getName()).getId());
 
-        calcularNietos(auth, equipos);
+        calcularNietos(equipos);
 
         model.addAttribute("ultimaActivacion",
                 activacionService.getUltimActivacion(usuarioService.getUsuarioByUsername(auth.getName()).getId()));
@@ -79,7 +79,15 @@ public class EquipoController {
         }
         log.debug("Usuario hijo encontrado: {}", usuarioHijo.getUsername());
 
-        // Validaciones
+        // Validar que el usuario no pueda agregarse a sí mismo como hijo
+        if (usuarioActual.getId().equals(usuarioHijo.getId())) {
+            log.warn("El usuario {} está intentando agregarse a sí mismo como hijo.", usuarioActual.getUsername());
+            model.addAttribute("messageKO", "No puedes agregarte a ti mismo como miembro del equipo.");
+            cargarDatosDeEquipo(model, auth);
+            return "usuario/equipo";
+        }
+
+        // Validaciones adicionales
         if (equipoService.existeRelacion(usuarioActual.getId(), usuarioHijo.getId())) {
             log.warn("El usuario {} ya ha sido registrado por el usuario {}.", usuarioActual.getUsername(),
                     usuarioHijo.getUsername());
@@ -211,7 +219,7 @@ public class EquipoController {
         }
     }
 
-    public void calcularNietos(Authentication auth, List<Equipo> equipos) {
+    public void calcularNietos(List<Equipo> equipos) {
 
         for (Equipo equipo : equipos) {
             equipo.getIdHijo().setUltimaActivacion(activacionService.getUltimActivacion(equipo.getIdHijo().getId()));
@@ -226,9 +234,7 @@ public class EquipoController {
                             .setUltimaActivacion(activacionService.getUltimActivacion(equiH.getIdHijo().getId()));
                     if (equiH.getIdHijo().getUltimaActivacion() != null) {
                         if (equiH.getIdHijo().getUltimaActivacion().getEstadoActivacion().getNombre()
-                                .equals("Pre Activado")
-                                || equiH.getIdHijo().getUltimaActivacion().getEstadoActivacion().getNombre()
-                                        .equals("Activado")
+                                .equals("Activado")
                                 || equiH.getIdHijo().getUltimaActivacion().getEstadoActivacion().getNombre()
                                         .equals("Validado")) {
                             nietos++;

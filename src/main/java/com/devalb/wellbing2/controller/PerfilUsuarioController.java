@@ -1,9 +1,5 @@
 package com.devalb.wellbing2.controller;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -21,7 +17,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.devalb.wellbing2.entity.Activacion;
@@ -314,56 +309,48 @@ public class PerfilUsuarioController {
                 return "redirect:/usuario";
             }
 
-            validarCantidadHijosActivos(usuario);
-
-            double valorActivacion = calcularValorActivacion(validarCantidadHijosActivos(usuario));
-
-            String nombreMes = fechaActual.getMonth().name().toLowerCase();
-            String nombreComprobante;
+            // Validar cantidad de hijos activos
+            int cantidadHijos = validarCantidadHijosActivos(usuario);
+            double valorActivacion = calcularValorActivacion(cantidadHijos);
 
             if (usuario.getWellPoints() >= valorActivacion) {
-                // Si el usuario tiene suficientes WellPoints, no es necesario subir comprobante
-                nombreComprobante = "WellPoints_" + usuario.getId() + "_" + nombreMes + ".jpg";
-                activacion.setComprobante(nombreComprobante);
-
-                // Si se sube un archivo, se ignora
-                MultipartFile archivo = activacion.getComprobanteFile();
-                if (archivo != null && !archivo.isEmpty()) {
-                    log.warn("No se requiere archivo de comprobante ya que tienes suficientes WellPoints.");
-                }
-
-                // Actualizar WellPoints
+                // Usuario tiene suficientes WellPoints, se descuenta la cantidad
                 actualizarWellPoints(usuario, valorActivacion, fechaActual, activacion);
-            } else {
-                // Verificar si se ha proporcionado un archivo comprobante
-                MultipartFile archivo = activacion.getComprobanteFile();
-                if (archivo == null || archivo.isEmpty()) {
-                    log.warn(
-                            "El archivo de comprobante es obligatorio ya que el valor de la activación es mayor a los WellPoints.");
-                    redirectAttributes.addFlashAttribute("messageKO", "El archivo de comprobante es obligatorio.");
-                    return "redirect:/usuario";
+
+                // Configurar fechas de activación
+                if (ultimaActivacion == null) {
+                    if (usuario.getFechaRegistro().getMonth().equals(LocalDate.now().getMonth())) {
+                        activacion.setEstadoActivacion(estadoActivacionService.getEstadoActivacionByNombre("Validado"));
+                        activacion.setFechaFin(fechaActual.withDayOfMonth(fechaActual.lengthOfMonth()).plusMonths(1));
+                        activacion.setNueva(true);
+                    } else {
+                        activacion.setEstadoActivacion(estadoActivacionService.getEstadoActivacionByNombre("Activado"));
+                        activacion.setFechaFin(fechaActual.withDayOfMonth(fechaActual.lengthOfMonth()));
+                        activacion.setNueva(false);
+                    }
+
+                } else {
+                    activacion.setFechaFin(fechaActual.withDayOfMonth(fechaActual.lengthOfMonth()));
+                    activacion.setNueva(false);
                 }
 
-                // Guardar el archivo y asignar el nombre
-                nombreComprobante = "activacion_" + usuario.getId() + "_" + nombreMes + ".jpg";
-                guardarArchivo(archivo, nombreComprobante);
-                activacion.setComprobante(nombreComprobante);
-            }
+                activacion.setValor(valorActivacion);
+                activacion.setFecha(fechaActual);
+                activacion.setUsuario(usuario);
+                usuario.setInactivo(0);
+                usuarioService.editUsuario(usuario);
 
-            // Configurar fechas de activación
-            if (ultimaActivacion == null) {
-                activacion.setFechaFin(fechaActual.withDayOfMonth(fechaActual.lengthOfMonth()).plusMonths(1));
+                activacionService.addActivacion(activacion);
+
+                log.info("Activación creada exitosamente para el usuario: {}", username);
+                redirectAttributes.addFlashAttribute("messageOK", "Activación creada exitosamente.");
             } else {
-                activacion.setFechaFin(fechaActual.withDayOfMonth(fechaActual.lengthOfMonth()));
+                // El usuario no tiene suficientes WellPoints, mostrar mensaje
+                log.warn("Usuario {} no tiene suficientes WellPoints", username);
+                redirectAttributes.addFlashAttribute("messageKO",
+                        "No tienes suficientes WellPoints para realizar la activación.");
             }
 
-            activacion.setFecha(fechaActual);
-            activacion.setUsuario(usuario);
-            activacion.setEstadoActivacion(estadoActivacionService.getEstadoActivacionByNombre("Pre Activado"));
-            activacionService.addActivacion(activacion);
-
-            log.info("Activación creada exitosamente para el usuario: {}", username);
-            redirectAttributes.addFlashAttribute("messageOK", "Activación creada exitosamente.");
             return "redirect:/usuario";
         } catch (Exception e) {
             log.error("Error al agregar activación", e);
@@ -399,12 +386,6 @@ public class PerfilUsuarioController {
         usuarioService.addUsuario(usuario);
     }
 
-    private void guardarArchivo(MultipartFile archivo, String nombreArchivo) throws IOException {
-        Path ruta = Paths.get("src/main/resources/static/images/activaciones/" + nombreArchivo);
-        Files.createDirectories(ruta.getParent());
-        Files.write(ruta, archivo.getBytes());
-    }
-
     public int validarCantidadHijosActivos(Usuario usuario) {
         // Validar cantidad de hijos
         var hijosActivos = 0;
@@ -415,9 +396,7 @@ public class PerfilUsuarioController {
                     .setUltimaActivacion(activacionService.getUltimActivacion(equiH.getIdHijo().getId()));
             if (equiH.getIdHijo().getUltimaActivacion() != null) {
                 if (equiH.getIdHijo().getUltimaActivacion().getEstadoActivacion().getNombre()
-                        .equals("Pre Activado")
-                        || equiH.getIdHijo().getUltimaActivacion().getEstadoActivacion().getNombre()
-                                .equals("Activado")
+                        .equals("Activado")
                         || equiH.getIdHijo().getUltimaActivacion().getEstadoActivacion().getNombre()
                                 .equals("Validado")) {
                     hijosActivos++;

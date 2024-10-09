@@ -22,16 +22,13 @@
                 <i class="bi bi-arrow-bar-right"></i>
             </button>
             <h1 class="mb-4 titulo-pagina">Equipo</h1>
-            
+
 
 
             <!-- Card Principal con Información del Usuario -->
             <div class="card card-perfil mb-4">
-                <button th:if="${ultimaActivacion != null and 
-                    (ultimaActivacion.estadoActivacion.nombre == 'Pre Activado' or 
-                     ultimaActivacion.estadoActivacion.nombre == 'Activado' or 
-                     ultimaActivacion.estadoActivacion.nombre == 'Validado')}" type="button"
-                    class="btn btn-primary derecha" data-bs-toggle="modal" data-bs-target="#crearEquipoModal">
+                <button type="button" class="btn btn-primary derecha" data-bs-toggle="modal"
+                    data-bs-target="#crearEquipoModal">
                     <i class="bi bi-plus-circle"></i>
                 </button>
                 <div class="card-body">

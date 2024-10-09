@@ -35,7 +35,7 @@
                                     <th class="align-left">Fecha Actualización</th>
                                     <th class="align-center">Estado</th>
                                     <th class="align-center">Total</th>
-                                    <th class="align-center">Estado de Pago</th> <!-- Nueva columna -->
+                                    <th class="align-center">Estado de Pago</th> 
                                 </tr>
                             </thead>
                             <tbody>
@@ -45,9 +45,9 @@
                                             th:text="${orden.nombre}">Nombre</a>
                                     </td>
                                     <td class="no-bold align-left"
-                                        th:text="${#temporals.format(orden.fechaCreacion, 'dd/MM/yyyy')}">fecha</td>
+                                        th:text="${#temporals.format(orden.fechaCreacion, 'dd/MM/yyy - hh:mm')}">fecha</td>
                                     <td class="no-bold align-left"
-                                        th:text="${#temporals.format(orden.fechaActualizacion, 'dd/MM/yyyy')}">fecha
+                                        th:text="${#temporals.format(orden.fechaActualizacion, 'dd/MM/yyy - hh:mm')}">fecha
                                     </td>
                                     <td class="no-bold align-center">
                                         <span th:switch="${orden.estadoOrden.nombre}">

@@ -125,29 +125,43 @@ public class CarritoController {
 
     @PostMapping("/actualizarCantidad")
     public String actualizarCantidad(@RequestParam("carritoId") Long carritoId,
-            @RequestParam("cantidad") Integer cantidad, @RequestParam("action") String action,
+            @RequestParam("cantidad") Integer cantidad,
+            @RequestParam(value = "action", required = false) String action,
             RedirectAttributes redirectAttributes) {
         log.info("Actualizando cantidad de carrito {} con acción {}", carritoId, action);
 
         Carrito carrito = carritoService.getCarritoById(carritoId);
         log.info("Carrito encontrado: {}", carrito);
 
-        switch (action) {
-            case "sumarCantidad":
-                log.info("Aumentando cantidad de carrito");
-                carrito.setCantidad(cantidad + 1);
-                break;
-            case "restarCantidad":
-                log.info("Disminuyendo cantidad de carrito");
-                carrito.setCantidad(cantidad - 1);
-                if (carrito.getCantidad() == 0) {
-                    log.info("Cantidad de carrito es 0, eliminando carrito");
-                    eliminarDelCarrito(carrito.getId(), redirectAttributes);
-                    return "redirect:/carrito";
-
-                }
-                break;
+        if (action != null) {
+            switch (action) {
+                case "sumarCantidad":
+                    log.info("Aumentando cantidad de carrito");
+                    carrito.setCantidad(cantidad + 1);
+                    break;
+                case "restarCantidad":
+                    log.info("Disminuyendo cantidad de carrito");
+                    carrito.setCantidad(cantidad - 1);
+                    if (carrito.getCantidad() == 0) {
+                        log.info("Cantidad de carrito es 0, eliminando carrito");
+                        eliminarDelCarrito(carrito.getId(), redirectAttributes);
+                        return "redirect:/carrito";
+                    }
+                    break;
+                default:
+                    log.warn("Acción desconocida: {}", action);
+                    break;
+            }
+        } else {
+            log.info("Actualizando cantidad directamente: {}", cantidad);
+            carrito.setCantidad(cantidad);
+            if (carrito.getCantidad() == 0) {
+                log.info("Cantidad de carrito es 0, eliminando carrito");
+                eliminarDelCarrito(carrito.getId(), redirectAttributes);
+                return "redirect:/carrito";
+            }
         }
+
         carritoService.editCarrito(carrito);
         log.info("Carrito actualizado correctamente");
 

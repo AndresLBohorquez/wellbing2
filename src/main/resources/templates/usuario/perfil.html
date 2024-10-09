@@ -342,10 +342,10 @@
                 </div>
                 <div class="modal-body">
                     <form id="formActivacion" th:action="@{/usuario/agregarActivacion}" th:object="${nuevaActivacion}"
-                        method="post" enctype="multipart/form-data">
+                        method="post">
                         <div class="mb-3">
                             <div class="row">
-                                <div class="col-12 col-center">
+                                <div class="col-12 text-center">
                                     <p class="text-success" th:text="'WellPoints: ' + ${usuLog.WellPoints}"></p>
                                 </div>
                             </div>
@@ -357,23 +357,31 @@
                                     <p class="text-danger" th:text="'$ ' + ${valorActivacion}"></p>
                                 </div>
                             </div>
-                            <input type="text" id="valor" name="valor" class="form-control" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="comprobanteFile" class="form-label">Comprobante (opcional, solo si no se usan
-                                WellPoints)</label>
-                            <input type="file" id="comprobanteFile" name="comprobanteFile" class="form-control"
-                                accept="image/*">
+                            <!-- Mostrar mensaje de advertencia si no tiene suficientes WellPoints -->
+                            <div class="row">
+                                <div class="col-12">
+                                    <p class="text-warning" th:if="${usuLog.WellPoints < valorActivacion}">
+                                        No tienes suficientes WellPoints para realizar esta activación.
+                                    </p>
+                                    <p class="text-success" th:if="${usuLog.WellPoints >= valorActivacion}">
+                                        Tienes suficientes WellPoints para realizar esta activación.
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                            <button type="submit" class="btn btn-primary">Guardar</button>
+                            <button type="submit" class="btn btn-primary"
+                                th:disabled="${usuLog.WellPoints < valorActivacion}">
+                                Confirmar Activación
+                            </button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+
 
 
 

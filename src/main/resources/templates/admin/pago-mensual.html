@@ -28,50 +28,58 @@
                                 <thead class="custom-table-header text-center">
                                     <tr>
                                         <th>Username</th>
-                                        <th>Valor Activacion</th>
-                                        <th>Pago Activacion</th>
-                                        <th>Diferencia</th>
-                                        <th>WellPoints</th>
+                                        <th>Hijos</th>
+                                        <th>Mes</th>
                                         <th>Comprobante</th>
+                                        <th>Ganancia</th>
+                                        <th>Descuento</th>
+                                        <th>Total</th>
                                         <th>Estado</th>
                                         <th>Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr th:each="usuario : ${usuarios}">
+                                    <tr th:each="pagoMensual : ${listaPagosMensual}">
                                         <td>
-                                            <a th:text="${usuario.username}"
-                                                th:href="@{/admin/usuarios/detalle/{id}(id=${usuario.id})}"
+                                            <a th:text="${pagoMensual.usuario.username}"
+                                                th:href="@{/admin/usuarios/detalle/{id}(id=${pagoMensual.usuario.id})}"
                                                 class="enlace-no-subr">
-
                                             </a>
                                         </td>
-                                        <td >Valor Activación</td>
-                                        <td >Pago Activación</td>
-                                        <td >Diferencia</td>
-                                        <td th:text="${usuario.wellPoints}"></td>
+                                        <td th:text="${pagoMensual.cantidadHijos}">Cantidad Hijos</td>
+                                        <td th:text="${pagoMensual.mes}">Mes</td>
+                                        <td th:text="${pagoMensual.comprobante}"></td>
+                                        <td th:text="${pagoMensual.ganancia}">Ganancia</td>
+                                        <td th:text="${pagoMensual.descuento}">Descuento</td>
+                                        <td th:text="${pagoMensual.total}">Total</td>
 
-                                        <td>Comprobante</td>
-                                        <td class="text-center" th:if="${usuario.estadoUsuario.nombre == 'Activo' }">
-                                            <span class="badge rounded-pill bg-success">Activo</span>
+                                        <td th:switch="${pagoMensual.estadoPagoMensual.nombre}">
+                                            <span th:case="'Pendiente'"
+                                                class="badge rounded-pill bg-warning">Pendiente</span>
+                                            <span th:case="'Pago'" class="badge rounded-pill bg-success">Pago</span>
                                         </td>
-                                        <td class="text-center" th:if="${usuario.estadoUsuario.nombre == 'Baneado' }">
-                                            <span class="badge rounded-pill bg-danger">Baneado</span>
-                                        </td>
-                                        <td class="text-center" th:if="${usuario.estadoUsuario.nombre == 'Eliminado' }">
-                                            <span class="badge rounded-pill bg-dark">Eliminado</span>
-                                        </td>
+
+
                                         <td class="text-center">
-                                            <!-- Icono de editar -->
-                                            <a th:href="@{/admin/usuarios/editar/{id}(id=${usuario.id})}"
-                                                class="custom-icon text-success me-2">
-                                                <i class="bi bi-pencil-square"></i>
-                                            </a>
-                                            <!-- Icono de eliminar -->
-                                            <a th:href="@{/admin/usuarios/eliminar/{id}(id=${usuario.id})}"
-                                                class="custom-icon text-danger me-2">
-                                                <i class="bi bi-trash3-fill"></i>
-                                            </a>
+                                            <div class="d-flex justify-content-center">
+                                                <!-- Modal trigger (botón Editar) -->
+
+                                                <a href="#" data-bs-toggle="modal"
+                                                    th:attr="data-bs-target='#editar-modal-' + ${pagoMensual.id}">
+                                                    <i class="custom-icon bi bi-pencil-square text-success "></i>
+                                                </a>
+                                                <!-- Botón estado pendiente -->
+
+                                                <form th:action="@{/admin/pago-mensual/estado-pendiente}" method="post"
+                                                    class="me-2">
+                                                    <input type="hidden" name="pagoMensualId"
+                                                        th:value="${pagoMensual.id}" />
+                                                    <button type="submit" class="btn btn-link p-0"
+                                                        title="Marcar como Pendiente">
+                                                        <i class="custom-icon bi bi-file-earmark-excel text-danger"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -83,6 +91,50 @@
             </div>
         </div>
     </div>
+
+
+    <!-- Modal dinámico para edición de PagoMensual -->
+    <div th:each="pagoMensual : ${listaPagosMensual}">
+        <div class="modal fade" th:attr="id='editar-modal-' + ${pagoMensual.id}" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Editar Pago Mensual</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form th:action="@{/admin/pago-mensual/actualizar}" method="post" enctype="multipart/form-data">
+                            <input type="hidden" name="pagoMensualId" th:value="${pagoMensual.id}" />
+
+                            <!-- Campo para subir la nueva imagen de comprobante -->
+                            <div class="mb-3">
+                                <label for="comprobante" class="form-label">Subir comprobante</label>
+                                <input class="form-control" type="file" id="comprobante" name="comprobanteImagen"
+                                    required>
+                            </div>
+
+                            <!-- Campo para cambiar el estado del pago -->
+                            <div class="mb-3">
+                                <label for="estado" class="form-label">Estado de Pago</label>
+                                <select class="form-select" id="estado" name="estadoPagoMensual" required>
+                                    <option th:each="estado : ${estados}" th:value="${estado.id}"
+                                        th:text="${estado.nombre}"
+                                        th:selected="${estado.id == pagoMensual.estadoPagoMensual.id}">
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Fin modal dinámico -->
 
     <div th:replace="~{layout/plantilla :: alertas}"></div>
     <script src="/js/datatable.js"></script>

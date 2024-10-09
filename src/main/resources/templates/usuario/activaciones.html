@@ -67,9 +67,12 @@
                                             class="badge rounded-pill bg-info">Validado</span>
                                     </td>
 
-                                    <td class="align-center">
+                                    <td th:if="${activacion.wellPoints == null}" class="align-center">
                                         <a th:href="@{/images/activaciones/} + ${activacion.comprobante}"
                                             target="_blank">Imagen</a>
+                                    </td>
+                                    <td th:if="${activacion.wellPoints != null}" class="align-center">
+                                        WellPoints
                                     </td>
                                 </tr>
                             </tbody>

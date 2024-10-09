@@ -27,4 +27,8 @@ public interface UsuarioService {
 
     public Map<String, Integer> getUsuariosLast6Months();
 
+    public List<Usuario> getUsuariosUltimaActivacionOK();
+
+    public List<Usuario> getUsuariosUltimaActivacionValidado();
+
 }
