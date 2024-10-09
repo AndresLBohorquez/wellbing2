@@ -34,8 +34,10 @@ import com.devalb.wellbing2.service.AccionWellPointsService;
 import com.devalb.wellbing2.service.ActivacionService;
 import com.devalb.wellbing2.service.EstadoPagoMensualService;
 import com.devalb.wellbing2.service.EstadoUsuarioService;
+import com.devalb.wellbing2.service.MedioPagoService;
 import com.devalb.wellbing2.service.OrdenService;
 import com.devalb.wellbing2.service.PagoMensualService;
+import com.devalb.wellbing2.service.RedesUsuarioService;
 import com.devalb.wellbing2.service.RolService;
 import com.devalb.wellbing2.service.UsuarioService;
 import com.devalb.wellbing2.service.VistaService;
@@ -83,6 +85,12 @@ public class AdminController {
     private EstadoPagoMensualService estadoPagoMensualService;
 
     @Autowired
+    private RedesUsuarioService redesUsuarioService;
+
+    @Autowired
+    private MedioPagoService medioPagoService;
+
+    @Autowired
     private PlantillaNotificacion pn;
 
     @Autowired
@@ -121,6 +129,8 @@ public class AdminController {
         model.addAttribute("roles", rolService.getRoles());
         model.addAttribute("listaEstadosUsuario", estadoUsuarioService.getEstadosUsuario());
         model.addAttribute("ultimaActivacion", activacionService.getUltimActivacion(usuario.getId()));
+        model.addAttribute("redesSociales", redesUsuarioService.getRedesUsuarioByUsuario(id));
+        model.addAttribute("mediosPago", medioPagoService.getMedioPagoByIdUsuario(id));
         return "admin/usuarios-detalle";
     }
 

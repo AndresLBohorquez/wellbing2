@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="es">
+
+<head th:replace="~{layout/plantilla :: head('Error 500 - Error del servidor')}"></head>
+
+<body class="d-flex flex-column min-vh-100">
+
+    <nav th:replace="~{layout/plantilla :: navbar('', '', '', '', '')}"></nav>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            text-align: center;
+        }
+
+        .container {
+            margin: auto;
+        }
+
+        h1 {
+            font-size: 48px;
+            color: #dc3545;
+        }
+
+        p {
+            font-size: 18px;
+        }
+    </style>
+
+    <div class="container">
+        <h1>Error 500</h1>
+        <p>Ha ocurrido un error en nuestro servidor. Estamos trabajando para solucionarlo.</p>
+        <p><a href="/">Volver a la página de inicio</a></p>
+    </div>
+
+    <footer th:replace="~{layout/plantilla :: footer}"></footer>
+
+
+</body>
+
+</html>
