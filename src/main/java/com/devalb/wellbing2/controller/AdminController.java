@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.devalb.wellbing2.entity.Email;
 import com.devalb.wellbing2.entity.EstadoPagoMensual;
 import com.devalb.wellbing2.entity.PagoMensual;
 import com.devalb.wellbing2.entity.Rol;
@@ -43,6 +45,7 @@ import com.devalb.wellbing2.util.PlantillaNotificacion;
 import com.devalb.wellbing2.util.WellPointsUtil;
 
 import io.micrometer.common.util.StringUtils;
+import jakarta.mail.MessagingException;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -389,6 +392,49 @@ public class AdminController {
         }
 
         return "redirect:/admin/pago-mensual"; // Redirigir a la lista de pagos
+    }
+
+    @GetMapping("/admin/email")
+    public String goToEmail(Model model, Authentication auth) {
+        vService.cargarVistasAdmin(model, auth);
+        model.addAttribute("email", new Email());
+        return "/admin/email";
+    }
+
+    @PostMapping("/email")
+    public String enviarEmail(@ModelAttribute Email email, @RequestParam String action,
+            RedirectAttributes redirectAttributes) {
+        try {
+            if ("enviar".equals(action)) {
+                // Obtener los correos del campo "para"
+                String[] destinatarios = email.getDestinatario().split(",");
+                for (String destinatario : destinatarios) {
+                    // Trim para eliminar espacios en blanco
+                    pn.enviarEmail(email, destinatario.trim());
+                }
+                log.info("Correos enviados a: {}", Arrays.toString(destinatarios));
+                redirectAttributes.addFlashAttribute("messageOK", "Los correos han sido enviados correctamente.");
+            } else if ("enviarTodos".equals(action)) {
+                // Ignorar el campo "para" y enviar a todos los usuarios
+                List<Usuario> usuarios = usuarioService.getUsuariosVisibles();
+                for (Usuario usuario : usuarios) {
+                    pn.enviarEmail(email, usuario.getEmail());
+                }
+                log.info("Correos enviados a todos los usuarios.");
+                redirectAttributes.addFlashAttribute("messageOK",
+                        "Los correos han sido enviados a todos los usuarios.");
+            }
+        } catch (MessagingException e) {
+            log.error("Error al enviar el correo: {}", e.getMessage());
+            redirectAttributes.addFlashAttribute("messageKO",
+                    "Hubo un error al enviar los correos. Inténtalo de nuevo más tarde.");
+        } catch (Exception e) {
+            log.error("Error inesperado: {}", e.getMessage());
+            redirectAttributes.addFlashAttribute("messageKO",
+                    "Hubo un error inesperado. Inténtalo de nuevo más tarde.");
+        }
+
+        return "redirect:/admin/email";
     }
 
 }

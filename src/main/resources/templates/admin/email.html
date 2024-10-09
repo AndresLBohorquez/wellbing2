@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="es">
+
+<!-- Head -->
+
+<head th:replace="~{layout/plantilla-admin :: head-admin('Email - ' + ${rolPrincipal})}"></head>
+
+<body>
+
+    <!-- Navbar -->
+
+    <head th:replace="~{layout/plantilla-admin :: navbar-admin}"></head>
+
+    <!-- Sidebar -->
+    <div th:replace="~{layout/plantilla-admin :: sidebar-admin('','','','','','','','','','')}"></div>
+
+    <!-- Contenido principal -->
+    <div class="main-content">
+        <div class="content container-fluid">
+            <!-- Título -->
+            <h2 class="section-title">Email</h2>
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <form th:action="@{/admin/email}" th:object="${email}" method="post">
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text" id="basic-addon1">Para: </span>
+                                        <input th:field="*{destinatario}" type="text" class="form-control"
+                                            placeholder="Para" aria-label="Username" aria-describedby="basic-addon1">
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text" id="basic-addon1">Asunto: </span>
+                                        <input th:field="*{asunto}" type="text" class="form-control"
+                                            placeholder="Asunto" aria-label="Username" aria-describedby="basic-addon1">
+                                    </div>
+
+                                    <div class="mb-2 mt-3">
+                                        <label for="exampleFormControlTextarea1" class="form-label">Mensaje: </label>
+                                        <textarea th:field="*{mensaje}" class="form-control"
+                                            id="exampleFormControlTextarea1" rows="15"></textarea>
+                                    </div>
+                                    <div class="col-center">
+                                        <div class="row">
+                                            <button type="submit" class="btn btn-outline-success col-sm-5 me-3 mt-2"
+                                                name="action" value="enviar">Enviar</button>
+                                            <button type="submit" class="btn btn-outline-success col-sm-5 me-3 mt-2"
+                                                name="action" value="enviarTodos">Enviar
+                                                a todos
+                                                los
+                                                usuarios</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+
+    <div th:replace="~{layout/plantilla :: alertas}"></div>
+    <script src="/js/datatable.js"></script>
+    <!-- Footer -->
+    <footer th:replace="~{layout/plantilla :: footer}"></footer>
+
+    <script th:inline="javascript">
+        document.querySelector('.sidebar-toggle').addEventListener('click', function () {
+            document.querySelector('.sidebar').classList.toggle('active');
+        });
+
+    </script>
+</body>
+
+</html>

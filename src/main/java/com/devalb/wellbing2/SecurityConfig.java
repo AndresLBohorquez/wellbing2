@@ -45,9 +45,10 @@ public class SecurityConfig {
                                                                 "/politicas_privacidad", "/aviso_legal",
                                                                 "/terminos_condiciones", "favicon.ico")
                                                 .permitAll()
-
-                                                .requestMatchers("/admin", "/admin/pago-mensual/**").hasAuthority("Admin")
-                                                .requestMatchers("/admin/usuarios/**")
+                                                
+                                                .requestMatchers("/admin", "/admin/pago-mensual/**")
+                                                .hasAuthority("Admin")
+                                                .requestMatchers("/admin/usuarios/**", "/admin/email/**")
                                                 .hasAnyAuthority("Admin", "Secretario", "Tesorero", "Domiciliario")
                                                 .requestMatchers("/admin/usuarios/eliminar/**")
                                                 .hasAnyAuthority("Admin", "Secretario", "Tesorero", "Domiciliario")
@@ -62,7 +63,8 @@ public class SecurityConfig {
                                                 .requestMatchers("/admin/ordenes/**", "/admin/ordenes-editar/**")
                                                 .hasAnyAuthority("Admin", "Domiciliario")
                                                 .requestMatchers("/admin/pagos/**").hasAnyAuthority("Admin", "Tesorero")
-                                                .requestMatchers("/admin/pqrs/**").hasAnyAuthority("Admin", "Secretario")
+                                                .requestMatchers("/admin/pqrs/**")
+                                                .hasAnyAuthority("Admin", "Secretario")
                                                 .requestMatchers("/admin/wellpoints/**").hasAuthority("Admin")
                                                 .requestMatchers("/secretario/**").hasAuthority("Secretario")
                                                 .requestMatchers("/tesorero/**").hasAuthority("Tesorero")

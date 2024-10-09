@@ -11,4 +11,6 @@ public interface EmailService {
     public void sendEmail(String to, String subject, String content);
 
     public void sendHtmlEmail(String to, String subject, String htmlContent) throws MessagingException;
+
+    public void sendHtmlEmailMime(String to, String subject, String htmlContent) throws MessagingException;
 }

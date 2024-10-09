@@ -103,10 +103,19 @@
                             <li>
                                 <a class="dropdown-item" th:href="@{/admin}">Admin</a>
                             </li>
+                            <li>
+                                <a class="dropdown-item" th:href="@{/admin/email}">Email</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item border-top" th:href="@{/admin/pago-mensual}">Pago Mensual</a>
+                            </li>
                         </div>
                         <div th:if="${rolPrincipal == 'Secretario' || rolPrincipal == 'Tesorero' || rolPrincipal == 'Domiciliario'}">
                             <li>
                                 <a class="dropdown-item" th:href="@{/admin/usuarios}">Administrar</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item border-top" th:href="@{/admin/email}">Email</a>
                             </li>
                         </div>
                     </div>

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.devalb.wellbing2.entity.Carrito;
+import com.devalb.wellbing2.entity.Email;
 import com.devalb.wellbing2.entity.Orden;
 import com.devalb.wellbing2.entity.Usuario;
 import com.devalb.wellbing2.service.EmailService;
@@ -241,4 +242,37 @@ public class PlantillaNotificacion {
                 emailService.sendHtmlEmail(destinatario, asunto, htmlContent.toString());
         }
 
+        public void enviarEmail(Email email, String destinatario) throws MessagingException {
+                String asunto = email.getAsunto();
+
+                // Crear el contenido del email con una plantilla HTML
+                StringBuilder htmlContent = new StringBuilder();
+                htmlContent.append("<html>")
+                                .append("<head>")
+                                .append("<style>")
+                                .append("body { font-family: Arial, sans-serif; }")
+                                .append(".container { width: 100%; max-width: 600px; margin: 0 auto; padding: 20px; }")
+                                .append(".header { background-color: #28a745; color: white; padding: 10px; text-align: center; }")
+                                .append(".content { padding: 20px; background-color: #f9f9f9; }")
+                                .append(".footer { text-align: center; padding: 10px; background-color: #28a745; color: white; }")
+                                .append("</style>")
+                                .append("</head>")
+                                .append("<body>")
+                                .append("<div class='container'>")
+                                .append("<div class='header'>")
+                                .append("<h2>").append(asunto).append("</h2>")
+                                .append("</div>")
+                                .append("<div class='content'>")
+                                .append("<p>").append(email.getMensaje()).append("</p>")
+                                .append("</div>")
+                                .append("<div class='footer'>")
+                                .append("<p>Gracias por usar nuestros servicios.</p>")
+                                .append("</div>")
+                                .append("</div>")
+                                .append("</body>")
+                                .append("</html>");
+
+                // Llamar al servicio de envío de emails con HTML
+                emailService.sendHtmlEmailMime(destinatario, asunto, htmlContent.toString());
+        }
 }
