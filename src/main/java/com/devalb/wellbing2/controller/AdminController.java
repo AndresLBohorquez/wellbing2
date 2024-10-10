@@ -408,7 +408,7 @@ public class AdminController {
     public String goToEmail(Model model, Authentication auth) {
         vService.cargarVistasAdmin(model, auth);
         model.addAttribute("email", new Email());
-        return "/admin/email";
+        return "admin/email";
     }
 
     @PostMapping("/email")
