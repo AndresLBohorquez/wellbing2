@@ -1,143 +1,239 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="es">
+<html
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:th="http://www.thymeleaf.org"
+  lang="es"
+>
+  <head th:replace="~{layout/plantilla :: head('Órdenes')}"></head>
 
-<head th:replace="~{layout/plantilla :: head('Órdenes')}"></head>
-
-<body>
+  <body>
     <!-- Navbar -->
     <nav th:replace="~{layout/plantilla :: navbar('', '', '', '', '')}"></nav>
 
     <!-- Contenedor principal -->
     <div class="container-fluid d-flex flex-column flex-md-row">
-        <!-- Sidebar -->
-        <nav th:replace="~{layout/plantilla :: sidebar-usuario('', '', '', '', 'active','','')}"></nav>
+      <!-- Sidebar -->
+      <nav
+        th:replace="~{layout/plantilla :: sidebar-usuario('', '', '', '', 'active','','')}"
+      ></nav>
 
-        <!-- Contenido principal -->
-        <div id="content" class="flex-grow-1 p-3">
-            <!-- Botón para mostrar el sidebar en móvil -->
-            <button id="sidebarToggle" class="d-md-none btn btn-primary">
-                <i class="bi bi-arrow-bar-right"></i>
-            </button>
-            <h1 class="mb-4 titulo-pagina">Órdenes</h1>
+      <!-- Contenido principal -->
+      <div id="content" class="flex-grow-1 p-3">
+        <!-- Botón para mostrar el sidebar en móvil -->
+        <button id="sidebarToggle" class="d-md-none btn btn-primary">
+          <i class="bi bi-arrow-bar-right"></i>
+        </button>
+        <h1 class="mb-4 titulo-pagina">Órdenes</h1>
 
-            <!-- Card Principal con Información del Usuario -->
-            <div class="card card-perfil mb-4">
-                <a href="/productos" type="button" class="btn btn-primary derecha">
-                    <i class="bi bi-plus-circle"></i>
-                </a>
-                <div class="card-body">
-                    <div class="row">
-                        <table id="example" class="bg-white rounded shadow-sm">
-                            <thead>
-                                <tr>
-                                    <th class="align-left">Nombre</th>
-                                    <th class="align-left">Fecha Creación</th>
-                                    <th class="align-left">Fecha Actualización</th>
-                                    <th class="align-center">Estado</th>
-                                    <th class="align-center">Total</th>
-                                    <th class="align-center">Estado de Pago</th> 
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr th:each="orden : ${listaOrdenes}">
-                                    <td class="no-bold align-left">
-                                        <a th:href="@{/usuario/ordenes/detalles/{id}(id=${orden.id})}"
-                                            th:text="${orden.nombre}">Nombre</a>
-                                    </td>
-                                    <td class="no-bold align-left"
-                                        th:text="${#temporals.format(orden.fechaCreacion, 'dd/MM/yyy - hh:mm')}">fecha</td>
-                                    <td class="no-bold align-left"
-                                        th:text="${#temporals.format(orden.fechaActualizacion, 'dd/MM/yyy - hh:mm')}">fecha
-                                    </td>
-                                    <td class="no-bold align-center">
-                                        <span th:switch="${orden.estadoOrden.nombre}">
-                                            <span th:case="'Pendiente'" class="badge estado-pendiente">Pendiente</span>
-                                            <span th:case="'En Proceso'" class="badge estado-en-proceso">En
-                                                proceso</span>
-                                            <span th:case="'Enviada'" class="badge estado-enviado">Enviada</span>
-                                            <span th:case="'Entregada'" class="badge estado-entregado">Entregada</span>
-                                            <span th:case="'Cancelada'" class="badge estado-cancelado">Cancelada</span>
-                                            <span th:case="'Devuelta'" class="badge estado-devuelto">Devuelta</span>
-                                            <span th:case="'Reembolsada'"
-                                                class="badge estado-reembolsado">Reembolsada</span>
-                                            <span th:case="'Pago Pendiente'" class="badge estado-pago-pendiente">Pago
-                                                Pendiente</span>
-                                            <span th:case="'Pago Rechazado'" class="badge estado-pago-rechazado">Pago
-                                                Rechazado</span>
-                                            <span th:case="'En Hold'" class="badge estado-en-hold">En Hold</span>
-                                        </span>
-                                    </td>
-                                    <td class="no-bold align-center"
-                                        th:text="${#numbers.formatDecimal(orden.total, 2 , 'COMMA', 2, 'POINT')}">0.00
-                                    </td>
-                                    <td class="no-bold align-center"> <!-- Columna para el estado de pago -->
-                                        <span th:if="${pagosMap[orden.id] != null}">
-                                            <span th:switch="${pagosMap[orden.id].estadoPago.nombre}">
-                                                <span th:case="'Pendiente'"
-                                                    class="badge rounded-pill estado-pendiente">Pendiente</span>
-                                                <span th:case="'Aprobado'"
-                                                    class="badge rounded-pill bg-success">Aprobado</span>
-                                                <span th:case="'Rechazado'"
-                                                    class="badge rounded-pill bg-danger">Rechazado</span>
-                                            </span>
-                                        </span>
-                                        <!-- Badge que abre el modal -->
-                                        <span th:if="${pagosMap[orden.id] == null}">
-                                            <a class="badge rounded-pill bg-dark enlace-no-subr-ord"
-                                                th:href="@{/usuario/pago/crear/{id}(id=${orden.id})}"
-                                                data-bs-toggle="modal" data-bs-target="#crearPagoModal"
-                                                th:attr="data-orden-id=${orden.id}">Sin Pago</a>
-                                        </span>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+        <!-- Card Principal con Información del Usuario -->
+        <div class="card card-perfil mb-4">
+          <a href="/productos" type="button" class="btn btn-primary derecha">
+            <i class="bi bi-plus-circle"></i>
+          </a>
+          <div class="card-body">
+            <div class="row">
+              <table id="example" class="bg-white rounded shadow-sm">
+                <thead>
+                  <tr>
+                    <th class="align-left">Nombre</th>
+                    <th class="align-left">Fecha Creación</th>
+                    <th class="align-left">Fecha Actualización</th>
+                    <th class="align-center">Estado</th>
+                    <th class="align-center">Total</th>
+                    <th class="align-center">Estado de Pago</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr th:each="orden : ${listaOrdenes}">
+                    <td class="no-bold align-left">
+                      <a
+                        th:href="@{/usuario/ordenes/detalles/{id}(id=${orden.id})}"
+                        th:text="${orden.nombre}"
+                        >Nombre</a
+                      >
+                    </td>
+                    <td
+                      class="no-bold align-left"
+                      th:text="${#temporals.format(orden.fechaCreacion, 'dd/MM/yyy - hh:mm')}"
+                    >
+                      fecha
+                    </td>
+                    <td
+                      class="no-bold align-left"
+                      th:text="${#temporals.format(orden.fechaActualizacion, 'dd/MM/yyy - hh:mm')}"
+                    >
+                      fecha
+                    </td>
+                    <td class="no-bold align-center">
+                      <span th:switch="${orden.estadoOrden.nombre}">
+                        <span
+                          th:case="'Pendiente'"
+                          class="badge estado-pendiente"
+                          >Pendiente</span
+                        >
+                        <span
+                          th:case="'En Proceso'"
+                          class="badge estado-en-proceso"
+                          >En proceso</span
+                        >
+                        <span th:case="'Enviada'" class="badge estado-enviado"
+                          >Enviada</span
+                        >
+                        <span
+                          th:case="'Entregada'"
+                          class="badge estado-entregado"
+                          >Entregada</span
+                        >
+                        <span
+                          th:case="'Cancelada'"
+                          class="badge estado-cancelado"
+                          >Cancelada</span
+                        >
+                        <span th:case="'Devuelta'" class="badge estado-devuelto"
+                          >Devuelta</span
+                        >
+                        <span
+                          th:case="'Reembolsada'"
+                          class="badge estado-reembolsado"
+                          >Reembolsada</span
+                        >
+                        <span
+                          th:case="'Pago Pendiente'"
+                          class="badge estado-pago-pendiente"
+                          >Pago Pendiente</span
+                        >
+                        <span
+                          th:case="'Pago Rechazado'"
+                          class="badge estado-pago-rechazado"
+                          >Pago Rechazado</span
+                        >
+                        <span th:case="'En Hold'" class="badge estado-en-hold"
+                          >En Hold</span
+                        >
+                      </span>
+                    </td>
+                    <td
+                      class="no-bold align-center"
+                      th:text="${#numbers.formatDecimal(orden.total, 2 , 'COMMA', 2, 'POINT')}"
+                    >
+                      0.00
+                    </td>
+                    <td class="no-bold align-center">
+                      <!-- Columna para el estado de pago -->
+                      <span th:if="${pagosMap[orden.id] != null}">
+                        <span
+                          th:switch="${pagosMap[orden.id].estadoPago.nombre}"
+                        >
+                          <span
+                            th:case="'Pendiente'"
+                            class="badge rounded-pill estado-pendiente"
+                            >Pendiente</span
+                          >
+                          <span
+                            th:case="'Aprobado'"
+                            class="badge rounded-pill bg-success"
+                            >Aprobado</span
+                          >
+                          <span
+                            th:case="'Rechazado'"
+                            class="badge rounded-pill bg-danger"
+                            >Rechazado</span
+                          >
+                        </span>
+                      </span>
+                      <!-- Badge que abre el modal -->
+                      <span th:if="${pagosMap[orden.id] == null}">
+                        <a
+                          class="badge rounded-pill bg-dark enlace-no-subr-ord"
+                          th:href="@{/usuario/pago/crear/{id}(id=${orden.id})}"
+                          data-bs-toggle="modal"
+                          data-bs-target="#crearPagoModal"
+                          th:attr="data-orden-id=${orden.id}"
+                          >Sin Pago</a
+                        >
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-
+          </div>
         </div>
+      </div>
     </div>
 
     <!-- Modal para Crear Pago -->
-    <div class="modal fade" id="crearPagoModal" tabindex="-1" aria-labelledby="crearPagoModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="crearPagoModalLabel">Crear Pago</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-                </div>
-                <div class="modal-body">
-                    <form th:action="@{/usuario/pago/crear/{id}(id=${ordenId})}" method="post"
-                        enctype="multipart/form-data">
-                        <div class="mb-3">
-                            <label for="cantidad" class="form-label">Valor</label>
-                            <input type="text" class="form-control" name="cantidad" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="comprobante" class="form-label">Comprobante</label>
-                            <input type="file" class="form-control" name="comprobante" required>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">Crear Pago</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
+    <div
+      class="modal fade"
+      id="crearPagoModal"
+      tabindex="-1"
+      aria-labelledby="crearPagoModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="crearPagoModalLabel">Crear Pago</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Cerrar"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form
+              th:action="@{/usuario/pago/crear/{id}(id=${ordenId})}"
+              method="post"
+              enctype="multipart/form-data"
+            >
+              <div class="mb-3">
+                <label for="cantidad" class="form-label">Valor</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="cantidad"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="comprobante" class="form-label">Comprobante</label>
+                <input
+                  type="file"
+                  class="form-control"
+                  name="comprobante"
+                  required
+                />
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">
+                  Crear Pago
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
+      </div>
     </div>
     <script>
-        var crearPagoModal = document.getElementById('crearPagoModal');
-        crearPagoModal.addEventListener('show.bs.modal', function (event) {
-            var button = event.relatedTarget; // Botón que activó el modal
-            var ordenId = button.getAttribute('data-orden-id'); // Obtener el id de la orden
-            var form = crearPagoModal.querySelector('form');
-            form.setAttribute('action', '/usuario/pago/crear/' + ordenId); // Establecer la acción del formulario
+      var crearPagoModal = document.getElementById("crearPagoModal");
+      crearPagoModal.addEventListener("show.bs.modal", function (event) {
+        var button = event.relatedTarget; // Botón que activó el modal
+        var ordenId = button.getAttribute("data-orden-id"); // Obtener el id de la orden
+        var form = crearPagoModal.querySelector("form");
+        form.setAttribute("action", "/usuario/pago/crear/" + ordenId); // Establecer la acción del formulario
+      });
+    </script>
+    <script>
+      document
+        .getElementById("sidebarToggle")
+        .addEventListener("click", function () {
+          const sidebar = document.getElementById("sidebar");
+          sidebar.classList.toggle("active");
         });
     </script>
     <footer th:replace="~{layout/plantilla :: footer}"></footer>
     <div th:replace="~{layout/plantilla :: alertas}"></div>
     <script src="/js/datatable.js"></script>
-</body>
-
+  </body>
 </html>

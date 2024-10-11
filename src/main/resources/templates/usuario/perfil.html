@@ -1,394 +1,626 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="es">
+<html
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:th="http://www.thymeleaf.org"
+  lang="es"
+>
+  <head th:replace="~{layout/plantilla :: head('Pefil de Usuario')}"></head>
 
-<head th:replace="~{layout/plantilla :: head('Pefil de Usuario')}"></head>
-
-<body>
+  <body>
     <!-- Navbar -->
 
     <nav th:replace="~{layout/plantilla :: navbar('', '', '', '', '')}"></nav>
 
-
-
     <!-- Contenedor principal -->
     <div class="container-fluid d-flex flex-column flex-md-row">
-        <!-- Sidebar -->
-        <nav th:replace="~{layout/plantilla :: sidebar-usuario('active', '', '', '', '','','')}"></nav>
+      <!-- Sidebar -->
+      <nav
+        th:replace="~{layout/plantilla :: sidebar-usuario('active', '', '', '', '','','')}"
+      ></nav>
 
-        <!-- Contenido principal -->
-        <div id="content" class="flex-grow-1 p-3">
-            <!-- Botón para mostrar el sidebar en móvil -->
-            <button id="sidebarToggle" class="d-md-none btn btn-primary">
-                <i class="bi bi-arrow-bar-right"></i>
-            </button>
-            <h1 class="mb-4 titulo-pagina">Perfil de Usuario</h1>
+      <!-- Contenido principal -->
+      <div id="content" class="flex-grow-1 p-3">
+        <!-- Botón para mostrar el sidebar en móvil -->
+        <button id="sidebarToggle" class="d-md-none btn btn-primary">
+          <i class="bi bi-arrow-bar-right"></i>
+        </button>
+        <h1 class="mb-4 titulo-pagina">Perfil de Usuario</h1>
 
-            <!-- Card Principal con Información del Usuario -->
-            <div class="card card-perfil mb-4">
-                <div class="card-body">
-                    <div class="row">
-                        <!-- Columna con la información del usuario -->
-                        <div class="col-md-6">
-                            <h5>Nombre:</h5>
-                            <p th:text="${usuLog.nombre} +' ' + ${usuLog.apellido}">Juan Pérez</p>
-
-                            <h5>Email:</h5>
-                            <p th:text="${usuLog.email}">juan.perez@example.com</p>
-
-                            <h5>Celular:</h5>
-                            <p th:text="${usuLog.celular}">+123456789</p>
-
-                            <h5>Dirección:</h5>
-                            <p th:text="${usuLog.direccion}">Calle 123, Ciudad</p>
-
-                            <h5>WellPoints:</h5>
-                            <p th:text="${usuLog.WellPoints}">500</p>
-                        </div>
-
-                        <!-- Segunda columna con más información -->
-                        <div class="col-md-6">
-                            <h5>Código de Usuario:</h5>
-                            <p th:text="${usuLog.codigoUsuario}">U12345</p>
-
-                            <h5>Nombre de Usuario:</h5>
-                            <p th:text="${usuLog.username}">juanperez</p>
-
-                            <h5>Fecha de Registro:</h5>
-                            <p th:text="${#temporals.format(usuLog.fechaRegistro, 'dd/MM/yyy')}">01/01/2022</p>
-
-                            <h5>Activo hasta:</h5>
-                            <div th:each="act : ${activacion}">
-                                <p th:text="${#temporals.format(act.fechaFin, 'dd/MM/yyy')}">01/02/2022</p>
-
-                            </div>
-
-                            <h5>Estado:</h5>
-                            <span th:if="${usuLog.estadoUsuario.nombre == 'Activo'}"
-                                class="badge bg-success">Activo</span>
-                            <span th:if="${usuLog.estadoUsuario.nombre == 'Baneado'}"
-                                class="badge bg-warning">Baneado</span>
-                            <span th:if="${usuLog.estadoUsuario.nombre == 'Eliminado'}"
-                                class="badge bg-danger">Eliminado</span>
-                        </div>
-                    </div>
-
-                    <!-- Lista de Roles -->
-                    <div class="row mt-2">
-                        <div class="col-12">
-                            <h5 th:if="${listaRolesUsuario?.size() > 1}">Roles:</h5>
-                            <div th:if="${listaRolesUsuario?.size() > 1}" th:each="rol : ${listaRolesUsuario}"
-                                class="roles-list d-inline">
-                                <span th:text="${rol.nombre}" class="mr-2">Rol</span>
-                            </div>
-                            <button type="button" class="btn btn-edit"
-                                th:if="${usuLog.estadoUsuario.nombre == 'Activo'}" data-bs-toggle="modal"
-                                data-bs-target="#editarUsuarioModal">
-                                <i class="fas fa-edit"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Otras Cards -->
+        <!-- Card Principal con Información del Usuario -->
+        <div class="card card-perfil mb-4">
+          <div class="card-body">
             <div class="row">
-                <!-- Card de Activación -->
-                <div class="col-md-4 mb-4">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h5 class="card-title section-title">Activación</h5>
-                            <div class="d-flex justify-content-end mb-3">
-                                <button class="btn btn-add" data-bs-toggle="modal"
-                                    data-bs-target="#agregarActivacionModal">
-                                    <i class="fas fa-plus"></i>
-                                </button>
+              <!-- Columna con la información del usuario -->
+              <div class="col-md-6">
+                <h5>Nombre:</h5>
+                <p th:text="${usuLog.nombre} +' ' + ${usuLog.apellido}">
+                  Juan Pérez
+                </p>
 
-                            </div>
-                            <div class="card-text">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <h6 th:if="${activacion != null}">Última: </h6>
-                                    </div>
-                                    <div class="col-6">
-                                        <div th:each="act : ${activacion}">
-                                            <span th:text="${act.fecha}"></span>
-                                        </div>
-                                    </div>
-                                </div>
+                <h5>Email:</h5>
+                <p th:text="${usuLog.email}">juan.perez@example.com</p>
 
-                                <div class="row">
-                                    <div class="col-6">
-                                        <h6 th:if="${activacion != null}">Activo Hasta: </h6>
-                                    </div>
-                                    <div class="col-6">
-                                        <div th:each="act : ${activacion}">
-                                            <span th:text="${act.fechaFin}"></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <h5>Celular:</h5>
+                <p th:text="${usuLog.celular}">+123456789</p>
+
+                <h5>Dirección:</h5>
+                <p th:text="${usuLog.direccion}">Calle 123, Ciudad</p>
+
+                <h5>WellPoints:</h5>
+                <p th:text="${usuLog.WellPoints}">500</p>
+              </div>
+
+              <!-- Segunda columna con más información -->
+              <div class="col-md-6">
+                <h5>Código de Usuario:</h5>
+                <p th:text="${usuLog.codigoUsuario}">U12345</p>
+
+                <h5>Nombre de Usuario:</h5>
+                <p th:text="${usuLog.username}">juanperez</p>
+
+                <h5>Fecha de Registro:</h5>
+                <p
+                  th:text="${#temporals.format(usuLog.fechaRegistro, 'dd/MM/yyy')}"
+                >
+                  01/01/2022
+                </p>
+
+                <h5>Activo hasta:</h5>
+                <div th:each="act : ${activacion}">
+                  <p th:text="${#temporals.format(act.fechaFin, 'dd/MM/yyy')}">
+                    01/02/2022
+                  </p>
                 </div>
 
-                <!-- Card de Medios de Pago -->
-                <div class="col-md-4 mb-4">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h5 class="card-title section-title">Medios de Pago</h5>
-                            <div class="d-flex justify-content-end mb-3">
-                                <button class="btn btn-add" th:if="${usuLog.estadoUsuario.nombre == 'Activo'}"
-                                    data-bs-toggle="modal" data-bs-target="#agregarMedioPagoModal">
-                                    <i class="fas fa-plus"></i>
-                                </button>
-                            </div>
-                            <div class="card-text">
-                                <div class="row" th:each="mPago : ${mediosPago}">
-                                    <div class="col-6">
-                                        <h6 th:text="${mPago.nombre}">Última: </h6>
-                                    </div>
-                                    <div class="col-6">
-                                        <span th:text="${mPago.numero}"></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card de Redes Sociales -->
-                <div class="col-md-4 mb-4">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h5 class="card-title section-title">Redes Sociales</h5>
-                            <div class="d-flex justify-content-end mb-3">
-                                <button class="btn btn-add" th:if="${usuLog.estadoUsuario.nombre == 'Activo'}"
-                                    data-bs-toggle="modal" data-bs-target="#agregarRedSocialModal">
-                                    <i class="fas fa-plus"></i>
-                                </button>
-                            </div>
-                            <div class="card-text">
-                                <div class="d-flex col-center my-4">
-                                    <div th:each="rUsuario : ${redesSociales}">
-                                        <a class="mx-1 socialm" th:if="${rUsuario.redes.nombre == 'Facebook'}"
-                                            th:href="${rUsuario.link}" target="_blank">
-                                            <i class="bi bi-facebook"></i>
-                                        </a>
-                                        <a class="mx-1 socialm" th:if="${rUsuario.redes.nombre == 'Instagram'}"
-                                            th:href="${rUsuario.link}" target="_blank">
-                                            <i class="bi bi-instagram"></i>
-                                        </a>
-                                        <a class="mx-1 socialm" th:if="${rUsuario.redes.nombre == 'X'}"
-                                            th:href="${rUsuario.link}" target="_blank">
-                                            <i class="bi bi-twitter-x"></i>
-                                        </a>
-                                        <a class="mx-1 socialm" th:if="${rUsuario.redes.nombre == 'TikTok'}"
-                                            th:href="${rUsuario.link}" target="_blank">
-                                            <i class="bi bi-tiktok"></i>
-                                        </a>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <h5>Estado:</h5>
+                <span
+                  th:if="${usuLog.estadoUsuario.nombre == 'Activo'}"
+                  class="badge bg-success"
+                  >Activo</span
+                >
+                <span
+                  th:if="${usuLog.estadoUsuario.nombre == 'Baneado'}"
+                  class="badge bg-warning"
+                  >Baneado</span
+                >
+                <span
+                  th:if="${usuLog.estadoUsuario.nombre == 'Eliminado'}"
+                  class="badge bg-danger"
+                  >Eliminado</span
+                >
+              </div>
             </div>
+
+            <!-- Lista de Roles -->
+            <div class="row mt-2">
+              <div class="col-12">
+                <h5 th:if="${listaRolesUsuario?.size() > 1}">Roles:</h5>
+                <div
+                  th:if="${listaRolesUsuario?.size() > 1}"
+                  th:each="rol : ${listaRolesUsuario}"
+                  class="roles-list d-inline"
+                >
+                  <span th:text="${rol.nombre}" class="mr-2">Rol</span>
+                </div>
+                <button
+                  type="button"
+                  class="btn btn-edit"
+                  th:if="${usuLog.estadoUsuario.nombre == 'Activo'}"
+                  data-bs-toggle="modal"
+                  data-bs-target="#editarUsuarioModal"
+                >
+                  <i class="fas fa-edit"></i>
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
+
+        <!-- Otras Cards -->
+        <div class="row">
+          <!-- Card de Activación -->
+          <div class="col-md-4 mb-4">
+            <div class="card h-100">
+              <div class="card-body">
+                <h5 class="card-title section-title">Activación</h5>
+                <div class="d-flex justify-content-end mb-3">
+                  <button
+                    class="btn btn-add"
+                    data-bs-toggle="modal"
+                    data-bs-target="#agregarActivacionModal"
+                  >
+                    <i class="fas fa-plus"></i>
+                  </button>
+                </div>
+                <div class="card-text">
+                  <div class="row">
+                    <div class="col-6">
+                      <h6 th:if="${activacion != null}">Última:</h6>
+                    </div>
+                    <div class="col-6">
+                      <div th:each="act : ${activacion}">
+                        <span th:text="${act.fecha}"></span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-6">
+                      <h6 th:if="${activacion != null}">Activo Hasta:</h6>
+                    </div>
+                    <div class="col-6">
+                      <div th:each="act : ${activacion}">
+                        <span th:text="${act.fechaFin}"></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card de Medios de Pago -->
+          <div class="col-md-4 mb-4">
+            <div class="card h-100">
+              <div class="card-body">
+                <h5 class="card-title section-title">Medios de Pago</h5>
+                <div class="d-flex justify-content-end mb-3">
+                  <button
+                    class="btn btn-add"
+                    th:if="${usuLog.estadoUsuario.nombre == 'Activo'}"
+                    data-bs-toggle="modal"
+                    data-bs-target="#agregarMedioPagoModal"
+                  >
+                    <i class="fas fa-plus"></i>
+                  </button>
+                </div>
+                <div class="card-text">
+                  <div class="row" th:each="mPago : ${mediosPago}">
+                    <div class="col-6">
+                      <h6 th:text="${mPago.nombre}">Última:</h6>
+                    </div>
+                    <div class="col-6">
+                      <span th:text="${mPago.numero}"></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card de Redes Sociales -->
+          <div class="col-md-4 mb-4">
+            <div class="card h-100">
+              <div class="card-body">
+                <h5 class="card-title section-title">Redes Sociales</h5>
+                <div class="d-flex justify-content-end mb-3">
+                  <button
+                    class="btn btn-add"
+                    th:if="${usuLog.estadoUsuario.nombre == 'Activo'}"
+                    data-bs-toggle="modal"
+                    data-bs-target="#agregarRedSocialModal"
+                  >
+                    <i class="fas fa-plus"></i>
+                  </button>
+                </div>
+                <div class="card-text">
+                  <div class="d-flex col-center my-4">
+                    <div th:each="rUsuario : ${redesSociales}">
+                      <a
+                        class="mx-1 socialm"
+                        th:if="${rUsuario.redes.nombre == 'Facebook'}"
+                        th:href="${rUsuario.link}"
+                        target="_blank"
+                      >
+                        <i class="bi bi-facebook"></i>
+                      </a>
+                      <a
+                        class="mx-1 socialm"
+                        th:if="${rUsuario.redes.nombre == 'Instagram'}"
+                        th:href="${rUsuario.link}"
+                        target="_blank"
+                      >
+                        <i class="bi bi-instagram"></i>
+                      </a>
+                      <a
+                        class="mx-1 socialm"
+                        th:if="${rUsuario.redes.nombre == 'X'}"
+                        th:href="${rUsuario.link}"
+                        target="_blank"
+                      >
+                        <i class="bi bi-twitter-x"></i>
+                      </a>
+                      <a
+                        class="mx-1 socialm"
+                        th:if="${rUsuario.redes.nombre == 'TikTok'}"
+                        th:href="${rUsuario.link}"
+                        target="_blank"
+                      >
+                        <i class="bi bi-tiktok"></i>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <footer th:replace="~{layout/plantilla :: footer}"></footer>
     <div th:replace="~{layout/plantilla :: alertas}"></div>
 
     <script>
-        document.getElementById('sidebarToggle').addEventListener('click', function () {
-            const sidebar = document.getElementById('sidebar');
-            sidebar.classList.toggle('active');
+      document
+        .getElementById("sidebarToggle")
+        .addEventListener("click", function () {
+          const sidebar = document.getElementById("sidebar");
+          sidebar.classList.toggle("active");
         });
-
     </script>
 
     <!-- Modal para editar usuario -->
-    <div class="modal fade" id="editarUsuarioModal" tabindex="-1" role="dialog"
-        aria-labelledby="editarUsuarioModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title section-title" id="editarUsuarioModalLabel">Editar Usuario</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <div
+      class="modal fade"
+      id="editarUsuarioModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="editarUsuarioModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title section-title" id="editarUsuarioModalLabel">
+              Editar Usuario
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form
+              th:action="@{/usuario/editar}"
+              method="post"
+              th:object="${usuLog}"
+              id="formEditarUsuario"
+            >
+              <div class="row mb-3">
+                <label for="nombres" class="col-sm-5 col-form-label"
+                  >Nombres</label
+                >
+                <div class="col-sm-7">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="nombre"
+                    th:field="*{nombre}"
+                    required
+                  />
                 </div>
-                <div class="modal-body">
-                    <form th:action="@{/usuario/editar}" method="post" th:object="${usuLog}" id="formEditarUsuario">
-                        <div class="row mb-3">
-                            <label for="nombres" class="col-sm-5 col-form-label">Nombres</label>
-                            <div class="col-sm-7">
-                                <input type="text" class="form-control" id="nombre" th:field="*{nombre}" required>
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <label for="apellidos" class="col-sm-5 col-form-label">Apellidos</label>
-                            <div class="col-sm-7">
-                                <input type="text" class="form-control" id="apellido" th:field="*{apellido}" required>
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <label for="celular" class="col-sm-5 col-form-label">Celular</label>
-                            <div class="col-sm-7">
-                                <input type="text" class="form-control" id="celular" th:field="*{celular}" required>
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <label for="direccion" class="col-sm-5 col-form-label">Dirección</label>
-                            <div class="col-sm-7">
-                                <input type="text" class="form-control" id="direccion" th:field="*{direccion}" required>
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <label for="username" class="col-sm-5 col-form-label">Nombre de Usuario</label>
-                            <div class="col-sm-7">
-                                <input type="text" class="form-control" id="username" th:field="*{username}"
-                                    minlength="7" required>
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <label for="password" class="col-sm-5 col-form-label">Contraseña</label>
-                            <div class="col-sm-7">
-                                <input type="password" class="form-control" id="password" th:field="*{password}"
-                                    minlength="6" placeholder="En blanco para mantener la actual">
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                            <button type="submit" class="btn btn-primary">Guardar Cambios</button>
-                        </div>
-                    </form>
+              </div>
+              <div class="row mb-3">
+                <label for="apellidos" class="col-sm-5 col-form-label"
+                  >Apellidos</label
+                >
+                <div class="col-sm-7">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="apellido"
+                    th:field="*{apellido}"
+                    required
+                  />
                 </div>
-            </div>
+              </div>
+              <div class="row mb-3">
+                <label for="celular" class="col-sm-5 col-form-label"
+                  >Celular</label
+                >
+                <div class="col-sm-7">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="celular"
+                    th:field="*{celular}"
+                    required
+                  />
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label for="direccion" class="col-sm-5 col-form-label"
+                  >Dirección</label
+                >
+                <div class="col-sm-7">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="direccion"
+                    th:field="*{direccion}"
+                    required
+                  />
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label for="username" class="col-sm-5 col-form-label"
+                  >Nombre de Usuario</label
+                >
+                <div class="col-sm-7">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="username"
+                    th:field="*{username}"
+                    minlength="7"
+                    required
+                  />
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label for="password" class="col-sm-5 col-form-label"
+                  >Contraseña</label
+                >
+                <div class="col-sm-7">
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="password"
+                    th:field="*{password}"
+                    minlength="6"
+                    placeholder="En blanco para mantener la actual"
+                  />
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Cancelar
+                </button>
+                <button type="submit" class="btn btn-primary">
+                  Guardar Cambios
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
+      </div>
     </div>
 
-
     <!-- Modal para agregar una nueva red social -->
-    <div class="modal fade" id="agregarRedSocialModal" tabindex="-1" role="dialog"
-        aria-labelledby="agregarRedSocialModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="agregarRedSocialModalLabel">Agregar Red Social</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="formRedSocial" th:action="@{/usuario/agregarRedSocial}" th:object="${redesUsuario}"
-                        method="post">
-                        <div class="mb-3">
-                            <label for="red" class="form-label">Red Social</label>
-                            <select id="red" name="redes.id" class="form-select" required>
-                                <option th:each="red : ${redes}" th:value="${red.id}" th:text="${red.nombre}"></option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="link" class="form-label">Enlace</label>
-                            <input type="url" id="link" name="link" class="form-control"
-                                placeholder="https://example.com" required>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                            <button type="submit" class="btn btn-primary">Guardar</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
+    <div
+      class="modal fade"
+      id="agregarRedSocialModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="agregarRedSocialModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="agregarRedSocialModalLabel">
+              Agregar Red Social
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form
+              id="formRedSocial"
+              th:action="@{/usuario/agregarRedSocial}"
+              th:object="${redesUsuario}"
+              method="post"
+            >
+              <div class="mb-3">
+                <label for="red" class="form-label">Red Social</label>
+                <select id="red" name="redes.id" class="form-select" required>
+                  <option
+                    th:each="red : ${redes}"
+                    th:value="${red.id}"
+                    th:text="${red.nombre}"
+                  ></option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="link" class="form-label">Enlace</label>
+                <input
+                  type="url"
+                  id="link"
+                  name="link"
+                  class="form-control"
+                  placeholder="https://example.com"
+                  required
+                />
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Cancelar
+                </button>
+                <button type="submit" class="btn btn-primary">Guardar</button>
+              </div>
+            </form>
+          </div>
         </div>
+      </div>
     </div>
 
     <!-- Modal para agregar un nuevo medio de pago -->
-    <div class="modal fade" id="agregarMedioPagoModal" tabindex="-1" role="dialog"
-        aria-labelledby="agregarMedioPagoModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="agregarMedioPagoModalLabel">Agregar Medio de Pago</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="formMedioPago" th:action="@{/usuario/agregarMedioPago}" th:object="${nuevoMedioPago}"
-                        method="post">
-                        <div class="mb-3">
-                            <label for="nombre" class="form-label">Nombre del Medio de Pago</label>
-                            <input type="text" id="nombre" name="nombre" class="form-control" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="numero" class="form-label">Número del Medio de Pago</label>
-                            <input type="text" id="numero" name="numero" class="form-control" required>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                            <button type="submit" class="btn btn-primary">Guardar</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
+    <div
+      class="modal fade"
+      id="agregarMedioPagoModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="agregarMedioPagoModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="agregarMedioPagoModalLabel">
+              Agregar Medio de Pago
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form
+              id="formMedioPago"
+              th:action="@{/usuario/agregarMedioPago}"
+              th:object="${nuevoMedioPago}"
+              method="post"
+            >
+              <div class="mb-3">
+                <label for="nombre" class="form-label"
+                  >Nombre del Medio de Pago</label
+                >
+                <input
+                  type="text"
+                  id="nombre"
+                  name="nombre"
+                  class="form-control"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="numero" class="form-label"
+                  >Número del Medio de Pago</label
+                >
+                <input
+                  type="text"
+                  id="numero"
+                  name="numero"
+                  class="form-control"
+                  required
+                />
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Cancelar
+                </button>
+                <button type="submit" class="btn btn-primary">Guardar</button>
+              </div>
+            </form>
+          </div>
         </div>
+      </div>
     </div>
 
     <!-- Modal para agregar una nueva activación -->
-    <div class="modal fade" id="agregarActivacionModal" tabindex="-1" role="dialog"
-        aria-labelledby="agregarActivacionModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="agregarActivacionModalLabel">Agregar Activación</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <div
+      class="modal fade"
+      id="agregarActivacionModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="agregarActivacionModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="agregarActivacionModalLabel">
+              Agregar Activación
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form
+              id="formActivacion"
+              th:action="@{/usuario/agregarActivacion}"
+              th:object="${nuevaActivacion}"
+              method="post"
+            >
+              <div class="mb-3">
+                <div class="row">
+                  <div class="col-12 text-center">
+                    <p
+                      class="text-success"
+                      th:text="'WellPoints: ' + ${usuLog.WellPoints}"
+                    ></p>
+                  </div>
                 </div>
-                <div class="modal-body">
-                    <form id="formActivacion" th:action="@{/usuario/agregarActivacion}" th:object="${nuevaActivacion}"
-                        method="post">
-                        <div class="mb-3">
-                            <div class="row">
-                                <div class="col-12 text-center">
-                                    <p class="text-success" th:text="'WellPoints: ' + ${usuLog.WellPoints}"></p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-7">
-                                    <label for="valor" class="form-label">Valor de la Activación</label>
-                                </div>
-                                <div class="col-5">
-                                    <p class="text-danger" th:text="'$ ' + ${valorActivacion}"></p>
-                                </div>
-                            </div>
-                            <!-- Mostrar mensaje de advertencia si no tiene suficientes WellPoints -->
-                            <div class="row">
-                                <div class="col-12">
-                                    <p class="text-warning" th:if="${usuLog.WellPoints < valorActivacion}">
-                                        No tienes suficientes WellPoints para realizar esta activación.
-                                    </p>
-                                    <p class="text-success" th:if="${usuLog.WellPoints >= valorActivacion}">
-                                        Tienes suficientes WellPoints para realizar esta activación.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                            <button type="submit" class="btn btn-primary"
-                                th:disabled="${usuLog.WellPoints < valorActivacion}">
-                                Confirmar Activación
-                            </button>
-                        </div>
-                    </form>
+                <div class="row">
+                  <div class="col-7">
+                    <label for="valor" class="form-label"
+                      >Valor de la Activación</label
+                    >
+                  </div>
+                  <div class="col-5">
+                    <p
+                      class="text-danger"
+                      th:text="'$ ' + ${valorActivacion}"
+                    ></p>
+                  </div>
                 </div>
-            </div>
+                <!-- Mostrar mensaje de advertencia si no tiene suficientes WellPoints -->
+                <div class="row">
+                  <div class="col-12">
+                    <p
+                      class="text-warning"
+                      th:if="${usuLog.WellPoints < valorActivacion}"
+                    >
+                      No tienes suficientes WellPoints para realizar esta
+                      activación.
+                    </p>
+                    <p
+                      class="text-success"
+                      th:if="${usuLog.WellPoints >= valorActivacion}"
+                    >
+                      Tienes suficientes WellPoints para realizar esta
+                      activación.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Cancelar
+                </button>
+                <button
+                  type="submit"
+                  class="btn btn-primary"
+                  th:disabled="${usuLog.WellPoints < valorActivacion}"
+                >
+                  Confirmar Activación
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
+      </div>
     </div>
 
-
-
-
-
     <script src="/js/editar_usuario.js"></script>
-</body>
-
-
-
+  </body>
 </html>

@@ -1,108 +1,178 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="es">
+<html
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:th="http://www.thymeleaf.org"
+  lang="es"
+>
+  <head th:replace="~{layout/plantilla :: head('Detalles de la Orden')}"></head>
 
-<head th:replace="~{layout/plantilla :: head('Detalles de la Orden')}"></head>
-
-<body>
+  <body>
     <!-- Navbar -->
     <nav th:replace="~{layout/plantilla :: navbar('', '', '', '', '')}"></nav>
 
     <!-- Contenedor principal -->
     <div class="container-fluid d-flex flex-column flex-md-row">
-        <!-- Sidebar -->
-        <nav th:replace="~{layout/plantilla :: sidebar-usuario('', '', '','', 'active', '', '')}"></nav>
+      <!-- Sidebar -->
+      <nav
+        th:replace="~{layout/plantilla :: sidebar-usuario('', '', '','', 'active', '', '')}"
+      ></nav>
 
-        <!-- Contenido principal -->
-        <div id="content" class="flex-grow-1 p-3">
-            <!-- Botón para mostrar el sidebar en móvil -->
-            <button id="sidebarToggle" class="d-md-none btn btn-primary">
-                <i class="bi bi-arrow-bar-right"></i>
-            </button>
+      <!-- Contenido principal -->
+      <div id="content" class="flex-grow-1 p-3">
+        <!-- Botón para mostrar el sidebar en móvil -->
+        <button id="sidebarToggle" class="d-md-none btn btn-primary">
+          <i class="bi bi-arrow-bar-right"></i>
+        </button>
 
-            <h1 class="mb-4 titulo-pagina">Detalles de la Orden</h1>
+        <h1 class="mb-4 titulo-pagina">Detalles de la Orden</h1>
 
-            <!-- Card con información de la orden -->
-            <div class="card card-perfil mb-4">
-                <div class="card-body">
+        <!-- Card con información de la orden -->
+        <div class="card card-perfil mb-4">
+          <div class="card-body">
+            <p>
+              <strong>Nombre:</strong> <span th:text="${orden.nombre}"></span>
+            </p>
+            <p>
+              <strong>Fecha de Creación:</strong>
+              <span
+                th:text="${#temporals.format(orden.fechaCreacion, 'dd/MM/yyy - hh:mm:ss')}"
+              ></span>
+            </p>
+            <p>
+              <strong>Fecha de Actualización:</strong>
+              <span
+                th:text="${#temporals.format(orden.fechaActualizacion, 'dd/MM/yyy - hh:mm:ss')}"
+              ></span>
+            </p>
+            <p>
+              <strong>Estado:</strong>
+              <span th:switch="${orden.estadoOrden.nombre}">
+                <span th:case="'Pendiente'" class="badge estado-pendiente"
+                  >Pendiente</span
+                >
+                <span th:case="'En Proceso'" class="badge estado-en-proceso"
+                  >En proceso</span
+                >
+                <span th:case="'Enviada'" class="badge estado-enviado"
+                  >Enviada</span
+                >
+                <span th:case="'Entregada'" class="badge estado-entregado"
+                  >Entregada</span
+                >
+                <span th:case="'Cancelada'" class="badge estado-cancelado"
+                  >Cancelada</span
+                >
+                <span th:case="'Devuelta'" class="badge estado-devuelto"
+                  >Devuelta</span
+                >
+                <span th:case="'Reembolsada'" class="badge estado-reembolsado"
+                  >Reembolsada</span
+                >
+                <span
+                  th:case="'Pago Pendiente'"
+                  class="badge estado-pago-pendiente"
+                  >Pago Pendiente</span
+                >
+                <span
+                  th:case="'Pago Rechazado'"
+                  class="badge estado-pago-rechazado"
+                  >Pago Rechazado</span
+                >
+                <span th:case="'En Hold'" class="badge estado-en-hold"
+                  >En Hold</span
+                >
+              </span>
+            </p>
+            <p>
+              <strong>Total:</strong> $<span
+                th:text="${#numbers.formatDecimal(orden.total, 2 , 'COMMA', 2, 'POINT')}"
+                >0.00</span
+              >
+            </p>
 
-                    <p><strong>Nombre:</strong> <span th:text="${orden.nombre}"></span></p>
-                    <p><strong>Fecha de Creación:</strong> <span
-                            th:text="${#temporals.format(orden.fechaCreacion, 'dd/MM/yyy - hh:mm:ss')}"></span></p>
-                    <p><strong>Fecha de Actualización:</strong> <span
-                            th:text="${#temporals.format(orden.fechaActualizacion, 'dd/MM/yyy - hh:mm:ss')}"></span></p>
-                    <p><strong>Estado:</strong>
-                        <span th:switch="${orden.estadoOrden.nombre}">
-                            <span th:case="'Pendiente'" class="badge estado-pendiente">Pendiente</span>
-                            <span th:case="'En Proceso'" class="badge estado-en-proceso">En proceso</span>
-                            <span th:case="'Enviada'" class="badge estado-enviado">Enviada</span>
-                            <span th:case="'Entregada'" class="badge estado-entregado">Entregada</span>
-                            <span th:case="'Cancelada'" class="badge estado-cancelado">Cancelada</span>
-                            <span th:case="'Devuelta'" class="badge estado-devuelto">Devuelta</span>
-                            <span th:case="'Reembolsada'" class="badge estado-reembolsado">Reembolsada</span>
-                            <span th:case="'Pago Pendiente'" class="badge estado-pago-pendiente">Pago Pendiente</span>
-                            <span th:case="'Pago Rechazado'" class="badge estado-pago-rechazado">Pago Rechazado</span>
-                            <span th:case="'En Hold'" class="badge estado-en-hold">En Hold</span>
-                        </span>
-                    </p>
-                    <p><strong>Total:</strong> $<span
-                            th:text="${#numbers.formatDecimal(orden.total, 2 , 'COMMA', 2, 'POINT')}">0.00</span></p>
-
-                    <!-- Información del Pago -->
-                    <div th:if="${pago != null}">
-                        <p><strong>Estado del Pago:</strong>
-                            <span th:switch="${pago.estadoPago.nombre}">
-                                <span th:case="'Pendiente'" class="badge rounded-pill estado-pendiente">Pendiente</span>
-                                <span th:case="'Aprobado'" class="badge rounded-pill bg-success">Aprobado</span>
-                                <span th:case="'Rechazado'" class="badge rounded-pill bg-danger">Rechazado</span>
-                            </span>
-                        </p>
-
-                    </div>
-                    <div th:if="${pago == null}">
-                        <p><strong>Estado del Pago:</strong> <span class="badge rounded-pill bg-dark">Sin Pago</span>
-                        </p>
-                    </div>
-                </div>
+            <!-- Información del Pago -->
+            <div th:if="${pago != null}">
+              <p>
+                <strong>Estado del Pago:</strong>
+                <span th:switch="${pago.estadoPago.nombre}">
+                  <span
+                    th:case="'Pendiente'"
+                    class="badge rounded-pill estado-pendiente"
+                    >Pendiente</span
+                  >
+                  <span
+                    th:case="'Aprobado'"
+                    class="badge rounded-pill bg-success"
+                    >Aprobado</span
+                  >
+                  <span
+                    th:case="'Rechazado'"
+                    class="badge rounded-pill bg-danger"
+                    >Rechazado</span
+                  >
+                </span>
+              </p>
             </div>
-
-            <!-- Card con el listado de productos de la orden -->
-            <div class="card mb-4">
-                <div class="card-body">
-                    <h3>Productos en la Orden</h3>
-                    <table class="table bg-white rounded shadow-sm table-hover tabla">
-                        <thead>
-                            <tr>
-                                <th class="align-left">Producto</th>
-                                <th class="align-left">Cantidad</th>
-                                <th class="align-right">Precio Unitario</th>
-                                <th class="align-right">Subtotal</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr th:each="item : ${itemsOrden}">
-                                <td>
-                                    <a class="enlace-no-subr" th:href="@{/producto_detalle/{id}(id=${item.producto.id})}"
-                                        th:text="${item.producto.nombre}"></a>
-                                </td>
-                                <td th:text="${item.cantidad}">0</td>
-                                <td class="align-right"
-                                    th:text="${#numbers.formatDecimal(item.producto.precio, 2 , 'COMMA', 2, 'POINT')}">
-                                    0.00
-                                </td>
-                                <td class="align-right"
-                                    th:text="${#numbers.formatDecimal(item.producto.precio * item.cantidad, 2 , 'COMMA', 2, 'POINT')}">
-                                    0.00</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+            <div th:if="${pago == null}">
+              <p>
+                <strong>Estado del Pago:</strong>
+                <span class="badge rounded-pill bg-dark">Sin Pago</span>
+              </p>
             </div>
-
+          </div>
         </div>
-    </div>
 
+        <!-- Card con el listado de productos de la orden -->
+        <div class="card mb-4">
+          <div class="card-body">
+            <h3>Productos en la Orden</h3>
+            <table class="table bg-white rounded shadow-sm table-hover tabla">
+              <thead>
+                <tr>
+                  <th class="align-left">Producto</th>
+                  <th class="align-left">Cantidad</th>
+                  <th class="align-right">Precio Unitario</th>
+                  <th class="align-right">Subtotal</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr th:each="item : ${itemsOrden}">
+                  <td>
+                    <a
+                      class="enlace-no-subr"
+                      th:href="@{/producto_detalle/{id}(id=${item.producto.id})}"
+                      th:text="${item.producto.nombre}"
+                    ></a>
+                  </td>
+                  <td th:text="${item.cantidad}">0</td>
+                  <td
+                    class="align-right"
+                    th:text="${#numbers.formatDecimal(item.producto.precio, 2 , 'COMMA', 2, 'POINT')}"
+                  >
+                    0.00
+                  </td>
+                  <td
+                    class="align-right"
+                    th:text="${#numbers.formatDecimal(item.producto.precio * item.cantidad, 2 , 'COMMA', 2, 'POINT')}"
+                  >
+                    0.00
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      document
+        .getElementById("sidebarToggle")
+        .addEventListener("click", function () {
+          const sidebar = document.getElementById("sidebar");
+          sidebar.classList.toggle("active");
+        });
+    </script>
     <footer th:replace="~{layout/plantilla :: footer}"></footer>
     <div th:replace="~{layout/plantilla :: alertas}"></div>
-</body>
-
+  </body>
 </html>
