@@ -411,7 +411,7 @@ public class AdminController {
         return "admin/email";
     }
 
-    @PostMapping("/email")
+    @PostMapping("/admin/email")
     public String enviarEmail(@ModelAttribute Email email, @RequestParam String action,
             RedirectAttributes redirectAttributes) {
         try {
