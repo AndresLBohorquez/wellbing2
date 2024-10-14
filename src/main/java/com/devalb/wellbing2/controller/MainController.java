@@ -10,10 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import com.devalb.wellbing2.entity.ItemsOrden;
 import com.devalb.wellbing2.entity.Producto;
 import com.devalb.wellbing2.service.CategoriaService;
-import com.devalb.wellbing2.service.ItemsOrdenService;
 import com.devalb.wellbing2.service.ProductoService;
 import com.devalb.wellbing2.service.VistaService;
 
@@ -30,20 +28,17 @@ public class MainController {
     private CategoriaService categoriaService;
 
     @Autowired
-    private ItemsOrdenService itemsOrdenService;
-
-    @Autowired
     private VistaService vService;
 
     @GetMapping("/")
     public String goToIndex(Model model, Authentication auth) {
         vService.verTopProductos(model);
         List<Producto> listaProductosTop = new ArrayList<>();
-        var productosTop = itemsOrdenService.obtenerTop10ProductosMasVendidos();
+        var productosTop = productoService.obtenerTop10ProductosMasVendidos();
 
-        for (ItemsOrden io : productosTop) {
-            if (io.getProducto().isVisible()) {
-                listaProductosTop.add(io.getProducto());
+        for (Producto io : productosTop) {
+            if (io.isVisible()) {
+                listaProductosTop.add(io);
             }
         }
 

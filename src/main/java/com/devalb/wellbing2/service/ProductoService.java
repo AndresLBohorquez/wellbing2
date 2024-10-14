@@ -24,4 +24,6 @@ public interface ProductoService {
     public Double getMaxPrecioProducto();
 
     public Map<String, Integer> getProductosLast6Months();
+
+    public List<Producto> obtenerTop10ProductosMasVendidos();
 }

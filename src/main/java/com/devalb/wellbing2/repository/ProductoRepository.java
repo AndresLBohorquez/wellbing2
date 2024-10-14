@@ -22,4 +22,11 @@ public interface ProductoRepository extends JpaRepository<Producto, Long> {
     public Double findMaxPrice();
 
     public int countByFechaBetween(LocalDate fechaInicio, LocalDate fechaFin);
+
+    @Query("SELECT io.producto " +
+            "FROM ItemsOrden io " +
+            "GROUP BY io.producto " +
+            "ORDER BY SUM(io.cantidad) DESC " +
+            "LIMIT 10")
+    public List<Producto> findTop10ProductosMasVendidos();
 }

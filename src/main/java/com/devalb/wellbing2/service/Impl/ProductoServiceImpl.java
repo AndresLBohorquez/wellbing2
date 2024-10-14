@@ -81,4 +81,11 @@ public class ProductoServiceImpl implements ProductoService {
         return registrosMensualesProductos;
     }
 
+    @Override
+    public List<Producto> obtenerTop10ProductosMasVendidos() {
+        return productoRepository.findTop10ProductosMasVendidos();
+    }
+
+    
+
 }

@@ -18,5 +18,4 @@ public interface ItemsOrdenService {
 
     public List<ItemsOrden> getItemsOrdenByIdOrden(Long id);
 
-    public List<ItemsOrden> obtenerTop10ProductosMasVendidos();
 }

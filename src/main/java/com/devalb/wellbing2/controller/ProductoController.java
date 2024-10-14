@@ -19,10 +19,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.devalb.wellbing2.entity.ItemsOrden;
 import com.devalb.wellbing2.entity.Producto;
 import com.devalb.wellbing2.service.CategoriaService;
-import com.devalb.wellbing2.service.ItemsOrdenService;
 import com.devalb.wellbing2.service.ProductoService;
 import com.devalb.wellbing2.service.VistaService;
 
@@ -31,9 +29,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Controller
 public class ProductoController {
-
-    @Autowired
-    private ItemsOrdenService itemsOrdenService;
 
     @Autowired
     private ProductoService productoService;
@@ -46,7 +41,7 @@ public class ProductoController {
 
     @GetMapping("/reportes/top-productos")
     public String verTopProductos(Model model) {
-        List<ItemsOrden> productosMasVendidos = itemsOrdenService.obtenerTop10ProductosMasVendidos();
+        List<Producto> productosMasVendidos = productoService.obtenerTop10ProductosMasVendidos();
         model.addAttribute("productosMasVendidos", productosMasVendidos);
         return "reportes/top-productos";
     }
