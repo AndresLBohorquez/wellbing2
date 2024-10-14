@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import com.devalb.wellbing2.entity.Carrito;
+import com.devalb.wellbing2.entity.ItemsOrden;
 import com.devalb.wellbing2.entity.Rol;
 import com.devalb.wellbing2.entity.Usuario;
 import com.devalb.wellbing2.service.CarritoService;
@@ -106,7 +107,7 @@ public class VistaServiceImpl implements VistaService {
         log.info("Iniciando la carga de los productos más vendidos.");
 
         try {
-            List<Object[]> productosMasVendidos = itemsOrdenService.obtenerTop10ProductosMasVendidos();
+            List<ItemsOrden> productosMasVendidos = itemsOrdenService.obtenerTop10ProductosMasVendidos();
             log.debug("Cantidad de productos obtenidos: {}", productosMasVendidos.size());
 
             if (productosMasVendidos.isEmpty()) {

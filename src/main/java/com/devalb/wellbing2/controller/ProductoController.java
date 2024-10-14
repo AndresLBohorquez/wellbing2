@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.devalb.wellbing2.entity.ItemsOrden;
 import com.devalb.wellbing2.entity.Producto;
 import com.devalb.wellbing2.service.CategoriaService;
 import com.devalb.wellbing2.service.ItemsOrdenService;
@@ -45,7 +46,7 @@ public class ProductoController {
 
     @GetMapping("/reportes/top-productos")
     public String verTopProductos(Model model) {
-        List<Object[]> productosMasVendidos = itemsOrdenService.obtenerTop10ProductosMasVendidos();
+        List<ItemsOrden> productosMasVendidos = itemsOrdenService.obtenerTop10ProductosMasVendidos();
         model.addAttribute("productosMasVendidos", productosMasVendidos);
         return "reportes/top-productos";
     }
@@ -94,6 +95,7 @@ public class ProductoController {
             @RequestParam(value = "visible", required = false) Boolean visible,
             @RequestParam("categoria.id") Long categoriaId, Model model, Authentication auth,
             RedirectAttributes redirectAttributes) {
+
         vService.cargarVistasAdmin(model, auth);
 
         try {
@@ -104,21 +106,33 @@ public class ProductoController {
             producto.setBono(bono);
             producto.setCategoria(categoriaService.getCategoriaById(categoriaId));
 
+            // Si estamos editando un producto
             if (id != null) {
                 producto.setId(id);
                 producto.setFecha(productoService.getProductoById(id).getFecha());
                 producto.setImagen(productoService.getProductoById(id).getImagen());
+
                 if (visible == null) {
                     producto.setVisible(false);
                 } else {
                     producto.setVisible(true);
                 }
 
+                // Si estamos creando un nuevo producto
             } else {
                 producto.setFecha(LocalDate.now());
                 producto.setVisible(true);
+
+                // Validar que la imagen no esté vacía
+                if (imagen.isEmpty()) {
+                    log.error("La imagen es obligatoria para crear un nuevo producto");
+                    redirectAttributes.addFlashAttribute("messageKO",
+                            "La imagen es obligatoria para crear un nuevo producto");
+                    return "redirect:/admin/productos/crear";
+                }
             }
 
+            // Guardar o editar el producto
             if (id != null) {
                 productoService.editProducto(producto);
                 log.info("Producto editado correctamente");
@@ -129,6 +143,7 @@ public class ProductoController {
                 redirectAttributes.addFlashAttribute("messageOK", "Producto creado correctamente");
             }
 
+            // Manejar la imagen
             if (!imagen.isEmpty()) {
                 String nombreImagen = "producto_" + producto.getId() + ".png";
                 producto.setImagen(nombreImagen);

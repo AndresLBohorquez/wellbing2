@@ -18,5 +18,5 @@ public interface ItemsOrdenRepository extends JpaRepository<ItemsOrden, Long> {
             "FROM ItemsOrden io " +
             "GROUP BY io.producto " +
             "ORDER BY totalCantidad DESC")
-    List<Object[]> findTop10ProductosMasVendidos();
+    public List<ItemsOrden> findTop10ProductosMasVendidos();
 }

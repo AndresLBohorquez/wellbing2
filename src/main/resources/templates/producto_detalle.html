@@ -18,7 +18,8 @@
                     <h2 class="product-title mt-5" th:text="${producto.nombre}">Nombre del Producto</h2>
                     <p class="product-category mt-5">Categoría: <span th:text="${producto.categoria.nombre}">Categoría
                             del Producto</span></p>
-                    <p class="product-price ">$ [[${producto.precio}]]</p>
+                    <p class="product-price ">Valor: $ [[${producto.precio}]]</p>
+                    <p class="product-price ">Bono: [[${producto.bono}]]</p>
                     <p class="product-description" th:text="${producto.descripcion}">Descripción detallada del producto.
                         Lorem ipsum dolor sit amet,
                         consectetur adipiscing elit. Nullam non urna vitae ligula sodales fermentum.</p>

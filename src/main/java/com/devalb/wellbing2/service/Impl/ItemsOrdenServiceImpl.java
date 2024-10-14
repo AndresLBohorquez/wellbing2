@@ -46,7 +46,7 @@ public class ItemsOrdenServiceImpl implements ItemsOrdenService {
     }
 
     @Override
-    public List<Object[]> obtenerTop10ProductosMasVendidos() {
+    public List<ItemsOrden> obtenerTop10ProductosMasVendidos() {
         return itemsOrdenRepository.findTop10ProductosMasVendidos();
     }
 }

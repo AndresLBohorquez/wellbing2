@@ -1,5 +1,8 @@
 package com.devalb.wellbing2.controller;
 
+import java.util.List;
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -7,7 +10,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import com.devalb.wellbing2.entity.ItemsOrden;
+import com.devalb.wellbing2.entity.Producto;
 import com.devalb.wellbing2.service.CategoriaService;
+import com.devalb.wellbing2.service.ItemsOrdenService;
 import com.devalb.wellbing2.service.ProductoService;
 import com.devalb.wellbing2.service.VistaService;
 
@@ -24,11 +30,27 @@ public class MainController {
     private CategoriaService categoriaService;
 
     @Autowired
+    private ItemsOrdenService itemsOrdenService;
+
+    @Autowired
     private VistaService vService;
 
     @GetMapping("/")
     public String goToIndex(Model model, Authentication auth) {
         vService.verTopProductos(model);
+        List<Producto> listaProductosTop = new ArrayList<>();
+        var productosTop = itemsOrdenService.obtenerTop10ProductosMasVendidos();
+
+        for (ItemsOrden io : productosTop) {
+            if (io.getProducto().isVisible()) {
+                listaProductosTop.add(io.getProducto());
+            }
+        }
+
+        if (listaProductosTop.size() == 0) {
+            listaProductosTop = productoService.getProductosVisibles();
+        }
+
         model.addAttribute("listaProductosTop", productoService.getProductos());
         vService.cargarVistas(model, auth);
         return "index";

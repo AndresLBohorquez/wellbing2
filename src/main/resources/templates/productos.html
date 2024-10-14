@@ -1,81 +1,147 @@
-<!doctype html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="es">
+<!DOCTYPE html>
+<html
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:th="http://www.thymeleaf.org"
+  lang="es"
+>
+  <head th:replace="~{layout/plantilla :: head('Productos')}"></head>
 
-<head th:replace="~{layout/plantilla :: head('Productos')}"></head>
-
-<body>
-    <nav th:replace="~{layout/plantilla :: navbar('', active, '', '', '')}"></nav>
+  <body>
+    <nav
+      th:replace="~{layout/plantilla :: navbar('', active, '', '', '')}"
+    ></nav>
     <div class="container-fluid mt-5 mb-5">
-        <h2 class="text-center section-title titulo-pagina">Productos</h2>
+      <h2 class="text-center section-title titulo-pagina">Productos</h2>
 
-        <!-- Filtros -->
-        <div class="row mb-4">
-            <div class="col-md-4">
-                <input type="text" id="filterName" class="form-control" placeholder="Filtrar por nombre">
-            </div>
-            <div class="col-md-4">
-                <select id="filterCategory" class="form-control">
-                    <option value="">Filtrar por categoría</option>
-                    <option th:each="categoria : ${listaCategorias}" th:value="${categoria.nombre}"
-                        th:text="${categoria.nombre}"></option>
-                </select>
-            </div>
-            <div class="col-md-4">
-                <div class="row range-container ">
-                    <h3 class="col-md-1 mt-1"><i class="bi bi-currency-dollar"></i></h3>
-                    <div class="col-md-5">
-                        <input type="range" id="filterMinPrice" min="0" th:max="${maxPrecio}" value="0"
-                            class="form-control-range">
-                        <input type="number" id="filterMinPriceInput" min="0" th:max="${maxPrecio}" value="0"
-                            class="form-control mt-2">
-                    </div>
-                    <div class="col-md-5">
-                        <input type="range" id="filterMaxPrice" min="0" th:max="${maxPrecio}" th:value="${maxPrecio}"
-                            class="form-control-range">
-                        <input type="number" id="filterMaxPriceInput" min="0" th:max="${maxPrecio}"
-                            th:value="${maxPrecio}" class="form-control mt-2">
-                    </div>
-                </div>
-            </div>
+      <!-- Filtros -->
+      <div class="row mb-4">
+        <div class="col-md-4">
+          <input
+            type="text"
+            id="filterName"
+            class="form-control"
+            placeholder="Filtrar por nombre"
+          />
         </div>
-
-        <!-- Listado de productos -->
-        <div class="row mx-auto justify-content-around" id="productList">
-            <div th:each="producto : ${listaProductos}" class="col-md-4 mb-4 product" th:data-id="${producto.id}"
-                th:data-name="${producto.nombre}" th:data-category="${producto.categoria.nombre}"
-                th:data-price="${producto.precio}">
-
-                <div class="card card-producto">
-                    <a th:href="@{/producto_detalle/{id}(id=${producto.id})}">
-                        <img th:src="@{/images/productos/} + ${producto.imagen}" class="card-img-top" alt="ProductoImg"
-                            style="height: 220px; object-fit: cover;">
-                    </a>
-                    <div class="card-body">
-                        <h5 th:text="${producto.nombre}" class="card-title"></h5>
-                        <p class="card-text card-descripcion"
-                            th:text="${producto.descripcion.length() > 85 ? producto.descripcion.substring(0, 85) + '...' : producto.descripcion}">
-                        </p>
-                        <p class="card-text"><strong
-                                th:text="'$ ' + ${#numbers.formatDecimal(producto.precio, 0 , 'COMMA', 0, 'POINT')}"></strong>
-                        </p>
-                        <p class="card-text"><em th:text="${producto.categoria.nombre}"></em></p>
-
-                        <!-- Formulario para agregar al carrito -->
-                        <form th:action="@{/carrito/agregar}" method="post">
-                            <input type="hidden" name="productoId" th:value="${producto.id}" />
-                            <input type="hidden" name="cantidad" value="1" min="1" class="form-control mb-2" />
-                            <button type="submit" class="btn btn-primary">Agregar al carrito</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
+        <div class="col-md-4">
+          <select id="filterCategory" class="form-control">
+            <option value="">Filtrar por categoría</option>
+            <option
+              th:each="categoria : ${listaCategorias}"
+              th:value="${categoria.nombre}"
+              th:text="${categoria.nombre}"
+            ></option>
+          </select>
         </div>
+        <div class="col-md-4">
+          <div class="row range-container">
+            <h3 class="col-md-1 mt-1"><i class="bi bi-currency-dollar"></i></h3>
+            <div class="col-md-5">
+              <input
+                type="range"
+                id="filterMinPrice"
+                min="0"
+                th:max="${maxPrecio}"
+                value="0"
+                class="form-control-range"
+              />
+              <input
+                type="number"
+                id="filterMinPriceInput"
+                min="0"
+                th:max="${maxPrecio}"
+                value="0"
+                class="form-control mt-2"
+              />
+            </div>
+            <div class="col-md-5">
+              <input
+                type="range"
+                id="filterMaxPrice"
+                min="0"
+                th:max="${maxPrecio}"
+                th:value="${maxPrecio}"
+                class="form-control-range"
+              />
+              <input
+                type="number"
+                id="filterMaxPriceInput"
+                min="0"
+                th:max="${maxPrecio}"
+                th:value="${maxPrecio}"
+                class="form-control mt-2"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Listado de productos -->
+      <div class="row mx-auto justify-content-around" id="productList">
+        <div
+          th:each="producto : ${listaProductos}"
+          class="col-md-4 mb-4 product"
+          th:data-id="${producto.id}"
+          th:data-name="${producto.nombre}"
+          th:data-category="${producto.categoria.nombre}"
+          th:data-price="${producto.precio}"
+        >
+          <div class="card card-producto">
+            <a th:href="@{/producto_detalle/{id}(id=${producto.id})}">
+              <img
+                th:src="@{/images/productos/} + ${producto.imagen}"
+                class="card-img-top"
+                alt="ProductoImg"
+                style="height: 220px; object-fit: cover"
+              />
+            </a>
+            <div class="card-body">
+              <h5 th:text="${producto.nombre}" class="card-title"></h5>
+              <p
+                class="card-text card-descripcion"
+                th:text="${producto.descripcion.length() > 85 ? producto.descripcion.substring(0, 85) + '...' : producto.descripcion}"
+              ></p>
+              <p class="row card-text">
+                <strong
+                  class="col-6"
+                  th:text="'$ ' + ${#numbers.formatDecimal(producto.precio, 0 , 'COMMA', 0, 'POINT')}"
+                ></strong>
+                <strong
+                  class="text-success col-6"
+                  th:text="${#numbers.formatDecimal(producto.bono, 0 , 'COMMA', 0, 'POINT')}"
+                ></strong>
+              </p>
+              <p class="card-text">
+                <em th:text="${producto.categoria.nombre}"></em>
+              </p>
+
+              <!-- Formulario para agregar al carrito -->
+              <form th:action="@{/carrito/agregar}" method="post">
+                <input
+                  type="hidden"
+                  name="productoId"
+                  th:value="${producto.id}"
+                />
+                <input
+                  type="hidden"
+                  name="cantidad"
+                  value="1"
+                  min="1"
+                  class="form-control mb-2"
+                />
+                <button type="submit" class="btn btn-primary">
+                  Agregar al carrito
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <footer th:replace="~{layout/plantilla :: footer}"></footer>
     <div th:replace="~{layout/plantilla :: alertas}"></div>
 
     <script src="/js/productos.js"></script>
-</body>
-
+  </body>
 </html>
