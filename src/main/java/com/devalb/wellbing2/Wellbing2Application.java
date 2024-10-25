@@ -1,18 +1,17 @@
 package com.devalb.wellbing2;
 
+import java.util.TimeZone;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
-import io.github.cdimascio.dotenv.Dotenv;
-
+@EnableScheduling
 @SpringBootApplication
 public class Wellbing2Application {
 
 	public static void main(String[] args) {
-		Dotenv dotenv = Dotenv.load();
-		dotenv.entries().forEach(entry -> {
-			System.setProperty(entry.getKey(), entry.getValue());
-		});
+		TimeZone.setDefault(TimeZone.getTimeZone("America/Bogota"));
 		SpringApplication.run(Wellbing2Application.class, args);
 	}
 

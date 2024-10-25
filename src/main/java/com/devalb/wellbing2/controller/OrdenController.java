@@ -76,7 +76,7 @@ public class OrdenController {
         }
 
         model.addAttribute("listaOrdenes", listaOrdenes);
-        model.addAttribute("pagosMap", pagosMap); 
+        model.addAttribute("pagosMap", pagosMap);
 
         return "usuario/ordenes";
     }
@@ -233,6 +233,22 @@ public class OrdenController {
         }
 
         return "redirect:/admin/ordenes";
+    }
+
+    @PostMapping("usuario/ordenes/cancelar/{id}")
+    public String cancelarOrden(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        Orden orden = ordenService.getOrdenById(id);
+
+        if (orden == null) {
+            redirectAttributes.addFlashAttribute("messagoKO", "Orden no encontrada.");
+            return "redirect:/usuario/ordenes";
+        }
+
+        orden.setEstadoOrden(estadoOrdenService.getEstadoOrdenByNombre("Cancelada"));
+        ordenService.editOrden(orden);
+        redirectAttributes.addFlashAttribute("messageOK", "La orden ha sido cancelada.");
+
+        return "redirect:/usuario/ordenes"; // Redirige de nuevo a la lista de órdenes
     }
 
     public double calcularTotalOrden(List<ItemsOrden> itemOrden) {

@@ -104,8 +104,7 @@ public class PerfilUsuarioController {
             model.addAttribute("nuevoMedioPago", new MedioPago());
             model.addAttribute("nuevaActivacion", new Activacion());
 
-            model.addAttribute("valorActivacion",
-                    calcularValorActivacion(validarCantidadHijosActivos(usuario)));
+            model.addAttribute("valorActivacion", 35000);
 
         } else {
             log.warn("No se encontró usuario con el nombre: {}", username);
@@ -309,9 +308,7 @@ public class PerfilUsuarioController {
                 return "redirect:/usuario";
             }
 
-            // Validar cantidad de hijos activos
-            int cantidadHijos = validarCantidadHijosActivos(usuario);
-            double valorActivacion = calcularValorActivacion(cantidadHijos);
+            double valorActivacion = 35000;
 
             if (usuario.getWellPoints() >= valorActivacion) {
                 // Usuario tiene suficientes WellPoints, se descuenta la cantidad
@@ -356,18 +353,6 @@ public class PerfilUsuarioController {
             log.error("Error al agregar activación", e);
             redirectAttributes.addFlashAttribute("messageKO", "Error al agregar activación.");
             return "redirect:/usuario";
-        }
-    }
-
-    private double calcularValorActivacion(long cantidadHijos) {
-        if (cantidadHijos >= 31) {
-            return 95000;
-        } else if (cantidadHijos >= 21) {
-            return 75000;
-        } else if (cantidadHijos >= 11) {
-            return 55000;
-        } else {
-            return 35000;
         }
     }
 

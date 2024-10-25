@@ -144,7 +144,9 @@ public class ProductoController {
                 producto.setImagen(nombreImagen);
                 try {
                     byte[] bytes = imagen.getBytes();
-                    Path ruta = Paths.get("src/main/resources/static/images/productos/" + nombreImagen);
+                    Path ruta = Paths.get("/app/images/productos/" + nombreImagen);
+                    
+
                     if (Files.exists(ruta)) {
                         Files.delete(ruta);
                     }
@@ -182,4 +184,5 @@ public class ProductoController {
         }
         return "redirect:/admin/productos";
     }
+    
 }

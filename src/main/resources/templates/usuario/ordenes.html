@@ -41,6 +41,7 @@
                     <th class="align-center">Estado</th>
                     <th class="align-center">Total</th>
                     <th class="align-center">Estado de Pago</th>
+                    <th class="align-center">Cancelar</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -119,39 +120,65 @@
                       0.00
                     </td>
                     <td class="no-bold align-center">
-                      <!-- Columna para el estado de pago -->
-                      <span th:if="${pagosMap[orden.id] != null}">
-                        <span
-                          th:switch="${pagosMap[orden.id].estadoPago.nombre}"
+                      <!-- Si la orden está cancelada, mostrar "Cancelada" en el estado de pago -->
+                      <span th:if="${orden.estadoOrden.nombre == 'Cancelada'}">
+                        <span class="badge rounded-pill bg-danger"
+                          >Cancelada</span
                         >
+                      </span>
+
+                      <!-- Si la orden no está cancelada, mostrar el estado de pago real -->
+                      <span th:if="${orden.estadoOrden.nombre != 'Cancelada'}">
+                        <!-- Si hay un estado de pago registrado -->
+                        <span th:if="${pagosMap[orden.id] != null}">
                           <span
-                            th:case="'Pendiente'"
-                            class="badge rounded-pill estado-pendiente"
-                            >Pendiente</span
+                            th:switch="${pagosMap[orden.id].estadoPago.nombre}"
                           >
-                          <span
-                            th:case="'Aprobado'"
-                            class="badge rounded-pill bg-success"
-                            >Aprobado</span
-                          >
-                          <span
-                            th:case="'Rechazado'"
-                            class="badge rounded-pill bg-danger"
-                            >Rechazado</span
+                            <span
+                              th:case="'Pendiente'"
+                              class="badge rounded-pill estado-pendiente"
+                              >Pendiente</span
+                            >
+                            <span
+                              th:case="'Aprobado'"
+                              class="badge rounded-pill bg-success"
+                              >Aprobado</span
+                            >
+                            <span
+                              th:case="'Rechazado'"
+                              class="badge rounded-pill bg-danger"
+                              >Rechazado</span
+                            >
+                          </span>
+                        </span>
+
+                        <!-- Si no hay estado de pago registrado, mostrar "Sin Pago" -->
+                        <span th:if="${pagosMap[orden.id] == null}">
+                          <a
+                            class="badge rounded-pill bg-dark enlace-no-subr-ord"
+                            th:href="@{/usuario/pago/crear/{id}(id=${orden.id})}"
+                            data-bs-toggle="modal"
+                            data-bs-target="#crearPagoModal"
+                            th:attr="data-orden-id=${orden.id}"
+                            >Sin Pago</a
                           >
                         </span>
                       </span>
-                      <!-- Badge que abre el modal -->
-                      <span th:if="${pagosMap[orden.id] == null}">
-                        <a
-                          class="badge rounded-pill bg-dark enlace-no-subr-ord"
-                          th:href="@{/usuario/pago/crear/{id}(id=${orden.id})}"
-                          data-bs-toggle="modal"
-                          data-bs-target="#crearPagoModal"
-                          th:attr="data-orden-id=${orden.id}"
-                          >Sin Pago</a
+                    </td>
+                    <td class="no-bold align-center">
+                      <form
+                        th:action="@{/usuario/ordenes/cancelar/{id}(id=${orden.id})}"
+                        method="post"
+                      >
+                        <button
+                          type="submit"
+                          class="btn btn-link p-0"
+                          style="border: none; background: none"
+                          title="Cancelar orden"
                         >
-                      </span>
+                          <i class="bi bi-x-circle-fill text-danger"></i>
+                        </button>
+                      </form>
                     </td>
                   </tr>
                 </tbody>

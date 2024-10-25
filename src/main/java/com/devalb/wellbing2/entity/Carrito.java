@@ -20,4 +20,6 @@ public class Carrito {
     private Usuario usuario;
 
     private int cantidad;
+
+    private String comentario;
 }

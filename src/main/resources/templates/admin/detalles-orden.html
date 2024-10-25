@@ -79,6 +79,10 @@
                                         </span>
                                     </td>
                                 </tr>
+                                <tr th:if="${orden.comentario != null}">
+                                    <th>Comentario</th>
+                                    <td th:text="${orden.comentario}"></td>
+                                </tr>
                             </table>
 
                             <h3>Productos de la Orden</h3>
@@ -89,6 +93,7 @@
                                         <th>Cantidad</th>
                                         <th>Precio Unitario</th>
                                         <th>Subtotal</th>
+                                        <th>Marca / Ref</th>
                                     </tr>
                                     <tr th:each="item : ${itemsOrden}">
                                         <td>
@@ -102,6 +107,7 @@
                                         </td>
                                         <td th:text="'$ ' + ${#numbers.formatDecimal(item.cantidad * item.producto.precio, 0 , 'COMMA', 0, 'POINT')}">
                                         </td>
+                                        <td th:text="${item.comentario}"></td>
                                     </tr>
                                 </table>
                             </div>

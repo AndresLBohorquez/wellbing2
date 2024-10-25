@@ -1,44 +1,70 @@
-<!doctype html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="es">
+<!DOCTYPE html>
+<html
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:th="http://www.thymeleaf.org"
+  lang="es"
+>
+  <head th:replace="~{layout/plantilla :: head('Iniciar Sesión')}"></head>
 
-
-<head th:replace="~{layout/plantilla :: head('Iniciar Sesión')}"></head>
-
-<body>
-    <nav th:replace="~{layout/plantilla :: navbar('', '', '', '', active)}"></nav>
+  <body>
+    <nav
+      th:replace="~{layout/plantilla :: navbar('', '', '', '', active)}"
+    ></nav>
     <div class="container mt-5 mb-5">
-        <div class="row justify-content-center">
-            <div class="col-md-6 col-lg-4">
-                <div class="card p-4 shadow-sm">
-                    <h2 class="text-center  section-title titulo-pagina">Iniciar Sesión</h2>
-                    <div class="text-center ">
-                        <img src="/images/img.png" alt="Imagen de inicio de sesión" class="login-image">
-                    </div>
-                    <form th:action="@{/login}" method="POST">
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Correo Electrónico o Nombre de Usuario</label>
-                            <input type="text" class="form-control" name="username" placeholder="nombre@ejemplo.com" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="password" class="form-label">Contraseña</label>
-                            <input type="password" class="form-control" name="password" placeholder="Contraseña" required>
-                        </div>
-                        <div class="d-grid">
-                            <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
-                        </div>
-                        <div class="text-center mt-3">
-                            <a href="/recuperar-pass" class="text-decoration-none">¿Olvidaste tu contraseña?</a>
-                        </div>
-                    </form>
-                </div>
+      <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-4 mt-5">
+          
+          <div class="card p-4 shadow-sm">
+            <h2 class="text-center section-title titulo-pagina">
+              Iniciar Sesión
+            </h2>
+            <div class="text-center">
+              <img
+                src="/images/img.png"
+                alt="Imagen de inicio de sesión"
+                class="login-image"
+              />
             </div>
+            <form th:action="@{/login}" method="POST">
+              <div class="mb-3">
+                <label for="email" class="form-label"
+                  >Correo Electrónico o Nombre de Usuario</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  name="username"
+                  placeholder="nombre@ejemplo.com"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="password" class="form-label">Contraseña</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  name="password"
+                  placeholder="Contraseña"
+                  required
+                />
+              </div>
+              <div class="d-grid">
+                <button type="submit" class="btn btn-primary">
+                  Iniciar Sesión
+                </button>
+              </div>
+              <div class="text-center mt-3">
+                <a href="/recuperar-pass" class="text-decoration-none"
+                  >¿Olvidaste tu contraseña?</a
+                >
+              </div>
+            </form>
+          </div>
         </div>
+      </div>
     </div>
 
     <footer th:replace="~{layout/plantilla :: footer}"></footer>
     <div th:replace="~{layout/plantilla :: alertas}"></div>
-
-
-</body>
-
+  </body>
 </html>

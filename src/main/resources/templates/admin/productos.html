@@ -57,7 +57,7 @@
                                         <td th:text="${#temporals.format(producto.fecha, 'dd/MM/yyyy')}"></td>
                                         <td>
                                             <a class="enlace-no-subr"
-                                                th:href="@{'/images/productos/'} + ${producto.imagen}" target="_blank">
+                                                th:href="@{/images/productos/} + ${producto.imagen}" target="_blank">
                                                 Imagen
                                             </a>
                                         </td>

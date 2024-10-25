@@ -324,10 +324,10 @@ public class AdminController {
             PagoMensual pagoMensual = pagoMensualService.getPagoMensualById(pagoMensualId);
             EstadoPagoMensual nuevoEstado = estadoPagoMensualService.getEstadoPagoById(estadoId);
 
-            // Guardar el archivo en la carpeta src/main/resources/static/images/pagoMensual
+            // Guardar el archivo en la carpeta /app/images/pagoMensual
             String mes = pagoMensual.getMes().toLowerCase();
             String fileName = mes + "_" + pagoMensual.getUsuario().getId() + ".png";
-            Path path = Paths.get("src/main/resources/static/images/pagoMensual/" + fileName);
+            Path path = Paths.get("/app/images/pagoMensual/" + fileName);
 
             // Registrar la acción de subir el archivo en los logs
             log.info("Guardando archivo comprobante: {} para el PagoMensual ID: {}", fileName, pagoMensualId);
@@ -379,7 +379,7 @@ public class AdminController {
 
             // Verifica si hay un comprobante y lo elimina
             if (pagoMensual.getComprobante() != null) {
-                String filePath = "src/main/resources/static/images/pagoMensual/" + pagoMensual.getComprobante();
+                String filePath = "/app/images/pagoMensual/" + pagoMensual.getComprobante();
                 Path path = Paths.get(filePath);
                 Files.deleteIfExists(path); // Elimina el archivo si existe
             }

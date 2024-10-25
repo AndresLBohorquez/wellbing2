@@ -63,7 +63,7 @@ public class ScheduledTasks {
     private EstadoPagoMensualService estadoPagoMensualService;
 
     // ejecutar todos los días 27 de cada mes a las 08:00:00
-    @Scheduled(cron = "0 0 8 27 * ?", zone = "America/Bogota")
+    @Scheduled(cron = "0 0 8 27 * ?", zone = "America/Bogota") // seg, min, horas, día del mes, mes y día de la
     public void desactivarUsuariosInactivos() {
         log.info("Iniciando tarea programada: Desactivar usuarios inactivos.");
 
@@ -146,7 +146,7 @@ public class ScheduledTasks {
     }
 
     // ejecutar todos los días 27 de cada mes a las 08:30:00
-    @Scheduled(cron = "0 30 8 27 * ?", zone = "America/Bogota")
+    @Scheduled(cron = "0 30 8 27 * ?", zone = "America/Bogota") // seg, min, horas, día del mes, mes y día de la
     public void reporteMensual() throws MessagingException {
         log.info("Iniciando tarea programada: Generar reporte mensual.");
         var listaUsuariosActivos = usuarioService.getUsuariosUltimaActivacionOK();
@@ -166,7 +166,7 @@ public class ScheduledTasks {
                 for (Equipo equi : equipo) {
                     var ultimaActHijo = activacionService.getUltimActivacion(equi.getIdHijo().getId());
                     if (ultimaActHijo != null
-                            && ultimaActHijo.getFechaFin().getMonth().equals(LocalDate.now().getMonth())) {
+                            && (ultimaActHijo.getEstadoActivacion().getNombre().equals("Activado"))) {
                         hijosActivos++; // si el hijo tiene activación vigente
                     }
                 }

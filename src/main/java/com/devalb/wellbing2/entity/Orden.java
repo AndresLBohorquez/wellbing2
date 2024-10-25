@@ -43,4 +43,6 @@ public class Orden {
     private String ciudad;
 
     private String barrio;
+
+    private String comentario;
 }

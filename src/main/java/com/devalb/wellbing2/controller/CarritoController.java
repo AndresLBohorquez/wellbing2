@@ -194,6 +194,34 @@ public class CarritoController {
         return "carrito/checkout";
     }
 
+    @PostMapping("/comentario")
+    public String registrarComentario(@RequestParam("carritoId") Long carritoId,
+            @RequestParam("comentario") String comentario, RedirectAttributes redirectAttributes) {
+        log.info("Registrando comentario para carrito {}", carritoId);
+
+        try {
+            var car = carritoService.getCarritoById(carritoId);
+            if (car == null) {
+                // Log de error si no se encuentra el carrito
+                log.error("No se encontró el carrito con ID {}", carritoId);
+                redirectAttributes.addFlashAttribute("messageError", "No se encontró el carrito");
+                return "redirect:/carrito";
+            }
+
+            car.setComentario(comentario);
+            carritoService.editCarrito(car);
+
+            log.info("Comentario registrado correctamente para carrito {}", carritoId);
+
+            redirectAttributes.addFlashAttribute("messageOK", "Marca o referencia registrada correctamente");
+            return "redirect:/carrito";
+        } catch (Exception e) {
+            log.error("Error al registrar comentario para carrito {}", carritoId, e);
+            redirectAttributes.addFlashAttribute("messageError", "Error al registrar comentario");
+            return "redirect:/carrito";
+        }
+    }
+
     public double calcularTotalCarrito(List<Carrito> carritos) {
         double total = 0;
         for (Carrito carrito : carritos) {
@@ -209,6 +237,7 @@ public class CarritoController {
             @RequestParam("direccion") String direccion,
             @RequestParam("ciudad") String ciudad,
             @RequestParam("barrio") String barrio,
+            @RequestParam(value = "comentario", required = false) String comentario, // Comentario opcional
             RedirectAttributes redirectAttributes) {
 
         log.info("Creando orden para el usuario con ID {}", usuarioId);
@@ -227,6 +256,9 @@ public class CarritoController {
         orden.setDireccion(direccion);
         orden.setCiudad(ciudad);
         orden.setBarrio(barrio);
+        if (comentario != null) {
+            orden.setComentario(comentario);
+        }
 
         ordenService.addOrden(orden);
 
@@ -239,6 +271,7 @@ public class CarritoController {
             itemsOrden.setOrden(orden);
             itemsOrden.setProducto(carritoElement.getProducto());
             itemsOrden.setCantidad(carritoElement.getCantidad());
+            itemsOrden.setComentario(carritoElement.getComentario());
             itemsOrdenService.addItemsOrden(itemsOrden);
         }
 

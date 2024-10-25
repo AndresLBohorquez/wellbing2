@@ -67,7 +67,7 @@
                                     <div class="row mt-3">
                                         <div th:class="${producto.id} ? 'col-md-6' : 'col-md-12'"
                                             th:style="${producto.id} ? '' : 'display: none;'">
-                                            <img th:src="@{'/images/productos/'} + ${producto.imagen}"
+                                            <img th:src="@{/images/productos/} + ${producto.imagen}"
                                                 alt="Imagen del producto" class="img-fluid img-edit-prod">
                                         </div>
                                         <div th:class="${producto.id} ? 'col-md-6' : 'col-md-12'">

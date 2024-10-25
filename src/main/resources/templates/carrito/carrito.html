@@ -1,85 +1,205 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="es">
+<html
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:th="http://www.thymeleaf.org"
+  lang="es"
+>
+  <head th:replace="~{layout/plantilla :: head('Carrito de Compras')}"></head>
 
-<head th:replace="~{layout/plantilla :: head('Carrito de Compras')}"></head>
-
-<body>
+  <body>
     <!-- Navbar -->
     <nav th:replace="~{layout/plantilla :: navbar('', '', '', '', '')}"></nav>
 
     <!-- Contenido principal del carrito de compras -->
     <div class="container cart-container">
-        <h2 class="text-center mb-4 section-title titulo-pagina">Carrito de Compras</h2>
+      <h2 class="text-center mb-4 section-title titulo-pagina">
+        Carrito de Compras
+      </h2>
 
-        <!-- Items del carrito -->
-        <div class="row">
-            <div class="col-md-8" id="cartItemsContainer">
-                <!-- Mostrar si el carrito está vacío -->
-                <div th:if="${#lists.isEmpty(carritos)}">
-                    <p class="text-center">Tu carrito está vacío.</p>
-                </div>
+      <!-- Items del carrito -->
+      <div class="row">
+        <div class="col-md-8" id="cartItemsContainer">
+          <!-- Mostrar si el carrito está vacío -->
+          <div th:if="${#lists.isEmpty(carritos)}">
+            <p class="text-center">Tu carrito está vacío.</p>
+          </div>
 
-                <!-- Iterar sobre los items del carrito -->
-                <div th:each="carrito : ${carritos}" class="cart-item mb-4" data-id="${carrito.producto.id}">
-                    <div class="row align-items-center">
-                        <!-- Imagen del producto -->
-                        <div class="col-3 col-md-2">
-                            <img th:src="@{/images/productos/} + ${carrito.producto.imagen}" alt="Producto"
-                                class="img-fluid">
-                        </div>
+          <!-- Iterar sobre los items del carrito -->
+          <div
+            th:each="carrito : ${carritos}"
+            class="cart-item mb-4"
+            data-id="${carrito.producto.id}"
+          >
+            <div class="row align-items-center">
+              <!-- Imagen del producto -->
+              <div class="col-3 col-md-2">
+                <img
+                  th:src="@{/images/productos/} + ${carrito.producto.imagen}"
+                  alt="Producto"
+                  class="img-fluid"
+                />
+              </div>
 
-                        <!-- Nombre y descripción -->
-                        <div class="col-9 col-md-4">
-                            <p class="item-name mb-1" th:text="${carrito.producto.nombre}">Nombre del Producto</p>
-                            <p class="text-muted mb-0 justify" th:text="${carrito.producto.descripcion}">Descripción
-                                breve</p>
-                        </div>
+              <!-- Nombre y descripción -->
+              <div class="col-9 col-md-4">
+                <p class="item-name mb-1" th:text="${carrito.producto.nombre}">
+                  Nombre del Producto
+                </p>
+                <p
+                  class="text-muted mb-0 justify"
+                  th:text="${carrito.producto.descripcion}"
+                >
+                  Descripción breve
+                </p>
+              </div>
 
-                        <!-- Input de cantidad -->
-                        <form th:action="@{/carrito/actualizarCantidad}" method="post"
-                            class="col-6 col-md-2 d-flex align-items-center justify-content-center quantity-container">
-                            <input type="hidden" name="carritoId" th:value="${carrito.id}" />
-                            <button class="quantity-btn quantity-btn-minus" type="submit" name="action"
-                                value="restarCantidad">-</button>
-                            <input type="number" name="cantidad" class="quantity-input mx-2"
-                                th:value="${carrito.cantidad}" min="1" >
-                            <button class="quantity-btn quantity-btn-plus" type="submit" name="action"
-                                value="sumarCantidad">+</button>
-                        </form>
+              <!-- Input de cantidad -->
+              <form
+                th:action="@{/carrito/actualizarCantidad}"
+                method="post"
+                class="col-6 col-md-2 d-flex align-items-center justify-content-center quantity-container"
+              >
+                <input
+                  type="hidden"
+                  name="carritoId"
+                  th:value="${carrito.id}"
+                />
+                <button
+                  class="quantity-btn quantity-btn-minus"
+                  type="submit"
+                  name="action"
+                  value="restarCantidad"
+                >
+                  -
+                </button>
+                <input
+                  type="number"
+                  name="cantidad"
+                  class="quantity-input mx-2"
+                  th:value="${carrito.cantidad}"
+                  min="1"
+                />
+                <button
+                  class="quantity-btn quantity-btn-plus"
+                  type="submit"
+                  name="action"
+                  value="sumarCantidad"
+                >
+                  +
+                </button>
+              </form>
 
-                        <!-- Precio -->
-                        <div class="col-6 col-md-2 text-center">
-                            <p class="item-price" th:text="'$ ' + ${carrito.producto.precio * carrito.cantidad}">
-                                $99.99</p>
+              <!-- Precio -->
+              <div class="col-6 col-md-2 text-center">
+                <p
+                  class="item-price"
+                  th:text="'$ ' + ${carrito.producto.precio * carrito.cantidad}"
+                >
+                  $99.99
+                </p>
+              </div>
 
-                        </div>
-
-                        <!-- Botón de eliminar -->
-                        <div class="col-12 col-md-1 text-end text-md-center mt-2 mt-md-0">
-                            <form th:action="@{/carrito/eliminar}" method="post">
-                                <input type="hidden" name="carritoId" th:value="${carrito.id}" />
-                                <button class="btn-delete-product" type="submit">Eliminar</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
+              <!-- Botón de eliminar -->
+              <div class="col-12 col-md-1 text-end text-md-center mt-2 mt-md-0">
+                <form th:action="@{/carrito/eliminar}" method="post">
+                  <input
+                    type="hidden"
+                    name="carritoId"
+                    th:value="${carrito.id}"
+                  />
+                  <button class="btn-delete-product" type="submit">
+                    Eliminar
+                  </button>
+                </form>
+              </div>
+              <div class="form-group mt-2">
+                <label for="floatingTextarea2">Referencia / Marca</label>
+                <i
+                  class="bi bi-info-circle-fill text-info"
+                  data-bs-toggle="tooltip"
+                  data-bs-placement="top"
+                  title="Comenta si es necesario especificar referencia o marca"
+                ></i>
+                <form th:action="@{/carrito/comentario}" method="post">
+                  <div class="row">
+                      <div class="col-12 col-md-8"> <!-- Ocupa todo el ancho en móviles y parte del ancho en pantallas grandes -->
+                          <input
+                              type="hidden"
+                              name="carritoId"
+                              th:value="${carrito.id}"
+                          />
+                          <input
+                              type="text"
+                              class="form-control mt-2"
+                              name="comentario"
+                              placeholder="Escribe tu comentario aquí"
+                              th:value="${carrito.comentario}"
+                              required
+                          />
+                      </div>
+                      <div class="col-12 col-md-4 d-flex justify-content-center"> <!-- Ocupa todo el ancho en móviles y parte del ancho en pantallas grandes -->
+                          <button type="submit" class="btn btn-success mt-2 w-100 w-md-auto"> <!-- w-100 para móviles, w-md-auto para pantallas grandes -->
+                              Registrar
+                          </button>
+                      </div>
+                  </div>
+              </form>
+              </div>
             </div>
-
-            <!-- Resumen del carrito -->
-            <div class="col-md-4">
-                <div class="card p-3">
-                    <h5>Resumen de la Compra</h5>
-                    <p>Total: <span id="cartTotal" th:text="${totalCarrito}"></span></p>
-
-                    <form th:action="@{/carrito/checkout}" method="get">
-                        <input class="btn btn-primary btn-block" th:if="${not #lists.isEmpty(carritos)}" type="submit"
-                            value="Ir a Pagar" />
-                    </form>
-
-                    <p th:if="${#lists.isEmpty(carritos)}">No hay productos para pagar.</p>
-                </div>
-            </div>
+          </div>
         </div>
+
+        <!-- Resumen del carrito -->
+        <div class="col-md-4 d-none d-md-block">
+          <div
+            class="card p-3"
+            style="
+              position: fixed;
+              top: 50%;
+              transform: translateY(-50%);
+              right: 20px;
+              width: 25%;
+            "
+          >
+            <h5>Resumen de la Compra</h5>
+            <p>Total: <span id="cartTotal" th:text="${totalCarrito}"></span></p>
+
+            <!-- Botón de checkout -->
+            <form th:action="@{/carrito/checkout}" method="get">
+              <input
+                class="btn btn-primary btn-block w-100"
+                th:if="${not #lists.isEmpty(carritos)}"
+                type="submit"
+                value="Ir al Checkout"
+              />
+            </form>
+
+            <p th:if="${#lists.isEmpty(carritos)}">
+              No hay productos para pagar.
+            </p>
+          </div>
+        </div>
+
+        <!-- En pantallas pequeñas (< md), usamos posición normal (static) para que aparezca debajo de los productos -->
+        <div class="card p-3 d-md-none">
+          <h5>Resumen de la Compra</h5>
+          <p>Total: <span id="cartTotal" th:text="${totalCarrito}"></span></p>
+
+          <!-- Botón de checkout -->
+          <form th:action="@{/carrito/checkout}" method="get">
+            <input
+              class="btn btn-primary btn-block w-100"
+              th:if="${not #lists.isEmpty(carritos)}"
+              type="submit"
+              value="Ir al Checkout"
+            />
+          </form>
+
+          <p th:if="${#lists.isEmpty(carritos)}">
+            No hay productos para pagar.
+          </p>
+        </div>
+      </div>
     </div>
 
     <!-- Footer -->
@@ -87,6 +207,5 @@
     <div th:replace="~{layout/plantilla :: alertas}"></div>
 
     <script src="/js/carrito.js"></script>
-</body>
-
+  </body>
 </html>

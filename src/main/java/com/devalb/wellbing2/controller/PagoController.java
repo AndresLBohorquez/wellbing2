@@ -115,7 +115,7 @@ public class PagoController {
         String fileName = "pago_" + orden.getId() + ".png";
         try {
             byte[] bytes = comprobante.getBytes();
-            Path ruta = Paths.get("src/main/resources/static/images/pagos/" + fileName);
+            Path ruta = Paths.get("/app/images/pagos/" + fileName);
             if (Files.exists(ruta)) {
                 Files.delete(ruta);
             }

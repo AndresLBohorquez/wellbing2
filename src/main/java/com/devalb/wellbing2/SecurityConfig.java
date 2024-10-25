@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 import com.devalb.wellbing2.service.Impl.UserService;
 
@@ -38,6 +39,8 @@ public class SecurityConfig {
         @Bean
         public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
                 http
+                                .csrf(csrf -> csrf
+                                                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
                                 .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
                                                 .requestMatchers(resources).permitAll()
                                                 .requestMatchers("/", "/signup", "/productos", "/login", "/nosotros",
@@ -45,7 +48,7 @@ public class SecurityConfig {
                                                                 "/politicas_privacidad", "/aviso_legal",
                                                                 "/terminos_condiciones", "favicon.ico")
                                                 .permitAll()
-                                                
+
                                                 .requestMatchers("/admin", "/admin/pago-mensual/**")
                                                 .hasAuthority("Admin")
                                                 .requestMatchers("/admin/usuarios/**", "/admin/email/**")

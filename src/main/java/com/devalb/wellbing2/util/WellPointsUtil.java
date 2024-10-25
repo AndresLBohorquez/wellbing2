@@ -58,7 +58,7 @@ public class WellPointsUtil {
         wellPoints2.setCantidad(cantidad);
         wellPoints2.setDescripcion("Transferencia de puntos hacia usuario " + usuarioReceptor.getUsername());
         wellPoints2.setFecha(LocalDate.now());
-        wellPoints2.setTotal(usuarioReceptor.getWellPoints() + cantidad);
+        wellPoints2.setTotal(usuarioDonante.getWellPoints() - cantidad);
 
         var aw2 = accionWellPointsService.getAccionWellPointsByNombre("Retirar");
         wellPoints2.setAccion(aw2);

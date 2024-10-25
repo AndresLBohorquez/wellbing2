@@ -28,4 +28,6 @@ public class ItemsOrden {
 
     private Integer cantidad;
 
+    private String comentario;
+
 }

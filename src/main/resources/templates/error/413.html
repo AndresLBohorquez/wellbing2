@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:th="http://www.thymeleaf.org"
+  lang="es"
+>
+  <head
+    th:replace="~{layout/plantilla :: head('Error 413 - Solicitud demasiado grande')}"
+  ></head>
+
+  <body class="d-flex flex-column min-vh-100">
+    <nav th:replace="~{layout/plantilla :: navbar('', '', '', '', '')}"></nav>
+
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f8f9fa;
+        text-align: center;
+      }
+
+      .container {
+        margin: auto;
+      }
+
+      h1 {
+        font-size: 48px;
+        color: #dc3545;
+      }
+
+      p {
+        font-size: 18px;
+      }
+    </style>
+
+    <div class="container">
+      <h1>Error 413</h1>
+      <p>La solicitud enviada es demasiado grande para ser procesada.</p>
+      <p>
+        Por favor, intenta reducir el tamaño de la solicitud o contactar con el
+        administrador del sitio.
+      </p>
+      <p><a href="/">Volver a la página de inicio</a></p>
+    </div>
+
+    <footer th:replace="~{layout/plantilla :: footer}"></footer>
+  </body>
+</html>
