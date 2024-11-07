@@ -6,7 +6,24 @@
     <meta name="_csrf_header" th:content="${_csrf.headerName}" />
     <meta name="_csrf_parameter" th:content="${_csrf.parameterName}" />
 
-    <title th:text="${titulo}">Index</title>
+    <!-- Title and Description -->
+    <title th:text="${titulo}">Wellbing - Tu Tienda de Bienestar</title>
+    <meta name="description" content="Wellbing es tu tienda de bienestar en línea. Descubre productos de salud, cuidado personal y bienestar con calidad garantizada y precios accesibles.">
+    <meta name="keywords" content="Wellbing, bienestar, salud, e-commerce, productos de cuidado personal, productos de salud, tienda en línea">
+
+    <!-- Open Graph (para redes sociales) -->
+    <meta property="og:title" content="Wellbing - Tu Tienda de Bienestar">
+    <meta property="og:description" content="Descubre los mejores productos para tu bienestar y salud en Wellbing.">
+    <meta property="og:image" content="/images/logo.jpg">
+    <meta property="og:url" content="https://wellbing.com.co">
+    <meta property="og:type" content="website">
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Wellbing - Tu Tienda de Bienestar">
+    <meta name="twitter:description" content="Encuentra productos de bienestar y salud en nuestra tienda en línea Wellbing.">
+    <meta name="twitter:image" content="/images/logo.jpg">
+
     <!-- Bootstrap CSS-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -46,6 +63,29 @@
     <!-- Datatables JS -->
     <script src="https://cdn.datatables.net/2.1.5/js/dataTables.min.js"></script>
 
+    <!-- JSON-LD Datos estructurados para Google -->
+    <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "Store",
+          "name": "Wellbing",
+          "url": "https://wellbing.com.co",
+          "logo": "https://wellbing.com.co/images/logo.jpg",
+          "description": "Wellbing es una tienda en línea dedicada al bienestar y la salud, ofreciendo productos de calidad para el cuidado personal y la salud.",
+          "sameAs": [
+            "https://www.facebook.com/wellbing",
+            "https://www.instagram.com/wellbing",
+            "https://twitter.com/wellbing"
+          ],
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+57 3144092580",
+            "contactType": "Customer Service",
+            "areaServed": "CO",
+            "availableLanguage": "Spanish"
+          }
+        }
+        </script>
 
 </head>
 
@@ -187,7 +227,7 @@
 
 <!-- Sidebar Usuario -->
 
-<div th:fragment="sidebar-usuario(perfil, activacion, equipo, pagos, ordenes, pqrs, wellpoints)" id="sidebar"
+<div th:fragment="sidebar-usuario(perfil, activacion, equipo, pagos, ordenes, pqrs)" id="sidebar"
     class="bg-sidebar p-3">
     <ul class="nav nav-pills flex-column mb-auto">
         <li class="nav-item mt-3">
@@ -218,11 +258,6 @@
         <li class="nav-item mt-3">
             <a href="/usuario/pqrs" th:class="|nav-link ${pqrs}|">
                 <i class="fas fa-comments"></i> PQRS
-            </a>
-        </li>
-        <li class="nav-item mt-3">
-            <a href="/usuario/wellpoints" th:class="|nav-link ${wellpoints}|">
-                <i class="fas fa-coins"></i> WellPoints
             </a>
         </li>
     </ul>

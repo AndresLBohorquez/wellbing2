@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="es">
 
-<head th:replace="~{layout/plantilla :: head(Inicio)}"></head>
+<head th:replace="~{layout/plantilla :: head('Wellbing - Tienda de Bienestar en Línea')}"></head>
 
 <body class="d-flex flex-column min-vh-100">
 
@@ -27,7 +27,7 @@
             <div class="carousel-inner">
                 <div th:each="producto, stat : ${listaProductosTop}"
                     th:class="${stat.index == 0} ? 'carousel-item active' : 'carousel-item'">
-                    <a href="/producto_detalle">
+                    <a th:href="@{/producto_detalle/{id}(id=${producto.id})}">
                         <img th:src="@{/images/productos/} + ${producto.imagen}" class="d-block" alt="Imagen">
                     </a>
                     <div class="carousel-caption d-none d-md-block">
