@@ -441,7 +441,6 @@ input[type="number"]::-webkit-outer-spin-button {
   background-color: #f0f5f9;
 }
 
-
 /* Estilo para los botones de cantidad */
 .quantity-btn {
   background-color: #30b8e2;
@@ -457,7 +456,6 @@ input[type="number"]::-webkit-outer-spin-button {
   box-shadow: inset 0 1px 0 0 #b0bec5, inset 0 -1px 0 0 #b0bec5;
   /* Esto simula los bordes superior e inferior */
 }
-
 
 .quantity-btn-minus {
   border-radius: 20px 0 0 20px;
@@ -622,6 +620,30 @@ input[type="number"]::-webkit-outer-spin-button {
   .range-container {
     flex-direction: column;
     gap: 10px;
+  }
+
+  .icon {
+    display: none; /* Ocultar el ícono en vista móvil */
+  }
+
+  .range-group {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 15px; /* Margen superior para el espacio adicional */
+  }
+
+  .range-group:last-child {
+    display: flex;
+    justify-content: flex-end; /* Alinear el contenido a la derecha en el último grupo */
+  }
+
+  .range-container input[type="range"] {
+    margin: 0; /* Eliminar margen derecho */
+  }
+
+  .range-container input[type="number"] {
+    margin-top: 10px; /* Espacio entre el rango y el número */
   }
 
   .number-container {

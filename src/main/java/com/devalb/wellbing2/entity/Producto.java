@@ -23,11 +23,14 @@ public class Producto {
     @Column(nullable = false)
     private String nombre;
 
-    @Column(nullable = false)
+    @Column(columnDefinition = "TEXT", nullable = false)
     private String descripcion;
 
     @Column(nullable = false)
     private Double precio;
+    
+    @Column(nullable = false)
+    private Double precioAnt;
 
     private String imagen;
 

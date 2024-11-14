@@ -86,7 +86,8 @@ public class ProductoController {
     public String guardarProducto(@RequestParam(value = "id", required = false) Long id,
             @RequestParam("imagen") MultipartFile imagen,
             @RequestParam("nombre") String nombre, @RequestParam("descripcion") String descripcion,
-            @RequestParam("precio") Double precio, @RequestParam("bono") Double bono,
+            @RequestParam("precio") Double precio, @RequestParam("precioAnt") Double precioAnt,
+            @RequestParam("bono") Double bono,
             @RequestParam(value = "visible", required = false) Boolean visible,
             @RequestParam("categoria.id") Long categoriaId, Model model, Authentication auth,
             RedirectAttributes redirectAttributes) {
@@ -98,6 +99,7 @@ public class ProductoController {
             producto.setNombre(nombre);
             producto.setDescripcion(descripcion);
             producto.setPrecio(precio);
+            producto.setPrecioAnt(precioAnt);
             producto.setBono(bono);
             producto.setCategoria(categoriaService.getCategoriaById(categoriaId));
 
@@ -145,7 +147,6 @@ public class ProductoController {
                 try {
                     byte[] bytes = imagen.getBytes();
                     Path ruta = Paths.get("/app/images/productos/" + nombreImagen);
-                    
 
                     if (Files.exists(ruta)) {
                         Files.delete(ruta);
@@ -184,5 +185,5 @@ public class ProductoController {
         }
         return "redirect:/admin/productos";
     }
-    
+
 }

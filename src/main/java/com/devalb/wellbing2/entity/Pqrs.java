@@ -27,7 +27,7 @@ public class Pqrs {
     @Column(nullable = false)
     private String descripcion;
 
-    @Column(nullable = false)
+    @Column(columnDefinition = "TEXT", nullable = false)
     private String contenido;
 
     @ManyToOne(fetch = FetchType.EAGER)

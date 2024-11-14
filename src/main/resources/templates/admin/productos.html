@@ -33,10 +33,11 @@
                                 <thead class="custom-table-header text-center">
                                     <tr>
                                         <th>Nombre</th>
+                                        <th>Anterior</th>
                                         <th>Precio</th>
                                         <th>Bono</th>
                                         <th>Descripción</th>
-                                        <th>Fecha</th>
+                                        
                                         <th>Imagen</th>
                                         <th>Categoría</th>
                                         <th>Visible</th>
@@ -49,12 +50,13 @@
                                         <td><a class="enlace-no-subr"
                                                 th:href="@{/admin/productos/detalle/{id}(id=${producto.id})}"
                                                 th:text="${producto.nombre}"></a></td>
+                                        <td th:text="${producto.precioAnt}"></td>
                                         <td th:text="${producto.precio}"></td>
                                         <td th:text="${producto.bono}"></td>
                                         <td
                                             th:text="${producto.descripcion.length() > 30 ? producto.descripcion.substring(0, 30) + '...' : producto.descripcion}">
                                         </td>
-                                        <td th:text="${#temporals.format(producto.fecha, 'dd/MM/yyyy')}"></td>
+                                        
                                         <td>
                                             <a class="enlace-no-subr"
                                                 th:href="@{/images/productos/} + ${producto.imagen}" target="_blank">

@@ -36,10 +36,16 @@
                                             th:value="${producto.nombre}" name="nombre" required>
                                     </div>
                                     <div class="form-group col-12 col-md-6 mt-2">
+                                        <label for="precio">Precio Anterior</label>
+                                        <input type="number" class="form-control" id="precioAnt"
+                                            th:value="${producto.precioAnt}" name="precioAnt" required>
+                                    </div>
+                                    <div class="form-group col-12 col-md-6 mt-2">
                                         <label for="precio">Precio</label>
                                         <input type="number" class="form-control" id="precio"
                                             th:value="${producto.precio}" name="precio" required>
                                     </div>
+                                    
                                     <div class="form-group col-12 col-md-6 mt-2">
                                         <label for="bono">Bono</label>
                                         <input type="number" class="form-control" id="bono" th:value="${producto.bono}"

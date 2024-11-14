@@ -44,5 +44,6 @@ public class Orden {
 
     private String barrio;
 
+    @Column(columnDefinition = "TEXT")
     private String comentario;
 }

@@ -20,6 +20,7 @@ public class Carrito {
     private Usuario usuario;
 
     private int cantidad;
-
+    
+    @Column(columnDefinition = "TEXT")
     private String comentario;
 }
