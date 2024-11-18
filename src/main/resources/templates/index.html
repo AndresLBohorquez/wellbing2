@@ -1,124 +1,216 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="es">
+<html
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:th="http://www.thymeleaf.org"
+  lang="es"
+>
+  <head
+    th:replace="~{layout/plantilla :: head('Wellbing - Tienda de Bienestar en Línea')}"
+  ></head>
 
-<head th:replace="~{layout/plantilla :: head('Wellbing - Tienda de Bienestar en Línea')}"></head>
-
-<body class="d-flex flex-column min-vh-100">
-
-    <nav th:replace="~{layout/plantilla :: navbar('active', '', '', '', '')}"></nav>
+  <body class="d-flex flex-column min-vh-100">
+    <nav
+      th:replace="~{layout/plantilla :: navbar('active', '', '', '', '')}"
+    ></nav>
 
     <div class="container mt-5 mb-5 flex-fill">
-        <div class="row">
-            <div class="col-12 text-center">
-                <h1 class="mb-4 titulo-pagina">Bienvenido a WellBing</h1>
-                <p>Encuentra los mejores productos a los mejores precios.</p>
-                <a href="/productos" class="btn btn-primary">Comprar Ahora</a>
+      <div class="row">
+        <div class="col-12 text-center">
+          <h1 class="mb-4 titulo-pagina">Bienvenido a WellBing</h1>
+          <p>Encuentra los mejores productos a los mejores precios.</p>
+          <a href="/productos" class="btn btn-primary">Comprar Ahora</a>
+        </div>
+      </div>
+
+      <!-- Carrusel de Productos -->
+      <div
+        id="carouselExampleIndicators"
+        class="carousel slide mt-5"
+        data-bs-ride="carousel"
+      >
+        <div class="carousel-indicators">
+          <button
+            th:each="producto, stat : ${listaProductosTop}"
+            type="button"
+            data-bs-target="#carouselExampleIndicators"
+            th:data-bs-slide-to="${stat.index}"
+            th:class="${stat.index == 0} ? 'active' : ''"
+            th:aria-label="'Slide ' + ${stat.index + 1}"
+          ></button>
+        </div>
+        <div class="carousel-inner">
+          <div
+            th:each="producto, stat : ${listaProductosTop}"
+            th:class="${stat.index == 0} ? 'carousel-item active' : 'carousel-item'"
+          >
+            <a th:href="@{/producto_detalle/{id}(id=${producto.id})}">
+              <img
+                th:src="@{/images/productos/} + ${producto.imagen}"
+                class="d-block"
+                alt="Imagen"
+              />
+            </a>
+            <div class="carousel-caption d-none d-md-block">
+              <h5>
+                <span class="bg-nombre-prod" th:text="${producto.nombre}"
+                  >Producto Destacado 1</span
+                >
+              </h5>
+              <p
+                th:text="${producto.descripcion.length() > 85 ? producto.descripcion.substring(0, 85) + '...' : producto.descripcion}"
+              >
+                Descripción del producto destacado 1.
+              </p>
             </div>
+          </div>
+        </div>
+        <button
+          class="carousel-control-prev"
+          type="button"
+          data-bs-target="#carouselExampleIndicators"
+          data-bs-slide="prev"
+        >
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Anterior</span>
+        </button>
+        <button
+          class="carousel-control-next"
+          type="button"
+          data-bs-target="#carouselExampleIndicators"
+          data-bs-slide="next"
+        >
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Siguiente</span>
+        </button>
+      </div>
+
+      <!-- Sección de Blog -->
+      <div class="row g-5 mt-5">
+        <div class="col-md-8">
+          <article class="blog-post">
+            <h2 class="blog-post-title">Genera ingresos con nosotros</h2>
+            <p class="justify">
+              Wellbing es la tienda virtual más innovadora en Colombia, que te
+              ayuda a convertir tus gastos habituales en ingresos, es por eso
+              que podrás comprar miles de productos nacionales e importados,
+              además encontrarás productos para el cuidado personal y el
+              bienestar en general.
+            </p>
+            <h5>¿Cómo vamos a generar ingresos?</h5>
+            <p>¡Te voy a explicar paso a paso!</p>
+            <ul>
+              <li>
+                <p class="justify">
+                  Primero debemos <a href="/signup">registrarnos</a> de forma
+                  totalmente gratuita en la plataforma de la pagina
+                  <a href="/signup">www.wellbing.com.co</a>.
+                </p>
+              </li>
+              <li>
+                <p class="justify">
+                  Segundo volvernos clientes nosotros mismos o crear ventas en
+                  la plataforma para activarnos a modo premium.
+                </p>
+              </li>
+              <li>
+                <p class="justify">
+                  Tercero, empezar a recomendar más clientes para crear tu
+                  propio equipo, por los usuarios premium que realizan sus
+                  compras habituales en la plataforma vas a ganar dinero.
+                </p>
+              </li>
+            </ul>
+            <p class="justify">
+              Después del primer mes tus compras pueden salir totalmente gratis,
+              recomendar es muy facil ya que atravez de nuestra plataforma
+              puedes comprar perfumería productos faciales y corporales,
+              complementos alimenticios. Todo con un enfoque referente a cuidado
+              personal y bienestar pero también encontrarás lo último en
+              tecnología y electronicos además de joyería y productos de acuerdo
+              a la temporada en el año.
+            </p>
+            <p class="justify">
+              Son cientos de productos, los pagos se generan atravez de
+              aplicaciones como nequi o daviplata, y los envíos por las empresas
+              más reconocidos del país, ¡que estás esperando! registrate ya con
+              la persona que quiere hagas parte de su equipo y empieza desde hoy
+              a generar ingresos y obtener el estilo de vida siempre haz
+              querido, no te límites, piensa en grande y obten libertad
+              financiera, está actividad se realiza desde tu celular o laptop y
+              lo mejor de todo desde la comodidad de tu hogar. ¡ Bienvenid@ !
+            </p>
+            <hr />
+          </article>
+          <article class="blog-post">
+            <h2 class="blog-post-title">Plan de Compensación Premium</h2>
+            <h5>Objetivo</h5>
+            <p class="justify">
+              Genera Comisiónes por tu equipo de referidos, cada vez que ellos
+              realicen activacion a modo premium.
+            </p>
+            <h5>Condición</h5>
+            <p class="justify">
+              Que tu referido Venda productos que generen 35.000 puntos o más en
+              el mes y se active en modo premium.
+            </p>
+            <h5>Beneficio</h5>
+            <p class="justify">Recibes una recompensa de 20.000 pesos.</p>
+            <h5>Requisitos</h5>
+            <ul>
+              <li>
+                <p class="justify">
+                  Para poder generar ganancias por tus referidos debes ser
+                  activo premium en la plataforma.
+                </p>
+              </li>
+              <li>
+                <p class="justify">
+                  Para ser activo premium en la plataforma debes realizar ventas
+                  que generen como mínimo 35.000 puntos en el mes y activarse a
+                  modo premium.
+                </p>
+              </li>
+            </ul>
+            <h5>Estructura</h5>
+            <p class="justify">
+              Comisiones únicamente por activacion de tu referido a modo premium. <a href="/signup">Términos y condiciones.</a>
+            </p>
+            <hr />
+          </article>
         </div>
 
-        <!-- Carrusel de Productos -->
-        <div id="carouselExampleIndicators" class="carousel slide mt-5" data-bs-ride="carousel">
-            <div class="carousel-indicators">
-                <button th:each="producto, stat : ${listaProductosTop}" type="button"
-                    data-bs-target="#carouselExampleIndicators" th:data-bs-slide-to="${stat.index}"
-                    th:class="${stat.index == 0} ? 'active' : ''" th:aria-label="'Slide ' + ${stat.index + 1}">
-                </button>
+        <!-- Sidebar de la Sección de Blog -->
+        <div class="col-md-4">
+          <div class="position-sticky" style="top: 2rem">
+            <div class="p-4 mb-3 bg-light rounded">
+              <h4 class="fst-italic">Acerca de</h4>
+              <p class="mb-0 justify">
+                En WellBing nos comprometemos a ofrecerte productos de la más
+                alta calidad al mejor precio, siempre guiados por nuestros
+                valores fundamentales y actuando de acuerdo con nuestra
+                <a href="/politicas_privacidad">Política de privacidad</a>.
+                Además, te invitamos a revisar nuestro
+                <a href="/aviso_legal">Aviso Legal</a>, donde encontrarás
+                información esencial sobre las condiciones de uso y protección
+                de tus datos personales.
+              </p>
             </div>
-            <div class="carousel-inner">
-                <div th:each="producto, stat : ${listaProductosTop}"
-                    th:class="${stat.index == 0} ? 'carousel-item active' : 'carousel-item'">
-                    <a th:href="@{/producto_detalle/{id}(id=${producto.id})}">
-                        <img th:src="@{/images/productos/} + ${producto.imagen}" class="d-block" alt="Imagen">
-                    </a>
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>
-                            <span class="bg-nombre-prod" th:text="${producto.nombre}">Producto Destacado 1</span>
-                        </h5>
-                        <p
-                            th:text="${producto.descripcion.length() > 85 ? producto.descripcion.substring(0, 85) + '...' : producto.descripcion}">
-                            Descripción del producto destacado 1.
-                        </p>
-                    </div>
-                </div>
+
+            <div class="p-4">
+              <h4 class="fst-italic">Síguenos</h4>
+              <ol class="list-unstyled">
+                <li><a href="#">Instagram</a></li>
+                <li><a href="#">Twitter</a></li>
+                <li><a href="#">Facebook</a></li>
+                <!-- Otros enlaces a redes sociales -->
+              </ol>
             </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
-                data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Anterior</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
-                data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Siguiente</span>
-            </button>
+          </div>
         </div>
-
-        <!-- Sección de Blog -->
-        <div class="row g-5 mt-5">
-            <div class="col-md-8">
-                <h3 class="pb-4 mb-4 fst-italic border-bottom">
-                    Novedades y Consejos
-                </h3>
-
-                <article class="blog-post">
-                    <h2 class="blog-post-title">Genera ingresos con nosotros</h2>
-                    <p class="justify">Te invitamos a convertirte en parte activa de nuestra comunidad y a generar
-                        ingresos adicionales al invitar a tus familiares y amigos a unirse. Al compartir esta
-                        oportunidad, no solo contribuyes al crecimiento de nuestra red, sino que también obtienes
-                        recompensas por cada nuevo miembro que se sume. Para conocer todos los detalles sobre cómo
-                        puedes beneficiarte, te recomendamos visitar nuestra sección de <a
-                            href="/terminos_condiciones">Términos y
-                            Condiciones</a>, donde encontrarás información completa sobre este programa y sus
-                        beneficios. </p>
-                    <hr>
-                </article>
-                <article class="blog-post">
-                    <h2 class="blog-post-title">Obtén bonificaciones exclusivas</h2>
-                    <p class="justify">Cada vez que realices una compra con nosotros, acumularás WellPoints, nuestra
-                        moneda virtual, que podrás usar como prefieras para futuras compras o beneficios exclusivos.
-                        Este programa de recompensas te permite maximizar el valor de cada transacción y disfrutar de
-                        ventajas adicionales. Te invitamos a revisar los <a href="/terminos_condiciones">Términos y
-                            Condiciones</a> aplicables para conocer
-                        todos los detalles y aprovechar al máximo tus WellPoints. </p>
-                    <hr>
-                </article>
-
-            </div>
-
-            <!-- Sidebar de la Sección de Blog -->
-            <div class="col-md-4">
-                <div class="position-sticky" style="top: 2rem;">
-                    <div class="p-4 mb-3 bg-light rounded">
-                        <h4 class="fst-italic">Acerca de</h4>
-                        <p class="mb-0 justify">En WellBing nos comprometemos a ofrecerte productos de la más alta
-                            calidad al mejor precio, siempre guiados por nuestros valores fundamentales y actuando de
-                            acuerdo con nuestra <a href="/politicas_privacidad">Política de privacidad</a>. Además, te
-                            invitamos a revisar nuestro <a href="/aviso_legal">Aviso Legal</a>, donde encontrarás
-                            información esencial sobre las condiciones de uso y protección de
-                            tus datos personales.
-                        </p>
-                    </div>
-
-
-
-                    <div class="p-4">
-                        <h4 class="fst-italic">Síguenos</h4>
-                        <ol class="list-unstyled">
-                            <li><a href="#">Instagram</a></li>
-                            <li><a href="#">Twitter</a></li>
-                            <li><a href="#">Facebook</a></li>
-                            <!-- Otros enlaces a redes sociales -->
-                        </ol>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+      </div>
     </div>
 
     <footer th:replace="~{layout/plantilla :: footer}"></footer>
     <div th:replace="~{layout/plantilla :: alertas}"></div>
-
-</body>
-
+  </body>
 </html>

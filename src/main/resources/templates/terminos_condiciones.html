@@ -1,54 +1,1196 @@
-<!doctype html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="es">
+<!DOCTYPE html>
+<html
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:th="http://www.thymeleaf.org"
+  lang="es"
+>
+  <head
+    th:replace="~{layout/plantilla :: head('Términos y Condiciones')}"
+  ></head>
 
-<head th:replace="~{layout/plantilla :: head('Términos y Condiciones')}"></head>
-
-<body>
-    <nav th:replace="~{layout/plantilla :: navbar('', '', active, '', '')}"></nav>
+  <body>
+    <nav
+      th:replace="~{layout/plantilla :: navbar('', '', active, '', '')}"
+    ></nav>
     <div class="container mt-5 mb-5">
-        <h1 class="text-center section-title titulo-pagina">Términos y Condiciones</h1>
-        <div class="row justify-content-center">
-            <div class="col-md-10">
-                <div class="card p-4 shadow-sm custom-font">
-                    <h3>1. Introducción</h3>
-                    <p class="justify">Bienvenido a [Nombre de la Compañía]. Estos Términos y Condiciones regulan el uso de nuestro sitio web y los servicios que ofrecemos. Al acceder o utilizar nuestro sitio web, aceptas cumplir con estos términos.</p>
+      <h1 class="text-center section-title titulo-pagina">
+        Términos y Condiciones
+      </h1>
+      <div class="row justify-content-center">
+        <div class="col-md-10">
+          <div class="card p-4 shadow-sm custom-font">
+            <h3>1. Introducción</h3>
+            <p class="justify">
+              Bienvenido a Wellbing. Estos Términos y Condiciones regulan el uso
+              de nuestro sitio web y los servicios que ofrecemos. Al acceder o
+              utilizar nuestro sitio web, aceptas cumplir con estos términos.
+            </p>
 
-                    <h3>2. Uso del Sitio Web</h3>
-                    <p class="justify">El uso de nuestro sitio web debe ser conforme a la ley y no debe perjudicar los derechos de terceros. No debes usar nuestro sitio web para cualquier propósito ilícito o prohibido por estos términos.</p>
+            <h3>2. Uso del Sitio Web</h3>
+            <p class="justify">
+              El uso de nuestro sitio web debe ser conforme a la ley y no debe
+              perjudicar los derechos de terceros. No debes usar nuestro sitio
+              web para cualquier propósito ilícito o prohibido por estos
+              términos.
+            </p>
 
-                    <h3>3. Registro de Usuario</h3>
-                    <p class="justify">Para acceder a ciertas funciones de nuestro sitio web, es posible que necesites registrarte y crear una cuenta. Debes proporcionar información precisa y completa al registrarte. Eres responsable de mantener la confidencialidad de tu cuenta y contraseña.</p>
+            <h3>3. Registro de Usuario</h3>
+            <p class="justify">
+              Para acceder a ciertas funciones de nuestro sitio web, es posible
+              que necesites registrarte y crear una cuenta. Debes proporcionar
+              información precisa y completa al registrarte. Eres responsable de
+              mantener la confidencialidad de tu cuenta y contraseña.
+            </p>
 
-                    <h3>4. Propiedad Intelectual</h3>
-                    <p class="justify">Todos los contenidos de nuestro sitio web, incluidos textos, gráficos, imágenes, logotipos y software, son propiedad de [Nombre de la Compañía] o de nuestros licenciantes y están protegidos por las leyes de propiedad intelectual.</p>
+            <h3>4. Propiedad Intelectual</h3>
+            <p class="justify">
+              Todos los contenidos de nuestro sitio web, incluidos textos,
+              gráficos, imágenes, logotipos y software, son propiedad de
+              Wellbing o de nuestros licenciantes y están protegidos por las
+              leyes de propiedad intelectual.
+            </p>
 
-                    <h3>5. Productos y Servicios</h3>
-                    <p class="justify">Los productos y servicios ofrecidos en nuestro sitio web están sujetos a disponibilidad y nos reservamos el derecho de modificarlos en cualquier momento sin previo aviso. Nos esforzamos por proporcionar descripciones precisas, pero no garantizamos que las descripciones de los productos sean exactas, completas, actuales o libres de errores.</p>
+            <h3>5. Productos y Servicios</h3>
+            <p class="justify">
+              Los productos y servicios ofrecidos en nuestro sitio web están
+              sujetos a disponibilidad y nos reservamos el derecho de
+              modificarlos en cualquier momento sin previo aviso. Nos esforzamos
+              por proporcionar descripciones precisas, pero no garantizamos que
+              las descripciones de los productos sean exactas, completas,
+              actuales o libres de errores.
+            </p>
 
-                    <h3>6. Precios y Pagos</h3>
-                    <p class="justify">Los precios de nuestros productos y servicios se especifican en nuestro sitio web. Nos reservamos el derecho de cambiar los precios en cualquier momento sin previo aviso. Los pagos se deben realizar de acuerdo con las instrucciones proporcionadas en el sitio web.</p>
+            <h3>6. Precios y Pagos</h3>
+            <p class="justify">
+              Los precios de nuestros productos y servicios se especifican en
+              nuestro sitio web. Nos reservamos el derecho de cambiar los
+              precios en cualquier momento sin previo aviso. Los pagos se deben
+              realizar de acuerdo con las instrucciones proporcionadas en el
+              sitio web.
+            </p>
 
-                    <h3>7. Enlaces a Sitios de Terceros</h3>
-                    <p class="justify">Nuestro sitio web puede contener enlaces a sitios web de terceros. Estos enlaces se proporcionan solo para tu conveniencia. No tenemos control sobre estos sitios y no somos responsables de su contenido o disponibilidad.</p>
+            <h3>7. Enlaces a Sitios de Terceros</h3>
+            <p class="justify">
+              Nuestro sitio web puede contener enlaces a sitios web de terceros.
+              Estos enlaces se proporcionan solo para tu conveniencia. No
+              tenemos control sobre estos sitios y no somos responsables de su
+              contenido o disponibilidad.
+            </p>
 
-                    <h3>8. Limitación de Responsabilidad</h3>
-                    <p class="justify">En la medida máxima permitida por la ley, [Nombre de la Compañía] no será responsable de ningún daño directo, indirecto, incidental, especial o consecuente que surja del uso de nuestro sitio web o de los productos y servicios adquiridos a través de él.</p>
+            <h3>8. Limitación de Responsabilidad</h3>
+            <p class="justify">
+              En la medida máxima permitida por la ley, Wellbing no será
+              responsable de ningún daño directo, indirecto, incidental,
+              especial o consecuente que surja del uso de nuestro sitio web o de
+              los productos y servicios adquiridos a través de él.
+            </p>
 
-                    <h3>9. Modificaciones de los Términos</h3>
-                    <p class="justify">Nos reservamos el derecho de modificar estos Términos y Condiciones en cualquier momento. Cualquier cambio será efectivo inmediatamente después de su publicación en nuestro sitio web. Es tu responsabilidad revisar periódicamente estos términos para estar al tanto de cualquier cambio.</p>
+            <h3>9. Modificaciones de los Términos</h3>
+            <p class="justify">
+              Nos reservamos el derecho de modificar estos Términos y
+              Condiciones en cualquier momento. Cualquier cambio será efectivo
+              inmediatamente después de su publicación en nuestro sitio web. Es
+              tu responsabilidad revisar periódicamente estos términos para
+              estar al tanto de cualquier cambio.
+            </p>
 
-                    <h3>10. Ley Aplicable y Jurisdicción</h3>
-                    <p class="justify">Estos Términos y Condiciones se rigen por las leyes de [País]. Cualquier disputa relacionada con estos términos se someterá a la jurisdicción exclusiva de los tribunales de [Ciudad, País].</p>
+            <h3>10. Ley Aplicable y Jurisdicción</h3>
+            <p class="justify">
+              Estos Términos y Condiciones se rigen por las leyes de [País].
+              Cualquier disputa relacionada con estos términos se someterá a la
+              jurisdicción exclusiva de los tribunales de [Ciudad, País].
+            </p>
 
-                    <h3>11. Contacto</h3>
-                    <p class="justify">Si tienes alguna pregunta sobre estos Términos y Condiciones, puedes contactarnos en [Correo Electrónico de la Compañía] o [Dirección de la Compañía].</p>
-                </div>
+            <h3>11. Plan de compensación</h3>
+
+            <h4>Anexo No. 1:</h4>
+            <h5>Plan de compensación premium</h5>
+            <div class="mt-2">
+              <h6>Objetivo</h6>
+              <p class="justify">
+                Genera Comisiónes por tu equipo de referidos, cada vez que ellos
+                realicen activacion a modo premium.
+              </p>
             </div>
+            <div class="mt-2">
+              <h6>Condición</h6>
+              <p class="justify">
+                Que tu referido Venda productos que generen 35.000 puntos o más
+                en el mes y se active en modo premium.
+              </p>
+            </div>
+            <div class="mt-2">
+              <h6>Beneficio</h6>
+              <p class="justify">Recibes una recompensa de 20.000 pesos.</p>
+            </div>
+            <div class="mt-2">
+              <h6>Requisitos</h6>
+              <ul>
+                <li>
+                  <p class="justify">
+                    Para poder generar ganancias por tus referidos debes ser
+                    activo premium en la plataforma.
+                  </p>
+                </li>
+                <li>
+                  <p class="justify">
+                    Para ser activo premium en la plataforma debes realizar
+                    ventas que generen como mínimo 35.000 puntos en el mes y
+                    activarse a modo premium.
+                  </p>
+                </li>
+              </ul>
+            </div>
+
+            <div class="mt-2">
+              <h6>Estructura</h6>
+              <p class="justify">
+                Comisiones únicamente por activacion de tu referido a modo
+                premium.
+              </p>
+            </div>
+
+            <div class="mt-2">
+              <h6>Cobro adicional por gestión (CAPG)</h6>
+              <p class="justify">
+                Cada vez que un referido de tu equipo genere recompensa por un
+                usuario premium en el mes, la plataforma le realizará un cobro
+                adicional por gastos de gestión en almacenamiento de datos y
+                administración en logística de acuerdo a la siguiente tabla:
+              </p>
+              <ul>
+                <li>Entre 1 y hasta 10 (CAPG) de $0 pesos</li>
+                <li>Entre 11 y hasta 20 (CAPG) de $20.000 pesos</li>
+                <li>Entre 21 y hasta 30 (CAPG) de $40.000 pesos</li>
+                <li>31 - en adelante (CAPG) de $60.000 pesos</li>
+              </ul>
+            </div>
+
+            <div class="mt-2">
+              <h6>Recompensa adicional modelo economía colaborativa (RAMEC)</h6>
+              <p class="justify">
+                Cada vez que un referido de tu equipo genere recompensa por
+                usuario premium en el mes, la plataforma generará una recompensa
+                adicional para el usuario que lo refirió de acuerdo a la
+                siguiente tabla:
+              </p>
+              <ul>
+                <li>Entre 1 y hasta 10 (RAMEC) de 0 pesos</li>
+                <li>Entre 11 y hasta 20 (RAMEC) de 20.000 pesos</li>
+                <li>Entre 21 y hasta 30 (RAMEC) de 40.000 pesos</li>
+                <li>31 - en adelante (RAMEC) de 60.000 pesos</li>
+              </ul>
+            </div>
+
+            <div class="mt-2">
+              <h6>Corte mensual y pagos</h6>
+              <ul>
+                <li>
+                  El corte mensual es el 25 de cada mes, hasta ese día puedes
+                  realizar compras y pagos, desde ahí y hasta final de mes la
+                  plataforma gestiona y liquida los movimientos contables.
+                </li>
+                <li>
+                  El sistema reinicia el dia primero de cada mes y tiene corte
+                  de finalización el día veinticinco de cada mes.
+                </li>
+                <li>
+                  El pago de la recompensa se realiza del día primero de cada
+                  mes al dia diez de cada mes.
+                </li>
+                <li>
+                  El pago se lleva a cabo de acuerdo a la contabilidad del corte
+                  de finalización que realiza en automático la plataforma.
+                </li>
+                <li>
+                  Los pagos se realizan únicamente a la cuenta (certifición
+                  bancaria) registrada en el perfil de usuario del vendedor.
+                </li>
+              </ul>
+            </div>
+
+            <div class="mt-2">
+              <h6>Plan compensación básico</h6>
+              <p class="justify">
+                Genera compras ganando descuentos entre el 20% y el 50% en todas
+                las categorías de productos.
+              </p>
+            </div>
+
+            <div class="mt-2">
+              <h6>Condición</h6>
+              <p class="justify">
+                Registrarse en la plataforma y generar compras entre 0 y 34.999
+                puntos en el mes.
+              </p>
+            </div>
+
+            <div class="mt-2">
+              <h6>Beneficio</h6>
+
+              <ul>
+                <li>
+                  Recibes descuentos en la compra de productos en todas nuestras
+                  categorías.
+                </li>
+                <li>Recibes una recompensa de 0 pesos por tus referidos.</li>
+              </ul>
+            </div>
+
+            <div class="mt-2">
+              <h6>Requisitos</h6>
+              <ul>
+                <li>
+                  Hacer compras que generen mínimo 35.000 puntos en un
+                  trimestre.
+                </li>
+                <li>Activarse a modo premium 1 o más veces cada trimestre.</li>
+              </ul>
+            </div>
+
+            <h4>Anexo No. 2:</h4>
+            <h5>
+              Reglamento de uso de la plataforma Wellbing "wb - wellbing.com.co"
+            </h5>
+            <div class="mt-2">
+              <ul>
+                <li>
+                  <p class="justify">
+                    Usuario que no se active a modo premium durante un plazo de
+                    más de 3 meses será eliminado en los registros de la
+                    plataforma con el objetivo de no generar gastos de gestión
+                    en almacenamiento de datos y administración en logística y
+                    en consecuencia perderá sus usuarios referidos.
+                  </p>
+                </li>
+                <li>
+                  <p class="justify">
+                    El usuario podrá activarse nuevamente haciendo una pqrs
+                    informando su decisión de regresar a ser usuario de la
+                    plataforma esperando respuesta por parte de WB.
+                  </p>
+                </li>
+              </ul>
+            </div>
+
+            <h3>12. Contrato</h3>
+
+            <h5>
+              Contrato de vendedor independiente bajo el esquema multinivel
+            </h5>
+            <div class="mt-2">
+              <p class="justify">
+                Entre los suscritos a saber; por una parte,
+                <strong>WELLBING.COM.CO, </strong>
+                sociedad legalmente constituida y existente a conformidad con
+                las leyes de Colombia, (llamado en adelante de este contrato
+                como “WB”) y_por otra parte el "VENDEDOR INDEPENDIENTE" y
+                conjuntamente las "Partes", hemos decidido celebrar un contrato
+                comercial de ventas para la vinculación de VENDEDOR
+                INDEPENDIENTE a través del esquema denominado multinivel, (en
+                adelante el "Contrato") regido por las siguientes:
+              </p>
+            </div>
+            <h4>Cláusulas</h4>
+            <h5>Primera: Naturaleza Jurídica</h5>
+            <ol>
+              <li>
+                <p class="justify">
+                  El presente contrato es de naturaleza y esencia mercantil de
+                  conformidad con lo señalado en la Ley 1700 del 2013, no
+                  origina y/o no genera ningún tipo de vinculo laboral ya que no
+                  existe ningún tipo de subordinación y/o dependencia. Las
+                  obligaciones que él genera son de resultado y no de medio. No
+                  da ni otorga ninguna forma de mandato, agencia o
+                  representación civil o comercial por parte de WB a EL VENDEDOR
+                  INDEPENDIENTE. Cada una de las Partes contratantes asume sus
+                  propios riesgos comerciales y la totalidad de los costos que
+                  acarree el desarrollo del objeto de este contrato.
+                </p>
+              </li>
+              <li>
+                <p>
+                  En desarrollo de este contrato, el VENDEDOR INDEPENDIENTE no
+                  representa a WB ante terceros, ni actúa en su nombre. Así las
+                  cosas, los actos y omisiones del VENDEDOR INDEPENDIENTE no
+                  comprometen la responsabilidad de WB. En consecuencia, le está
+                  prohibido al VENDEDOR INDEPENDIENTE presentarse ante terceros,
+                  o incluir en su papelería mención alguna que le haga aparecer
+                  como trabajador, apoderado, mandatario, agente o dependiente
+                  de WB.
+                </p>
+              </li>
+            </ol>
+            <h5>Segunda: Objeto Comercial del Presente Contrato</h5>
+            <ol>
+              <li>
+                <p class="justify">
+                  EL VENDEDOR INDEPENDIENTE, prestará sus servicios con plena
+                  autonomía, y utilizando sus propios medios, capacidades,
+                  recursos humanos y económicos, según su propia destinación de
+                  tiempo, sin que exista subordinación jurídica ni vínculo
+                  laboral de ninguna naturaleza, realizará en forma
+                  independiente las actividades de venta directa de los
+                  servicios y/o productos de asistencia que comercializa WB y de
+                  sus empresas aliadas con el fin de obtener una compensación
+                  por cada venta directa realizada. Así mismo, realizará la
+                  búsqueda e incorporación de personas naturales al canal de
+                  ventas de WB para que estas realicen en forma independiente
+                  las actividades de venta directa de los servicios y/o
+                  productos de asistencia de WB y sus empresas aliadas y la
+                  coordinación de la red comercial que EL VENDEDOR INDEPENDIENTE
+                  cree a través de la incorporación de personas naturales para
+                  la actividad multinivel. El VENDEDOR INDEPENDIENTE obtendrá
+                  una compensación por las compras que realicen cada uno de los
+                  vendedores independientes que el incorpore atendiendo a lo
+                  señalado en el artículo 2 de la Ley 1700 del 2013.
+                </p>
+              </li>
+              <li>
+                <p class="justify">
+                  Dar a conocer a los posibles usuarios-compradores, el paquete
+                  de los servicios y/o productos asistenciales y los beneficios
+                  a los cuales pueden acceder.
+                </p>
+              </li>
+              <li>
+                <p class="justify">
+                  Dar a conocer y motivar a los vendedores independientes que el
+                  VENDEDOR INDEPENDIENTE incorpore, sobre el sistema de venta
+                  directa, cuáles son sus características, ventajas comerciales,
+                  así como la naturaleza de independientes en el desarrollo de
+                  la actividad comercial de “Mercadeo en red” o “Multinivel”.
+                  Las personas incorporadas por el VENDEDOR INDEPENDIENTE para
+                  que estas realicen la venta de los servicios de asistencia
+                  harán parte de su red de ventas.
+                </p>
+              </li>
+              <li>
+                <p class="justify">
+                  Siendo consecuente con la naturaleza de este Contrato, EL
+                  VENDEDOR INDEPENDIENTE, deberá mantener su estatus de vendedor
+                  independiente de los servicios y/o productos de asistencia ya
+                  que esta es una de las fuentes que acrecienta su experiencia
+                  en el sistema de venta directa.
+                </p>
+              </li>
+            </ol>
+            <h5>Tercera: Obligaciones y Derechos del Vendedor Independiente</h5>
+            <p class="justify">
+              <strong>A. </strong>Además de los derechos establecidos en la Ley
+              y en este Contrato, EL VENDEDOR INDEPENDIENTE tendrá derecho:
+            </p>
+
+            <ol>
+              <li>
+                <p class="justify">
+                  Formular preguntas, consultas y solicitudes de aclaración a WB
+                  respecto del Contrato, los Productos y servicios, y demás
+                  asuntos relacionados con la ejecución del presente Contrato,
+                  como son los niveles, criterios comerciales para el
+                  mantenimiento en los mismos, forma de cálculo de las
+                  compensaciones y el acceso a los planes de estas;
+                </p>
+              </li>
+              <li>
+                <p class="justify">
+                  Recibir información precisa sobre las características de los
+                  productos y servicios objeto de comercialización en virtud del
+                  presente Contrato, así como de las garantías de dichos
+                  productos y servicios;
+                </p>
+              </li>
+              <li>
+                <p class="justify">
+                  Recibir información precisa sobre las ventajas a las cuales
+                  tendrá acceso al vincularse como vendedor independiente de los
+                  servicios de WB;
+                </p>
+              </li>
+              <li>
+                <p class="justify">
+                  Una vez manifestada la intención de vincularse con WB, recibir
+                  un usuario y contraseña para ingresar al sistema dispuesto por
+                  la compañía para el registro de ventas. Este usuario y
+                  contraseña es personal e intransferible;
+                </p>
+              </li>
+              <li>
+                <p class="justify">
+                  Solicitar información relevante relacionada a las
+                  compensaciones o demás ventajas comerciales previstas en este
+                  contrato, y preguntas sobre el esquema de niveles del negocio
+                  de WB;
+                </p>
+              </li>
+              <li>
+                <p class="justify">
+                  Recibir el pago de las compensaciones y demás pagos por parte
+                  de WB a las que tenga derecho por haber cumplido con los
+                  criterios e indicadores comerciales establecidos de
+                  conformidad con el presente Contrato.
+                </p>
+              </li>
+            </ol>
+            <p class="justify">
+              <strong>B. </strong>Además de las obligaciones complementarias
+              establecidas en este Contrato y en la ley, el VENDEDOR
+              INDEPENDIENTE se obliga a:
+            </p>
+            <ol>
+              <li>
+                <p class="justify">
+                  Aportar para la celebración y/o suscripción del contrato
+                  presente contrato todos los documentos requeridos por WB, en
+                  espe- cial los siguientes:
+                </p>
+                <ol class="list-letras">
+                  <li>Documento de identidad</li>
+                  <li>Certificacion bancaria</li>
+                  <li>RUT</li>
+                  <li>Foto</li>
+                </ol>
+              </li>
+              <li>
+                <p class="justify">
+                  Recibido el usuario y contraseña para ingresar al sistema
+                  dispuesto por la compañía para el registro de ventas, este
+                  debe ser utilizado de manera adecuada para el ejercicio de la
+                  actividad. Este usuario y contraseña es personal e
+                  intransferible;
+                </p>
+              </li>
+              <li>
+                <p class="justify">
+                  Dar a conocer las características y ventajas de la venta
+                  directa a aquellas personas que aspiran a incorporarse a la
+                  Red de vendedores independientes.
+                </p>
+              </li>
+              <li>
+                <p class="justify">
+                  Dar a conocer a los posibles usuarios de los servicios y/o
+                  productos de asistencia, sus beneficios y su forma de pago
+                  acorde a los parámetros definidos por WB.
+                </p>
+              </li>
+              <li>
+                <p class="justify">
+                  Garantizar que, al momento de realizar una venta efectiva,
+                  esta cumpla para cada aliado y su respectivo cliente con los
+                  pará- metros de ventas fijados por WB, es decir, deberá
+                  constatar que se cumplan con los respectivos requisitos para
+                  la venta según corresponda.
+                </p>
+              </li>
+              <li>
+                <p class="justify">
+                  Para la venta de los servicios asistenciales y la efectividad
+                  de esta el VENDEDOR INDEPENDIENTE deberá verificar que el
+                  posible nuevo usuario del servicio cumpla mínimo con los
+                  siguientes requisitos:
+                </p>
+                <ol class="list-letras">
+                  <li>Encontrarse ACTIVO EN LA PLATAFORMA.</li>
+                  <li>Verificar que GENERO 35.000 PUNTOS DE COMPRA.</li>
+                  <li>
+                    Garantizar el correcto registro de todos los campos
+                    solicitados para las ventas y que toda la información
+                    diligenciada sea correcta y verídica.
+                  </li>
+                  <li>
+                    Respetar las disposiciones contenidas en los anexos del
+                    presente contrato y cumplir con todos y cada uno de los
+                    deberes y comportamientos que sean propios de la actividad
+                    comercial, por lo que acatará normas que se encuentran en
+                    las leyes vigentes y los de códigos de conducta que tenga
+                    Wb, en particular, pero no limitado a los establecidos en el
+                    manual de uso de marcas, código de ética, entre otros, cuyos
+                    términos y condiciones declara conocer;
+                  </li>
+                  <li>
+                    Incentivar e incorporar a nuevos vendedores independientes
+                    al sistema de venta directa;
+                  </li>
+                  <li>
+                    Coordinar la RED de ventas que cree con los vendedores que
+                    vincule para la venta de los servicios de asistencia a
+                    través del esquema multinivel.
+                  </li>
+                  <li>
+                    Incentivar la presencia de su red de vendedores
+                    independientes al sistema de venta directa en los eventos
+                    comerciales donde se hagan encuentros, lanzamientos, entre
+                    otros que sean liderados por WB;
+                  </li>
+                  <li>
+                    Mantener confidencialidad de todas las informaciones
+                    pertinentes a lanzamientos, estrategias publicitarias, de
+                    ventas, nuevos productos y servicios, acciones de marketing
+                    o merchandising, entre otras, a las que tuviere acceso;
+                  </li>
+                  <li>
+                    Cumplir y pagar oportunamente, todas y cada una de sus
+                    obligaciones de carácter legal, pago de contribuciones,
+                    tasas o impuestos de orden nacional, departamental,
+                    municipal, o local e impuestos, a que hubiere lugar. WB
+                    podrá exigirle en cualquier momento al VENDEDOR
+                    INDEPENDIENTE la demostración del cumplimiento de esta
+                    obligación;
+                  </li>
+                  <li>
+                    Informar a WB cualquier novedad de la cual tenga
+                    conocimiento y pueda afectar su operatividad, en especial
+                    las siguientes:
+                    <ol>
+                      <li>
+                        Dificultades con la plataforma, errores arrojados por el
+                        mismo, entre otros.
+                      </li>
+                      <li>
+                        Diferencias en su liquidación y pago de compensaciones
+                        en relación con las ventas efectuadas o el reporte de
+                        sus ventas.
+                      </li>
+                      <li>
+                        Cualquier inquietud de los usuarios de los servicios
+                        asistenciales que puedan afectar la imagen de WB o
+                        empresas aliadas.
+                      </li>
+                    </ol>
+                  </li>
+                  <li>
+                    Informar a WB sobre cualquier cambio en su naturaleza como
+                    sujeto tributario;
+                  </li>
+                  <li>
+                    Apoyar a WB y suministrar oportunamente y con toda la
+                    seriedad y veracidad del caso, la información que esta
+                    última requiera para la resolución adecuada y oportuna de
+                    quejas, requerimientos y acciones judiciales; todo ello
+                    dentro de los límites y términos establecidos para tal fin
+                    por WB.
+                  </li>
+                  <li>
+                    Devolver a WB la totalidad de los documentos, información,
+                    equipos y/o elementos de cualquier índole y/o naturaleza que
+                    en cualquier medio le hubiesen sido sean entregados por WB,
+                    en desarrollo del objeto del presente contrato.
+                  </li>
+                  <li>
+                    EL VENDEDOR INDEPENDIENTE se obliga a observar y cumplir los
+                    procedimientos establecidos tanto por la Ley y la
+                    normatividad reglamentaria vigente, así como los
+                    establecidos por WB para el cumplimiento del objeto del
+                    presente contrato.
+                  </li>
+                  <li>
+                    Las demás que se deriven del normal desarrollo del objeto
+                    del presente contrato.
+                  </li>
+                </ol>
+              </li>
+            </ol>
+            <h5>Cuarta: Derechos y Obligaciones para Wellbing</h5>
+            <h6>Wellbing tiene derecho a:</h6>
+            <ol>
+              <li>
+                <p class="justify">
+                  Recibir los registros de venta realizados por el VENDEDOR
+                  INDEPENDIENTE de manera correcta, de tal forma que se pueda
+                  materializar en el cobro efectivo a los usuarios.
+                </p>
+              </li>
+              <li>
+                <p class="justify">
+                  Recibir oportunamente todas las novedades presentadas para
+                  poder dar trámite correspondiente en los tiempos debidos.
+                </p>
+              </li>
+              <li>
+                <p class="justify">
+                  Recibir el pago de los productos y servicios a través de los
+                  canales dispuestos para tal fin.
+                </p>
+              </li>
+              <li>
+                <p class="justify">
+                  Dar por terminado la relación comercial y cerrar todos los
+                  accesos a la plataforma y vínculos con la organización, en el
+                  evento que se incurra en malas prácticas comerciales o éticas
+                  como por ejemplo (Falsedad en la información suministrada para
+                  realizar el registro respectivo a nuestros sistemas, ventas
+                  realizadas de manera fraudulenta que impliquen mala asesoría,
+                  venta engañosa, o tergiversar la información de los beneficios
+                  del producto para lograr un cierre de venta y/o manipulación
+                  para la prestación de servicios asistenciales)
+                </p>
+              </li>
+              <li>
+                <p class="justify">
+                  Todos aquellos derechos establecidos en la ley y en este
+                  Contrato.
+                </p>
+              </li>
+            </ol>
+            <h6>Wellbing se obliga a:</h6>
+            <ol>
+              <li>
+                <p class="justify">
+                  Facilitar el acceso a la información o medios necesarios, de
+                  manera oportuna, para la debida ejecución del objeto
+                  convenido, así como informarle al VENDEDOR INDEPENDIENTE sobre
+                  las características de los productos y servicios, y el alcance
+                  de sus garantías;
+                </p>
+              </li>
+              <li>
+                <p class="justify">
+                  Dar respuesta a las preguntas, consultas, solicitudes de
+                  aclaración, de manera precisa dentro de los quince (15) días
+                  siguientes a la solicitud hecha por el VENDEDOR INDEPENDIENTE;
+                </p>
+              </li>
+              <li>
+                <p class="justify">
+                  Llevar los extractos del VENDEDOR INDEPENDIENTE y los
+                  registros con el fin de que esta pueda percibir oportuna e
+                  inequívocamente su compensación y demás beneficios a los que
+                  tiene derecho en virtud del presente Contrato;
+                </p>
+              </li>
+              <li>
+                <p class="justify">
+                  Otorgar los premios, bonificaciones e incentivos ofrecidos en
+                  los plazos estipulados, y demás obligaciones derivadas de la
+                  naturaleza mercantil del Contrato.
+                </p>
+              </li>
+              <li>
+                <p class="justify">
+                  Cumplir con el pago de la compensación, reconocimientos y
+                  demás pagos que se generen a favor del VENDEDOR INDEPENDIENTE
+                  en virtud del presente Contrato;
+                </p>
+              </li>
+              <li>
+                <p class="justify">
+                  Informar de forma clara y precisa sobre las ventajas
+                  comerciales a que tiene derecho el VENDEDOR INDEPENDIENTE por
+                  la vinculación comercial con WB;
+                </p>
+              </li>
+              <li>
+                <p class="justify">
+                  Informar de forma suficiente y satisfactoria sobre las
+                  condiciones y la naturaleza jurídica del esquema de negocios
+                  de WB al VENDEDOR INDEPENDIENTE, y de las obligaciones que
+                  adquiere, así como la forma operativa del negocio, su sede y
+                  las oficinas de apoyo;
+                </p>
+              </li>
+              <li>
+                <p class="justify">
+                  Permitir al VENDEDOR INDEPENDIENTE acudir a sus oficinas/sedes
+                  ubicadas en la Carrera 87 No. 62 31 sur de la ciudad de
+                  Bogotá, para solicitar la información antes mencionada, o para
+                  formular preguntas, consultas y solicitudes de aclaración.
+                  Dichas inquietudes o consultas serán resueltas por wb de
+                  manera precisa, antes, durante y una vez finalizado el
+                  presente Contrato. Las consultas, preguntas y peticiones de
+                  información serán resueltas por wb en los términos previstos
+                  en las normas vigentes para la respuesta de peticiones de
+                  información.
+                </p>
+              </li>
+              <li>
+                <p class="justify">
+                  Pagar las facturas o cuentas de cobro, según el régimen
+                  tributario al que pertenezca el VENDEDOR INDEPENDIENTE, que se
+                  originen por el presente Contrato;
+                </p>
+              </li>
+              <li>
+                <p class="justify">
+                  Suministrar información sobre los productos y servicios,
+                  beneficios, promociones y demás actividades comerciales;
+                </p>
+              </li>
+              <li>
+                <p class="justify">
+                  Incluir materiales de capacitación, así como referencias y
+                  guías de información que sean necesarias para que el VENDEDOR
+                  INDEPENDIENTE entienda el negocio, pueda vincular a terceras
+                  personas a su Red de vendedores independientes y pueda
+                  desarrollar cabalmente el objeto del presente contrato
+                </p>
+              </li>
+              <li>
+                <p class="justify">
+                  Informar sobre los requisitos para acceder a los tipos de
+                  compensación;
+                </p>
+              </li>
+              <li>
+                <p class="justify">
+                  Notificar oportunamente al VENDEDOR INDEPENDIENTE en relación
+                  con los cambios en los planes de compensación
+                </p>
+              </li>
+            </ol>
+            <h5>Quinta: Compensación</h5>
+            <ol>
+              <li>
+                <p class="justify">
+                  El objeto del presente contrato consiste en que EL VENDEDOR
+                  INDEPENDIENTE realice la venta directa de los productos y
+                  servicios de WB y sus empresas aliadas, la vinculación de
+                  terceras personas al negocio de WB para que estas realicen la
+                  venta efectiva de productos y servicios que comercializa WB y
+                  estas a su vez promuevan la venta de productos y servicios a
+                  través de otras personas y así sucesivamente. WB compensará
+                  las ventas de acuerdo con las disposiciones del ANEXO I del
+                  presente Contrato "Plan de Compensación”, que el VENDEDOR
+                  INDEPENDIENTE declara conocer y aceptar. La forma de
+                  compensación, los rangos, porcentajes de compensación, logros
+                  que dan lugar a los beneficios, y demás privilegios que
+                  recibirá están detallados en el ANEXO I del presente Contrato.
+                </p>
+              </li>
+              <li>
+                <p class="justify">
+                  Ambas partes reconocen que el monto de la compensación a ser
+                  pagado por WB al VENDEDOR INDEPENDIENTE guarda una relación de
+                  causalidad directa con la efectiva venta de los productos y
+                  servicios que WB comercializa, por lo tanto, las
+                  compensaciones y beneficios que recibirá el vendedor
+                  independiente dependerán de sus ventas directas y de las que
+                  realice su red de ventas.
+                </p>
+              </li>
+              <li>
+                <p class="justify">
+                  El pago se hará mediante transferencia electrónica en su
+                  cuenta bancaria o cualquier otro medio de pago acordado entre
+                  las dos partes, dentro de los quince (15) días hábiles
+                  siguientes al cierre de ciclo de ventas el cual se realiza el
+                  día veinticinco (25) de cada mes a mas tardar a las 11:59 PM,
+                  aplicándose todas las retenciones, los tributos y/o
+                  contribuciones impuestos por la ley, previa presentación de la
+                  factura o cuenta de cobro la cual deberá contar con el lleno
+                  de requisitos legales, dejando expresa cons- tancia que para
+                  efectuar dichos pagos se requiere que el presente contrato se
+                  encuentre vigente y que el dinero producto de las ventas hayan
+                  ingresado efectivamente a caja del WB.
+                </p>
+              </li>
+              <li>
+                <p class="justify">
+                  Las facturas o cuentas de cobro, dependiendo del régimen
+                  tributario al que pertenezca el VENDEDOR INDEPENDIENTE, de la
+                  actividad comercial que se originen con el presente Contrato y
+                  del valor de la compensación correspondiente conforme a lo
+                  establecido en la cláusula 5, deberán cumplir con todos los
+                  requerimientos de la ley tributaria. PARÁGRAFO PRIMERO: En
+                  relación con la labor de venta de los productos y servicios,
+                  WB informará al VENDEDOR INDEPENDIENTE, a través de los medios
+                  acordados para el efecto, los precios sugeridos para la venta
+                  al público de los Productos y servicios. WB se reserva el
+                  derecho de modificar los precios, total o parcialmente,
+                  notificando tal circunstancia al VENDEDOR INDEPENDIENTE, en
+                  los medíos que tiene dispuestos para tal fin.
+                </p>
+              </li>
+            </ol>
+            <h5>Sexta: Tipos de Planes de Compensación</h5>
+            <p class="justify">
+              Además de la compensación detallada en el ANEXO I y de conformidad
+              con la cláusula quinta del presente contrato, el VENDEDOR
+              INDEPENDIENTE podrá acceder a los programas concursos, campañas
+              comerciales, incentivos, con o sin valor comercial, ganancias
+              adicionales en dinero o en especie, los cuales serán informados
+              por medios idóneos por parte de WB, junto con los requisitos que
+              darán lugar a la obtención de dichos planes de compensación.
+            </p>
+            <h5>
+              Séptima: El Sistema de Seguridad Social Integral en Pensiones y en
+              Salud
+            </h5>
+            <p class="justify">
+              El VENDEDOR INDEPENDIENTE deberá efectuar su afiliación a los
+              sistemas de pensiones y de salud como cotizante cuando así
+              corresponda, siendo responsabilidad única y exclusiva de VENDEDOR
+              INDEPENDIENTE adelantar tal afiliación y mantenerlas vigentes y al
+              día en el pago de las cotizaciones obligatorias (aportes
+              parafiscales) durante toda la vigencia del presente contrato.
+            </p>
+            <h5>
+              Octava: Sistema de Seguridad Social Integral en Riesgos Laborales
+            </h5>
+            <p class="justify">
+              El VENDEDOR INDEPENDIENTE deberá afiliarse al sistema de riesgos
+              laborales cuando así corresponda, siendo responsabilidad exclusiva
+              del VENDEDOR INDEPENDIENTE el pago del valor del aporte. Si el
+              VENDEDOR INDEPENDIENTE se encuentra previamente afiliado a una
+              ADMINISTRADORA DE RIESGOS LABORALES, deberá realizar el
+              correspondiente aporte adicional en proporción al ingreso
+              percibido en ejecución del presente contrato. Esta afiliación al
+              sistema de riesgos laborales no presume, ni configura la
+              existencia de una relación laboral ya que se trata del
+              cumplimiento de una obligación legal.
+            </p>
+            <h5>Novena: Duración</h5>
+            <p class="justify">
+              Este contrato tendrá una duración indefinida a partir de la fecha
+              de firma. No obstante, las partes contratantes dejan expresa
+              constancia que cualquiera de ellas puede, por decisión unilateral,
+              dar por terminado en cualquier momento el presente contrato;
+              decisión que deberá ser informada por escrito a la otra con
+              antelación mínima de CINCO (5) DÍAS CALENDARIO a la pretendida
+              fecha de terminación, sin que tal determinación implique pago de
+              indemnización alguna o incumplimiento del contrato, siempre y
+              cuando se cumpla el requisito de dar aviso previo y por escrito.
+            </p>
+            <h5>Décima: Requerimientos</h5>
+            <p class="justify">
+              EL VENDEDOR INDEPENDIENTE renuncia expresamente a partir de la
+              firma de este documento, a las formalidades legales para ser
+              constituido en mora; en caso de retardo u omisión en el
+              cumplimiento de las obligaciones que adquiere en virtud del
+              presente contrato. Por lo tanto, acepta desde ahora que la simple
+              comunicación escrita dirigida a él por parte de WB cumple dichos
+              efectos.
+            </p>
+            <h5>Décima Primera: Terminación</h5>
+            <p class="justify">
+              Este contrato terminará por la ocurrencia de uno cualquiera o
+              varios de los siguientes:
+            </p>
+            <ol>
+              <li>
+                <p class="justify">
+                  Por mutuo acuerdo entre las partes, caso en el cual no se
+                  causará a cargo de ninguna de ellas ningún tipo de sanción,
+                  penas o indemnizaciones por la terminación.
+                </p>
+              </li>
+              <li>
+                <p class="justify">
+                  Por inexactitud en cualquier información o comunicación que se
+                  origine por cualquiera de las Partes con ocasión del presente
+                  Contrato;
+                </p>
+              </li>
+              <li>
+                <p class="justify">
+                  Por incumplimiento de alguna de las obligaciones previstas en
+                  el presente contrato por cualquiera de las partes; Por la
+                  facultad natural de terminar este contrato unilateralmente y
+                  sin que se considere incumplimiento de este y que por tal
+                  hecho se vea obligada a pagar multas, sanciones, penas o
+                  indemnizaciones a su cargo, si: a) Por violación por parte del
+                  VENDEDOR INDEPENDIENTE de los derechos de propiedad
+                  intelectual en cabeza de WB;
+                </p>
+              </li>
+              <li>
+                <p class="justify">
+                  Por muerte del VENDEDOR INDEPENDIENTE si es persona natural
+                  sin que se causen multas, penas o perjuicios a favor de
+                  terceros.
+                </p>
+              </li>
+              <li>
+                <p class="justify">
+                  Por incumplimiento al presente contrato o cualquiera de sus
+                  anexos los cuales hacen parte integral del mismo
+                </p>
+              </li>
+              <li>
+                <p class="justify">
+                  Por la facultad de WB de terminar el presente contrato de
+                  forma unilateral, notificada por escrito al VENDEDOR
+                  INDEPENDIENTE sin que por tal hecho haya lugar al pago de
+                  ningún tipo de indemnización en favor del VENDEDOR
+                  INDEPENDIENTE
+                </p>
+              </li>
+              <li>
+                <p class="justify">
+                  Si pasados tres (3) meses de vinculación no realizan la
+                  activación en la plataforma Al no generar ventas propias por
+                  más de tres (3) meses consecutivos., WB deshabilitará al
+                  usuario, en caso que el vendedor independiente desee habilitar
+                  nuevamente su usuario deberá enviar un correo electrónico a
+                  wellbing2024@gmail.com el equipo de soporte y pqrs se pondrá
+                  en contacto, para proceder con una nueva vinculación si lo
+                  considera pertinente de acuerdo a los criterio de cumplimiento
+                  en ventas y/o calidad demostrados durante la relación
+                  contractual.
+                </p>
+              </li>
+            </ol>
+            <h5>Décima Segunda: No Exclusividad</h5>
+            <p class="justify">
+              Ninguna de las partes adquiere obligación de exclusividad con la
+              otra para la celebración de contratos como el presente dentro del
+              territorio de la República de Colombia, por lo que cualquiera de
+              ellas podrá celebrar con otros empresarios contratos iguales o
+              semejantes a éste.
+            </p>
+            <h5>Décima Tercera: Propiedad Intelectual</h5>
+            <p class="justify">
+              Todas las marcas y patentes, así como todos los demás derechos
+              inherentes a la propiedad intelectual en relación con los
+              Productos y servicios, son de la exclusiva propiedad de WB o sus
+              socios, afiliadas, matrices, filiales, subsidiarias, asociadas o
+              aliadas quienes harán los registros que consideren convenientes
+              ante las autoridades competentes en el territorio de la República
+              de Colombia.
+            </p>
+            <ol>
+              <li>
+                <p class="justify">
+                  EL VENDEDOR INDEPENDIENTE se obliga a no usar los nombres,
+                  marcas, derechos de autor expresiones de propaganda y demás
+                  derechos de propiedad intelectual de WB, ni cualquier activo
+                  que pertenezca o que haya sido licenciado a WB, o a sus
+                  socios, afiliadas, matrices, filiales, subsidiarias, asociadas
+                  o aliadas, sin el previo consentimiento por escrito de B2C, en
+                  el entendido que cualquier consentimiento de WB en tal sentido
+                  deberá ser considerado como una autorización limitada;
+                </p>
+              </li>
+              <li>
+                <p class="justify">
+                  El VENDEDOR INDEPENDIENTE se obliga a: (I) No realizar actos
+                  que puedan contravenir los derechos de propiedad intelectual o
+                  afectar el nombre, reputación, activos, derechos y marcas de
+                  wb y sus aliados, ni el crédito comercial asociado a los
+                  mismos; (II) No usar marcas, nombres comerciales que sean
+                  similares a las marcas de B2C; y (III) No promover, usar o de
+                  manera incorrecta, asociar productos o servicios de terceros
+                  con el nombre o las marcas de WB;
+                </p>
+              </li>
+              <li>
+                <p class="justify">
+                  La violación de los derechos de propiedad intelectual por
+                  parte del VENDEDOR INDEPENDIENTE dará derecho a WB a terminar
+                  inmediatamente este Contrato.
+                </p>
+              </li>
+            </ol>
+            <h5>Décima Cuarta: Cesión</h5>
+            <p class="justify">
+              El presente contrato no podrá cederse total ni parcialmente por
+              ninguna de las partes, sin previa y expresa autorización escrita
+              de la otra. El VENDEDOR INDEPENDIENTE no podrá subcontratar el
+              objeto del presente contrato o prestarlos por interpuesta persona,
+              sin la previa y expresa aceptación escrita de WB.
+            </p>
+            <h5>Décima Quinta: Modificaciones al Contrato</h5>
+            <p class="justify">
+              Cualquier modificación al presente convenio durante su vigencia,
+              debe realizarse de común acuerdo entre las partes y constar por
+              escrito, mediante la forma de un otrosí.
+            </p>
+            <h5>Décima Sexta: Soluciones de Controversias</h5>
+            <p class="justify">
+              Las diferencias o controversias que surjan con ocasión del
+              presente contrato se procurarán resolver directamente mediante
+              acuerdo recíproco, en un término de quince (15) días hábiles,
+              contados a partir de la fecha en que una de ellas comunique a la
+              otra el motivo del conflicto y la convoque para el arreglo. Si
+              transcurrido el lapso mencionado no se llegare a alcanzar un
+              acuerdo entre el VENDEDOR INDEPENDIENTE y B2C, estos decidirán
+              mediante acuerdo recíproco en un plazo no mayor a diez (10) días
+              hábiles, si acuden a instrumentos alternativos de solución de
+              conflictos, tales como la amigable composición, la conciliación o
+              la transacción. Si decidieren darle viabilidad a alguno de los
+              mencionados mecanismos, se aplicará el procedimiento y las reglas
+              correspondientes en los términos del ordenamiento sobre la
+              materia. De no lograr un arreglo en virtud de cualquiera de los
+              mecanismos anteriormente mencionados, las PARTES quedarán en
+              libertad de recurrir a la justicia ordinaria.
+            </p>
+            <h5>Décima Séptima: Autorización de Manejo de Datos Personales</h5>
+            <p class="justify">
+              VENDEDOR INDEPENDIENTE actuando en nombre propio, de manera libre,
+              expresa, inequívoca e informada, AUTORIZA la firma del presente
+              contrato diligenciando y aprobando la casilla términos y
+              condiciones ubicada en la plataforma en la sección registrarse, a
+              que wb, realice la recolección, almacenamiento, uso, circulación,
+              supresión, y en general, tratamiento de sus datos personales
+              (incluyendo datos sensibles), derivados o con ocasión de la
+              relación comercial y/o contractual que VENDEDOR INDEPENDIENTE
+              tenga, tuvo, tuviere o llegare a tener con Wb, de conformidad con
+              lo previsto en la Ley 1581 de 2012, al Decreto 1377 de 2013 y
+              demás normas que las modifiquen o sustituyan, y en la Política de
+              Tratamiento de Datos Personales de wb, disponible en su sitio web
+              www.wellbing.com.co EL VENDEDOR INDEPENDIENTE reconoce como
+              finalidades de la presente autorización: (i) el uso de sus datos
+              personales (incluidos datos sensibles) con fines comerciales, (ii)
+              el uso contable, (iii) el cumplimiento de decisiones judiciales y
+              disposiciones administrativas y legales, fiscales, (iv) el
+              cumplimiento de obligaciones contractuales, por lo cual la
+              información podrá ser transferida de ser necesario a terceros,
+              tales como entidades financieras, notarías, listas OFAC y de
+              terrorismo, abogados, etc., (v) el uso en los procesos en que se
+              encuentran vinculados los proveedores, (vi) La transmisión de
+              información y datos personales en procesos de auditorías y (vii)
+              en general cualquier otro uso de la información que el proveedor
+              autorice por escrito. EL VENDEDOR INDEPENDIENTE autoriza a que sus
+              datos personales y en general cualquier información incluida o
+              derivada de la presente relación comercial y contractual sea
+              compartida con terceros para los efectos propios de la labor,
+              actividad o negocio que EL VENDEDOR INDEPENDIENTE desarrolle,
+              desarrolló o llegare a desarrollar en favor de EL wb, así mismo,
+              para la presentación de ofertas, invitaciones privadas o públicas,
+              licitaciones y demás actos, contratos o negocios en los cuales wb
+              tenga participación; En el mismo entendido para verificar las
+              calidades y condiciones que EL VENDEDOR INDEPENDIENTE manifiesta
+              para ser contratado o prestar sus servicios a wb o adquirir
+              productos o servicios de éste. Los datos sensibles y/o personales
+              podrán ser alojados fuera del territorio colombiano en
+              herramientas tecnológicas, software y bases de datos adquiridas o
+              licenciadas por la Compañía, empresas matrices, sociedades
+              controlantes, filiales o subsidiarias de estas. EL VENDEDOR
+              INDEPENDIENTE reconoce que, como titular de la información, le
+              asisten los derechos previstos en la Ley 1581 de 2012 y el Decreto
+              1377 de 2013, en especial, se informa que le asiste el derecho a
+              conocer, actualizar y rectificar las informaciones que se hayan
+              recogido sobre él, así como presentar consultas y reclamos;
+              revocar la autorización o solicitar la supresión de los datos, en
+              los casos en que sea procedente.
+            </p>
+            <h5>Décima Octava: Supervisión del Contrato</h5>
+            <p class="justify">
+              Wb vigilará el cumplimiento de las obligaciones a cargo de EL
+              VENDEDOR INDEPENDIENTE sin que exista dependencia jerárquica,
+              quien como supervisor ejercerá las siguientes funciones:
+            </p>
+            <ol class="list-letras">
+              <li>
+                Verificar el cabal y oportuno cumplimiento de todas y cada una
+                de las obligaciones adquiridas por EL VENDEDOR INDEPEN- DIENTE
+                en virtud de la relación objeto del presente contrato.
+              </li>
+              <li>
+                Expedir la constancia a satisfacción de recibo del presente
+                contrato.
+              </li>
+              <li>
+                Solicitar informes a EL VENDEDOR INDEPENDIENTE sobre el
+                desarrollo del objeto contratado.
+              </li>
+              <li>
+                Si durante la ejecución del contrato, se presenta incumplimiento
+                de las obligaciones a cargo de EL VENDEDOR INDEPENDIENTE, deberá
+                informar inmediatamente a WB.
+              </li>
+              <li>
+                Las demás que se deriven de la naturaleza del cargo de
+                supervisor.
+              </li>
+            </ol>
+            <h5>Décima Novena: Comunicaciones</h5>
+            <p class="justify">
+              EL VENDEDOR INDEPENDIENTE podrá comunicarse con WB a través del
+              correo electrónico wellbing2024@gmail.com, así mismo, WB podrá
+              comunicarse con el VENDEDOR INDEPENDIENTE a través del medio que
+              esté último indique para tal fin.
+            </p>
+            <h5>Vigésima: Declaraciones Adicionales</h5>
+            <p class="justify">
+              El VENDEDOR INDEPENDIENTE expresamente reconoce y acepta que antes
+              de proceder con la firma del presente documento:
+            </p>
+            <ol>
+              <li>
+                <p class="justify">
+                  Tuvo acceso durante un tiempo razonable al texto completo del
+                  presente contrato;
+                </p>
+              </li>
+              <li>
+                <p class="justify">
+                  Tuvo acceso completo a las características de los productos
+                  objeto de este contrato, así como al alcance de las garantías
+                  que corresponden a los productos;
+                </p>
+              </li>
+              <li>
+                <p class="justify">
+                  Wb le suministró información clara y precisa sobre las
+                  ventajas comerciales y los beneficios de vincularse como
+                  vendedor independiente y vincular nuevos vendedores
+                  independientes dentro de su red comercial;
+                </p>
+              </li>
+              <li>
+                <p class="justify">
+                  WB le suministró información clara y precisa sobre las
+                  ventajas comerciales y los beneficios de vincularse como
+                  vendedor independiente, para realizar lo señalado en la
+                  cláusula segunda del presente Contrato;
+                </p>
+              </li>
+              <li>
+                <p class="justify">
+                  WB le suministró información suficiente sobre (a) condiciones
+                  y naturaleza jurídica del negocio, (b) las obligaciones que
+                  adquiere al vincularse, y (c) la forma operativa del negocio,
+                  sedes y oficinas de apoyo de WB;
+                </p>
+              </li>
+              <li>
+                <p class="justify">
+                  WB ha brindado acceso a materiales de capacitación,
+                  referencias y guías de información sobre las actividades a
+                  realizar en el marco de este Contrato;
+                </p>
+              </li>
+              <li>
+                <p class="justify">
+                  Que ha sido informada que WB cuenta con una oficina abierta al
+                  público ubicada en Bogotá D.C. en la Carrera 87 No. 62 - 31
+                  sur
+                </p>
+              </li>
+            </ol>
+            <h5>Vigésima Primera</h5>
+            <p class="justify">
+              Hacen parte integral del presente contrato los siguientes anexos:
+            </p>
+            <ul>
+              <li>Anexo No. 1: PLAN DE COMPENSACIÓN</li>
+              <li>
+                Anexo No. 2: REGLAMENTO DE USO DE LA PLATAFORMA “WB -
+                wellbing.com.co”
+              </li>
+              <li>Anexo No. 3: CÓDIGO DE ETICA - VENDEDORES INDEPENDIENTES</li>
+            </ul>
+            <h5>Vigésima Segunda</h5>
+            <p class="justify">
+              El presente contrato deja sin valor y efecto cualquiera otro
+              contrato verbal o escrito que se haya suscrito con anterioridad
+              entre las partes. EL VENDEDOR INDEPENDIENTE acepta diligenciando
+              la casilla términos y condiciones ubicada en la plataforma
+              wellbing.com.co en el área de registro.
+            </p>
+            <h3>13. Contrato</h3>
+            <p class="justify">
+              Si tienes alguna pregunta sobre estos Términos y Condiciones,
+              puedes contactarnos por medio de una pqrs, por correo electrónico
+              a wellbing2024@gmail.com o Carrera 87 No. 62 - 31 sur.
+            </p>
+          </div>
         </div>
+      </div>
     </div>
 
     <footer th:replace="~{layout/plantilla :: footer}"></footer>
     <div th:replace="~{layout/plantilla :: alertas}"></div>
-</body>
-
+  </body>
 </html>

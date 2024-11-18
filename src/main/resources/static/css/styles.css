@@ -608,6 +608,26 @@ input[type="number"]::-webkit-outer-spin-button {
   text-decoration: none;
 }
 
+.limited-lines-3 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+}
+
+.limited-lines-2 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+}
+
+.list-letras {
+  list-style-type: lower-alpha;
+}
+
 /* Estilos Responsivos */
 
 @media (max-width: 991.98px) {
