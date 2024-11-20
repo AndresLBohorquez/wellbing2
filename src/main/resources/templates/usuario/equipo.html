@@ -48,6 +48,7 @@
                     <th class="align-center">Activación</th>
                     <th class="align-center">Equipo</th>
                     <th class="align-center">Hijos</th>
+                    <th class="align-center">WP</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -157,6 +158,10 @@
                     <td
                       class="align-left"
                       th:text="${equipo.cantidadNietos}"
+                    ></td>
+                    <td
+                      class="align-left"
+                      th:text="${equipo.idHijo.wellPoints}"
                     ></td>
                   </tr>
                 </tbody>
