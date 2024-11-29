@@ -122,7 +122,7 @@
                 ></i>
                 <form th:action="@{/carrito/comentario}" method="post">
                   <div class="row">
-                      <div class="col-12 col-md-8"> <!-- Ocupa todo el ancho en móviles y parte del ancho en pantallas grandes -->
+                      <div class="col-12 col-md-8">
                           <input
                               type="hidden"
                               name="carritoId"
@@ -137,8 +137,8 @@
                               required
                           />
                       </div>
-                      <div class="col-12 col-md-4 d-flex justify-content-center"> <!-- Ocupa todo el ancho en móviles y parte del ancho en pantallas grandes -->
-                          <button type="submit" class="btn btn-success mt-2 w-100 w-md-auto"> <!-- w-100 para móviles, w-md-auto para pantallas grandes -->
+                      <div class="col-12 col-md-4 d-flex justify-content-center"> 
+                          <button type="submit" class="btn btn-success mt-2 w-100 w-md-auto">
                               Registrar
                           </button>
                       </div>
@@ -172,6 +172,7 @@
                 type="submit"
                 value="Ir al Checkout"
               />
+              <small class="mt-2">Recuerda que los pagos debes realizarlos a la cuenta número: <strong> 3144092580</strong> a nombre de <strong>Johan Jaimes</strong></small>
             </form>
 
             <p th:if="${#lists.isEmpty(carritos)}">
@@ -180,7 +181,7 @@
           </div>
         </div>
 
-        <!-- En pantallas pequeñas (< md), usamos posición normal (static) para que aparezca debajo de los productos -->
+        
         <div class="card p-3 d-md-none">
           <h5>Resumen de la Compra</h5>
           <p>Total: <span id="cartTotal" th:text="${totalCarrito}"></span></p>
@@ -193,6 +194,9 @@
               type="submit"
               value="Ir al Checkout"
             />
+            
+            <small class="mt-2">Recuerda que los pagos debes realizarlos a la cuenta número: <strong> 3144092580</strong> a nombre de <strong>Johan Jaimes</strong></small>
+          
           </form>
 
           <p th:if="${#lists.isEmpty(carritos)}">

@@ -27,9 +27,26 @@
 
         <!-- Card Principal con Información del Usuario -->
         <div class="card card-perfil mb-4">
-          <a href="/productos" type="button" class="btn btn-primary derecha">
-            <i class="bi bi-plus-circle"></i>
-          </a>
+          <div class="row">
+            <div class="col-10 col-sm-11">
+              <i class="bi bi-info-circle-fill text-info"></i>
+              <small class="mt-2"
+                >Recuerda que los pagos debes realizarlos a la cuenta número:
+                <strong> 3144092580</strong> a nombre de
+                <strong>Johan Jaimes</strong></small
+              >
+            </div>
+            <div class="col-2 col-sm-1">
+              <a
+                href="/productos"
+                type="button"
+                class="btn btn-primary derecha"
+              >
+                <i class="bi bi-plus-circle"></i>
+              </a>
+            </div>
+          </div>
+
           <div class="card-body">
             <div class="row">
               <table id="example" class="bg-white rounded shadow-sm">
@@ -214,7 +231,13 @@
               method="post"
               enctype="multipart/form-data"
             >
-              <div class="mb-3">
+            <i class="bi bi-info-circle-fill text-info"></i>
+              <small class="mt-2 text-dark"
+                >Recuerda que los pagos debes realizarlos a la cuenta número:
+                <strong> 3144092580</strong> a nombre de
+                <strong>Johan Jaimes</strong></small
+              >
+              <div class="mb-3 mt-2">
                 <label for="cantidad" class="form-label">Valor</label>
                 <input
                   type="text"

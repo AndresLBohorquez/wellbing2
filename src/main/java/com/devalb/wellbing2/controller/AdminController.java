@@ -182,6 +182,8 @@ public class AdminController {
         }
         if (StringUtils.isEmpty(usuarioForm.getPassword())) {
             usuarioForm.setPassword(usuarioActual.getPassword());
+        } else {
+            usuarioForm.setPassword(ENCODER.encode(usuarioForm.getPassword()));
         }
 
         // Verificar si los roles han cambiado
@@ -215,7 +217,7 @@ public class AdminController {
             usuario.setUsername(usuarioForm.getUsername());
             usuario.setDireccion(usuarioForm.getDireccion());
             usuario.setEmail(usuarioForm.getEmail());
-            usuario.setPassword(ENCODER.encode(usuarioForm.getPassword()));
+            usuario.setPassword(usuarioForm.getPassword());
             usuario.setRoles(usuarioForm.getRoles());
             usuario.setVisible(true);
             usuario.setWellPoints(usuarioActual.getWellPoints());
